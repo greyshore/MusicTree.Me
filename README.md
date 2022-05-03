@@ -19,6 +19,11 @@ If you are interested in contributing to this project, thank you! If you'd like 
 - [Building Neo4j Applications with Node.js](https://neo4j.com/developer/javascript/): This is a great introduction to Neo4j, Node.js, and a test driven development approach. It does not incorporate TypeScript, but the link below brings it all together.
 - [Building a Web Application with Neo4j and NestJS](https://medium.com/neo4j/building-a-modern-web-application-with-neo4j-and-nestjs-b51ffd8268fa): This article and series is the basis for the technical approach to the MusicTree.Me application.
 - [NestJS](https://nestjs.com/): for more details on the NestJS framework for Node applications.
+- Graph/Tree data visialization
+
+  - [Neo4j graph visualization using D3.js](https://github.com/eisman/neo4jd3)  
+  - [Visualizing languages through time](http://www.elinguistics.net/AA_language_tree.html): ideally we want to visualize instructor-student relationships through time
+  - The basis for the visualization above [can also be found here](https://observablehq.com/@aaronkyle/interactive-tree-diagram-d3v3). ObservableHQ.com is a great resource for visualization options and D3.js
 
 ## Neo4j Graph Data Model
 
