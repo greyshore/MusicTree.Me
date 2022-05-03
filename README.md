@@ -8,7 +8,7 @@ A proof-of-concept application to collect data and display a musical heritage 'f
 
 ## Technical Concepts
 
-The original data collected by Dr. Enegren was stored in a relational database. For this open source project the data has been migrated to a [Neo4j graph database](https://neo4j.com/). The production application data is hosted on an instance of [Neo4j AuraDB](https://neo4j.com/cloud/platform/aura-graph-database/); a shared AuraDB development environment has also been provisioned. Local development is configured for a free [Neo4j Desktop](https://neo4j.com/product/developer-tools/) environment.
+The original data collected by Dr. Enegren was stored in a relational database. For this open source project the data has been migrated to a [Neo4j graph database](https://neo4j.com/). The production application data is hosted on an instance of [Neo4j AuraDB](https://neo4j.com/cloud/platform/aura-graph-database/) along with a shared AuraDB development environment. Local development is configured for a free [Neo4j Desktop](https://neo4j.com/product/developer-tools/) environment.
 
 The application that allows for collection of information, navigating the graph, and establishing musical relationships, is deployed to and hosted on [Heroku](https://www.heroku.com/). The application code is based on [Node.js](https://nodejs.org/), [TypeScript](https://www.typescriptlang.org/), and [React](https://reactjs.org/), and leverages the [Neo4j Javascript driver](https://neo4j.com/developer/javascript/) for data access.
 
@@ -36,7 +36,7 @@ ToDo
 
 ## Contributing
 
-ToDo
+The agile board containing Features, Stories, Spikes, Bugs, Questions, and ADRs [can be found here](https://github.com/orgs/greyshore/projects/4).
 
 ### Open Source Owners and principal contributors
 
