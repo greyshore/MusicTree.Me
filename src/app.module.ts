@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { Neo4jConfig } from './neo4j/neo4j-config.interface';
+import { Neo4jConfig } from 'src/neo4j/neo4j-config.interface';
 import { Neo4jModule } from './neo4j/neo4j.module';
 
 @Module({

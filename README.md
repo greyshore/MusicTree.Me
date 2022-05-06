@@ -37,8 +37,38 @@ Future versions of MusicTree.Me can extend this model to include additional node
 
 ## Build and Run Locally
 
-ToDo
+### Prerequisites
 
+- [Node](https://nodejs.org/) v14.18.0 and npm v6.14.15 or above. Using a Node version manager such as [nvm or nodist](https://npm.github.io/installation-setup-docs/installing/using-a-node-version-manager.html) is recommended.
+- [Neo4j Desktop](https://neo4j.com/download/) with Neo4j version 4.4.6 or above.
+
+### Clone, build and run locally
+
+- Set up your local Neo4j database:
+  - Launch Neo4j Desktop
+  - Create a New Project (if desired, or use the default Project)
+  - Create a local DBMS, named 'MusicTree.Me', and make a note of your password
+  - Start the local DBMS cluster with your MusicTree.Me database (if not already running)
+- Create .env files to store connection credentials (.env files are listed in .gitignore - do not commit your credentials...)
+  - Create a .env file, and a .env.test file at the root of this repository
+  - Add your credentials in this format:
+  - >NEO4J_SCHEME=neo4j
+  - >NEO4J_HOST=localhost
+  - >NEO4J_USERNAME=neo4j
+  - >NEO4J_PASSWORD='your password'
+  - >NEO4J_PORT=7687
+  - > NEO4J_DATABASE=MusicTree-Me
+- To contribute, fork the repository and clone your fork locally.
+- From the repository root directory run:
+  - > npm install
+  - > npm run start
+- Open your browser and navigate to:
+  - > http://localhost:3000/
+  - > You should see the default route return "Hello MusicTree.Me!"
+  - > http://localhost:3000/nodes
+  - > If you've configured your .env files with appropriate connection information to your local Neo4j database, you should see a count of the nodes created in your database
+  - > For example: "There are 10 nodes in the database"
+  
 ## Contributing
 
 The agile board containing Features, Stories, Spikes, Bugs, Questions, and ADRs [can be found here](https://github.com/orgs/greyshore/projects/4).

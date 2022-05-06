@@ -1,6 +1,5 @@
-import { Neo4jTypeInterceptor } from 'src/neo4j/neo4j-type.interceptor';
-import { tap } from 'rxjs/operators';
-import { Observable, Subscriber } from 'rxjs';
+import { Neo4jTypeInterceptor } from 'src/neo4j/Neo4jTypeInterceptor';
+import { Observable } from 'rxjs';
 
 describe('Neo4jTypeInterceptor', () => {
   const interceptor: Neo4jTypeInterceptor = new Neo4jTypeInterceptor();

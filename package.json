@@ -1,10 +1,10 @@
 {
-  "name": "hello-neo4j-nest",
+  "name": "musictree.me",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "description": "MusicTree.Me open source project for capturing and visualizing musical heritage",
+  "author": "Paula Paul",
   "private": true,
-  "license": "UNLICENSED",
+  "license": "MIT",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
