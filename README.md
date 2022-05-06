@@ -53,15 +53,21 @@ Future versions of MusicTree.Me can extend this model to include additional node
   - From Neo4j Desktop, click the '-> Open' button for your active Project to open a Neo4j Browser
   - enter and run the following commands to create a node in your database
   > :use musictree-me
+  >
   > create (n:Person:Musician)
 - Create .env files to store connection credentials (.env files are listed in .gitignore - do not commit your credentials...)
   - Create a .env file, and a .env.test file at the root of this repository
   - Add your credentials in this format:
   >NEO4J_SCHEME=neo4j
+  >
   >NEO4J_HOST=localhost
+  >
   >NEO4J_USERNAME=neo4j
+  >
   >NEO4J_PASSWORD='your password'
+  >
   >NEO4J_PORT=7687
+  >
   >NEO4J_DATABASE=MusicTree-Me
 - To contribute, fork the repository and clone your fork locally.
 - From the repository root directory run:
@@ -69,9 +75,11 @@ Future versions of MusicTree.Me can extend this model to include additional node
   > npm run start
 - Open your browser and navigate to:
   > http://localhost:3000/
+  >
   > You should see the default route return "Hello MusicTree.Me!"
   >
   > http://localhost:3000/nodes
+  >
   > If you've configured your .env files with appropriate connection information to your local Neo4j database, you should see a count of the nodes created in your database.
   > For example: "There are 10 nodes in the database"
   
