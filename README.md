@@ -54,7 +54,12 @@ Future versions of MusicTree.Me can extend this model to include additional node
   - enter and run the following commands to create a node in your database
   > :use musictree-me
   >
-  > create (n:Person:Musician)
+  > create (n:Musician:Bassoon {firstName: 'Erik', lastName: 'Paul'})
+  >
+  - Note - if you are tinkering with your local database and want to delete all existing nodes and relationships, you can do so with the following command:
+  > MATCH (n) DETACH DELETE n;
+  - For more information about Cypher commands you can use to manipulate your data, refer to the [Neo4j Cypher Manual](https://neo4j.com/docs/cypher-manual/current/)
+
 - Create .env files to store connection credentials (.env files are listed in .gitignore - do not commit your credentials...)
   - Create a .env file, and a .env.test file at the root of this repository
   - Add your credentials in this format:
