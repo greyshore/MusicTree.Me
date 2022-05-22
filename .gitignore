@@ -44,3 +44,13 @@ node_modules
 
 # Local Netlify folder
 .netlify
+
+# node_modules
+/.cache
+/netlify/functions/server/index.js
+/public/build
+/.netlify
+
+/.env
+
+/app/styles/tailwind.css
