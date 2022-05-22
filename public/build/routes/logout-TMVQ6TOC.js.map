@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["browser-route-module:/Users/paula/code/MusicTree/trap-stack/app/routes/logout.tsx?browser"],
+  "sourcesContent": ["module.exports = {};"],
+  "mappings": ";;;;;;AAAA;AAAA;AAAA;AAAA,WAAO,UAAU;AAAA;AAAA;",
+  "names": []
+}
