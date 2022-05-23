@@ -53,6 +53,4 @@ node_modules
 
 /.env
 
-/app/styles/tailwind.css
-
 MusicTree.code-workspace

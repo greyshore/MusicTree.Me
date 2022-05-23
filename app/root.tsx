@@ -13,15 +13,10 @@ import {
   ScrollRestoration,
 } from "@remix-run/react";
 
-import tailwindStylesheetUrl from "./styles/tailwind.css";
 import { getUser } from "./session.server";
 
 export const meta: MetaFunction = () => {
   return { title: "MusicTree.Me" };
-};
-
-export const links: LinksFunction = () => {
-  return [{ rel: "stylesheet", href: tailwindStylesheetUrl }];
 };
 
 export const loader: LoaderFunction = async ({ request }) => {
