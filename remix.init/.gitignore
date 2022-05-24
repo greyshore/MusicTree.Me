@@ -5,5 +5,3 @@ node_modules
 /.netlify
 
 /.env
-
-/app/styles/tailwind.css
