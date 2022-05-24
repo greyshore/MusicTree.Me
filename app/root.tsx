@@ -16,7 +16,7 @@ import Nav from "./components/nav";
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
-  title: "New Remix App",
+  title: "MusicTree.Me",
   viewport: "width=device-width,initial-scale=1",
 });
 

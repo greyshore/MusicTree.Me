@@ -85,3 +85,80 @@ WHERE a.musicianID= 102 AND b.musicianID= 108
 CREATE
 (a)-[r:Studied_Bassoon_With {verified: true}]->(b)
 RETURN a.firstName, type(r), b.firstName;
+
+//// Begin import of Sasha spreadsheet relationships
+
+//// Mark Timmerman 295 Relationships
+// Studied Bassoon with Sol Schoenbach 350
+MATCH
+ (a:Musician),
+ (b:Musician)
+WHERE a.musicianID= 295 AND b.musicianID= 350
+CREATE
+(a)-[r:Studied_Bassoon_With {startYear: 1984, endYear: 1985, verified: true}]->(b)
+RETURN a.firstName, type(r), b.firstName;
+
+// Studied Bassoon with Bernard Garfield 213
+MATCH
+ (a:Musician),
+ (b:Musician)
+WHERE a.musicianID= 295 AND b.musicianID= 213
+CREATE
+(a)-[r:Studied_Bassoon_With {startYear: 1985, endYear: 1988, verified: true}]->(b)
+RETURN a.firstName, type(r), b.firstName;
+
+//// Amy Pollard 202 Relationships
+// Studied Bassoon with William Ludwig 346
+MATCH
+ (a:Musician),
+ (b:Musician)
+WHERE a.musicianID= 202 AND b.musicianID= 346
+CREATE
+(a)-[r:Studied_Bassoon_With {verified: true}]->(b)
+RETURN a.firstName, type(r), b.firstName;
+
+// Studied Bassoon with Eric Stomberg 355
+MATCH
+ (a:Musician),
+ (b:Musician)
+WHERE a.musicianID= 202 AND b.musicianID= 355
+CREATE
+(a)-[r:Studied_Bassoon_With {verified: true}]->(b)
+RETURN a.firstName, type(r), b.firstName;
+
+//// Myles Minguan Yang 308 Relationships
+// Studied Bassoon with Frank Morelli 102
+MATCH
+ (a:Musician),
+ (b:Musician)
+WHERE a.musicianID= 308 AND b.musicianID= 102
+CREATE
+(a)-[r:Studied_Bassoon_With {verified: true}]->(b)
+RETURN a.firstName, type(r), b.firstName;
+
+// Studied Bassoon with Wendy Rose 343
+MATCH
+ (a:Musician),
+ (b:Musician)
+WHERE a.musicianID= 308 AND b.musicianID= 343
+CREATE
+(a)-[r:Studied_Bassoon_With {verified: true}]->(b)
+RETURN a.firstName, type(r), b.firstName;
+
+// Studied Bassoon with William Ludwig 346
+MATCH
+ (a:Musician),
+ (b:Musician)
+WHERE a.musicianID= 308 AND b.musicianID= 346
+CREATE
+(a)-[r:Studied_Bassoon_With {verified: true}]->(b)
+RETURN a.firstName, type(r), b.firstName;
+
+// Studied Bassoon with Kathleen McLean 354
+MATCH
+ (a:Musician),
+ (b:Musician)
+WHERE a.musicianID= 308 AND b.musicianID= 354
+CREATE
+(a)-[r:Studied_Bassoon_With {verified: true}]->(b)
+RETURN a.firstName, type(r), b.firstName;
