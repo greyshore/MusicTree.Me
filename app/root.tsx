@@ -12,6 +12,7 @@ import {
 import type { MetaFunction, LinksFunction } from "@remix-run/node"; // Depends on the runtime you choose
 
 import { ServerStyleContext, ClientStyleContext } from "./context";
+import Nav from "./components/nav";
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
@@ -67,6 +68,7 @@ const Document = withEmotionCache(
           ))}
         </head>
         <body>
+          <Nav />
           {children}
           <ScrollRestoration />
           <Scripts />
