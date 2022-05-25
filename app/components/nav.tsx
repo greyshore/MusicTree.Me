@@ -1,5 +1,5 @@
-import { Center, Grid, GridItem, Flex, Button } from "@chakra-ui/react";
-import { Link } from "@remix-run/react";
+import { Center, Grid, GridItem, Flex, Button, Box } from "@chakra-ui/react";
+import { Link, NavLink, useLocation } from "@remix-run/react";
 import type { ReactNode } from "react";
 
 type Item = {
@@ -8,10 +8,44 @@ type Item = {
   span?: number;
   child: ReactNode;
 };
+// @todo define route `to` links as constant //
+const MTNavLink = ({
+  linkTo,
+  children,
+}: {
+  linkTo: string;
+  children: string;
+}) => {
+  const { pathname } = useLocation();
+  const isActivePage = linkTo === pathname;
+  const activeStyle = {
+    fontWeight: "bold",
+  };
+  return (
+    <Center flexDir={"column"}>
+      <NavLink
+        to={linkTo}
+        style={({ isActive }) => (isActive ? activeStyle : {})}
+      >
+        {children}
+      </NavLink>
+      {isActivePage && (
+        <Box
+          height={1.5}
+          width={1.5}
+          mt={1}
+          borderRadius="full"
+          background="green"
+        />
+      )}
+    </Center>
+  );
+};
 const navItemList: Item[] = [
   {
     position: 1,
     child: (
+      // @todo these styles should be elsewhere, i.e. logo?
       <Link style={{ fontSize: "24px", fontWeight: "bold" }} to="/">
         MusicTree.me
       </Link>
@@ -19,24 +53,16 @@ const navItemList: Item[] = [
   },
   {
     position: 4,
-    child: (
-      <Center>
-        <Link to="/">Home</Link>
-      </Center>
-    ),
+    child: <MTNavLink linkTo="/">Home</MTNavLink>,
   },
   {
     position: 5,
     span: 7,
-    child: (
-      <Center>
-        <Link to="/explore">Explore Trees</Link>
-      </Center>
-    ),
+    child: <MTNavLink linkTo="/explore">Explore Trees</MTNavLink>,
   },
   {
     position: 7,
-    child: <Link to="/about">About</Link>,
+    child: <MTNavLink linkTo="/about">About</MTNavLink>,
   },
   {
     position: 11,
@@ -66,7 +92,6 @@ const navItemList: Item[] = [
 
 const NavItem = (item: Item) => {
   const { position, isButton, span, child } = item;
-  console.log(navItemList);
   return (
     <GridItem
       as="li"
@@ -78,9 +103,9 @@ const NavItem = (item: Item) => {
     </GridItem>
   );
 };
-
+// @todo margins on flex container
 const Nav = () => (
-  <Flex as="nav" maxW="6xl" mx="auto" height={100} align="center">
+  <Flex as="nav" maxW="6xl" mx={[4, 5]} height={100} align="center">
     <Grid as="ul" templateColumns="repeat(12, 1fr)" gap={6}>
       {navItemList.map((item, index) => (
         <NavItem
