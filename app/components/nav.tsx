@@ -11,7 +11,7 @@ import type { ReactNode } from "react";
 
 type Item = {
   position: number;
-  isButton?: boolean;
+  notLink?: boolean;
   span?: number;
   child: ReactNode;
 };
@@ -51,6 +51,7 @@ const MTNavLink = ({
 const navItemList: Item[] = [
   {
     position: 1,
+    notLink: true,
     child: (
       // @todo these styles should be elsewhere, i.e. logo?
       <Link style={{ fontSize: "24px", fontWeight: "bold" }} to="/">
@@ -81,7 +82,7 @@ const navItemList: Item[] = [
   },
   {
     position: 12,
-    isButton: true,
+    notLink: true,
     child: (
       <Button
         as={Link}
@@ -98,11 +99,11 @@ const navItemList: Item[] = [
 ];
 
 const NavItem = (item: Item) => {
-  const { position, isButton, span, child } = item;
+  const { position, notLink, span, child } = item;
   return (
     <GridItem
       as="li"
-      mt={!isButton ? 2 : undefined}
+      mt={notLink ? undefined : 2}
       colEnd={span ? span : undefined}
       colStart={position}
     >
@@ -118,7 +119,7 @@ const Nav = () => (
         <NavItem
           key={`${item.position}-${index}`}
           position={item.position}
-          isButton={item.isButton ?? undefined}
+          notLink={item.notLink ?? undefined}
           child={item.child}
           span={item.span}
         />
