@@ -105,7 +105,7 @@ const NavItem = (item: Item) => {
 };
 // @todo margins on flex container
 const Nav = () => (
-  <Flex as="nav" maxW="6xl" mx={[4, 5]} height={100} align="center">
+  <Flex as="nav" maxW="6xl" mx="auto" height={100} align="center">
     <Grid as="ul" templateColumns="repeat(12, 1fr)" gap={6}>
       {navItemList.map((item, index) => (
         <NavItem
