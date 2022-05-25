@@ -1,4 +1,11 @@
-import { Center, Grid, GridItem, Flex, Button, Box } from "@chakra-ui/react";
+import {
+  Center,
+  Grid,
+  GridItem,
+  Button,
+  Box,
+  Container,
+} from "@chakra-ui/react";
 import { Link, NavLink, useLocation } from "@remix-run/react";
 import type { ReactNode } from "react";
 
@@ -105,7 +112,7 @@ const NavItem = (item: Item) => {
 };
 // @todo margins on flex container
 const Nav = () => (
-  <Flex as="nav" maxW="6xl" mx="auto" height={100} align="center">
+  <Container mt={5} as="nav" maxW="6xl" height={100}>
     <Grid as="ul" templateColumns="repeat(12, 1fr)" gap={6}>
       {navItemList.map((item, index) => (
         <NavItem
@@ -117,7 +124,7 @@ const Nav = () => (
         />
       ))}
     </Grid>
-  </Flex>
+  </Container>
 );
 
 export default Nav;

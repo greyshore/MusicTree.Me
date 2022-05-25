@@ -1,3 +1,7 @@
+body {
+    background: #E5E5E5 !important;
+    height: 100vh;
+}
 li {
     list-style-type: none
 }
