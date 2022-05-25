@@ -67,7 +67,7 @@ export default function Index() {
               </VStack>
             </Center>
             <Center flexDir={"column"}>
-              <VStack>
+              <VStack spacing={10}>
                 <StringsIcon />
                 <Text>Strings</Text>
               </VStack>
