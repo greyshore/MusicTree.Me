@@ -15,18 +15,18 @@ export default function Index() {
 
   return (
     <Container as="main" maxW="6xl">
-      {/* <VStack spacing={8}> */}
-      <Center>
-        <Heading as="h1" fontSize="5xl">
-          Explore your musical heritage <br />
-          Connect with other musicians.
-        </Heading>
-      </Center>
-      <Center>
-        <Text>Select an instrument to start</Text>
-      </Center>
+      <VStack spacing={8}>
+        <Center>
+          <Heading as="h1" fontSize="5xl">
+            Explore your musical heritage <br />
+            Connect with other musicians.
+          </Heading>
+        </Center>
+        <Center>
+          <Text>Select an instrument to start</Text>
+        </Center>
+      </VStack>
       <InstrumentSelect />
-      {/* </VStack> */}
     </Container>
   );
 }

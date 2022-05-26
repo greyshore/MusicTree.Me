@@ -47,7 +47,7 @@ const InstrumentSelect = () => {
         display="flex"
         justifyContent="space-around"
         paddingBottom={0}
-        cursor="pointer"
+        marginTop={8}
       >
         {selections.map((type) => {
           return (
