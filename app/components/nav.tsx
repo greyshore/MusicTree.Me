@@ -15,7 +15,8 @@ type Item = {
   span?: number;
   child: ReactNode;
 };
-// @todo define route `to` links as constant //
+// @todo define route `to` links as constant 
+// @todo nav a11y
 const MTNavLink = ({
   linkTo,
   children,

@@ -16,9 +16,10 @@ const icon = {
   [INSTRUMENT_TYPES.BRASS]: <BrassIcon />,
   [INSTRUMENT_TYPES.STRINGS]: <StringsIcon />,
 };
-
+// @todo: keyboard navigation (a11y)
 const Tab = ({ isActive, label }: { isActive: boolean; label: string }) => (
   <Center
+    as="button"
     width="100%"
     height={"40px"}
     background={isActive ? "green" : "unset"}
