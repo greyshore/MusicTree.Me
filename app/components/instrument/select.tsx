@@ -41,6 +41,8 @@ const InstrumentSelect = () => {
         p={5}
         background="white"
         borderRadius="lg"
+        borderBottom={selectedInstrument ? "none" : undefined}
+        borderBottomRadius={selectedInstrument ? "none" : undefined}
         borderWidth="1px"
         display="flex"
         justifyContent="space-around"
