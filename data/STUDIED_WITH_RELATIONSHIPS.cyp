@@ -375,8 +375,6 @@ CREATE
 (a)-[r:Studied_Bassoon_With {verified: true}]->(b)
 RETURN a.firstName, type(r), b.firstName;
 
-///// Begin import of Sasha spreadsheet relationships
-
 //// Gordon Fantini 249 Relationships
 // Studied Bassoon with Leonardo Dosso 365
 MATCH
@@ -1100,8 +1098,11 @@ CREATE
 (a)-[r:Studied_Bassoon_With {verified: true}]->(b)
 RETURN a.firstName, type(r), b.firstName;
 
+///////  Start Sasha spreadsheet import
+
 //// Frode Cato Carlsen 242 Relationships
-// Studied Bassoon with Inge Fjørtoft 379 - conductor/viola, important coach
+// Studied Bassoon with Inge Fjørtoft 379 conductor viola, important coach
+MATCH
  (a:Musician),
  (b:Musician)
 WHERE a.musicianID= 242 AND b.musicianID= 379
@@ -1110,6 +1111,7 @@ CREATE
 RETURN a.firstName, type(r), b.firstName;
 
 // Studied Bassoon with Torleiv Nedberg 340
+MATCH
  (a:Musician),
  (b:Musician)
 WHERE a.musicianID= 242 AND b.musicianID= 340
@@ -1118,6 +1120,7 @@ CREATE
 RETURN a.firstName, type(r), b.firstName;
 
 // Studied Bassoon with Eirik Birkeland 231
+MATCH
  (a:Musician),
  (b:Musician)
 WHERE a.musicianID= 242 AND b.musicianID= 231
@@ -1127,6 +1130,7 @@ RETURN a.firstName, type(r), b.firstName;
 
 //// Roman Reznik 327 Relationships
 // Studied Bassoon with Sergio Azzolini 378
+MATCH
  (a:Musician),
  (b:Musician)
 WHERE a.musicianID= 327 AND b.musicianID= 378
@@ -1136,6 +1140,7 @@ RETURN a.firstName, type(r), b.firstName;
 
 //// Jesús Armendáriz Ramírez 262 Relationships
 // Studied Bassoon with Jerzy Lemiszka 261
+MATCH
  (a:Musician),
  (b:Musician)
 WHERE a.musicianID= 262 AND b.musicianID= 261
@@ -1145,6 +1150,7 @@ RETURN a.firstName, type(r), b.firstName;
 
 //// Jose Alberto Barrera 268 Relationships
 // Studied Bassoon with Jerzy Lemiszka 261
+MATCH
  (a:Musician),
  (b:Musician)
 WHERE a.musicianID= 268 AND b.musicianID= 261
@@ -1154,6 +1160,7 @@ RETURN a.firstName, type(r), b.firstName;
 
 //// Angel Duran 206 Relationships
 // Studied Bassoon with Jerzy Lemiszka 261
+MATCH
  (a:Musician),
  (b:Musician)
 WHERE a.musicianID= 206 AND b.musicianID= 261
@@ -1163,6 +1170,7 @@ RETURN a.firstName, type(r), b.firstName;
 
 //// Juan Pablo Linarez Cruz 274 Relationships
 // Studied Bassoon with Jerzy Lemiszka 261
+MATCH
  (a:Musician),
  (b:Musician)
 WHERE a.musicianID= 274 AND b.musicianID= 261
@@ -1171,6 +1179,7 @@ CREATE
 RETURN a.firstName, type(r), b.firstName;
 
 // Studied Bassoon with Roberto Mendez 380
+MATCH
  (a:Musician),
  (b:Musician)
 WHERE a.musicianID= 274 AND b.musicianID= 380
@@ -1179,6 +1188,7 @@ CREATE
 RETURN a.firstName, type(r), b.firstName;
 
 // Studied Bassoon with Edith Violeta Gómez Delgado 381
+MATCH
  (a:Musician),
  (b:Musician)
 WHERE a.musicianID= 274 AND b.musicianID= 381
@@ -1188,6 +1198,7 @@ RETURN a.firstName, type(r), b.firstName;
 
 //// Winfred Felton 348 Relationships
 // Studied Bassoon with Saxton Rose 349
+MATCH
  (a:Musician),
  (b:Musician)
 WHERE a.musicianID= 348 AND b.musicianID= 349
@@ -1197,6 +1208,7 @@ RETURN a.firstName, type(r), b.firstName;
 
 //// Shanna Welch 333 Relationships
 // Studied Bassoon with Saxton Rose 349
+MATCH
  (a:Musician),
  (b:Musician)
 WHERE a.musicianID= 333 AND b.musicianID= 349
@@ -1206,6 +1218,7 @@ RETURN a.firstName, type(r), b.firstName;
 
 //// Ryan Roikola 331 Relationships
 // Studied Bassoon with Saxton Rose 349
+MATCH
  (a:Musician),
  (b:Musician)
 WHERE a.musicianID= 331 AND b.musicianID= 349
@@ -1214,6 +1227,7 @@ CREATE
 RETURN a.firstName, type(r), b.firstName;
 
 // Studied Bassoon with Suzanne Pattison 337
+MATCH
  (a:Musician),
  (b:Musician)
 WHERE a.musicianID= 331 AND b.musicianID= 337
@@ -1223,6 +1237,7 @@ RETURN a.firstName, type(r), b.firstName;
 
 //// Phillip Kandel 319 Relationships
 // Studied Bassoon with Saxton Rose 349
+MATCH
  (a:Musician),
  (b:Musician)
 WHERE a.musicianID= 319 AND b.musicianID= 349
@@ -1231,6 +1246,7 @@ CREATE
 RETURN a.firstName, type(r), b.firstName;
 
 // Studied Bassoon with Keith Sweger 278
+MATCH
  (a:Musician),
  (b:Musician)
 WHERE a.musicianID= 319 AND b.musicianID= 278
@@ -1240,6 +1256,7 @@ RETURN a.firstName, type(r), b.firstName;
 
 //// Ida Cawley 255 Relationships
 // Studied Bassoon with Saxton Rose 349
+MATCH
  (a:Musician),
  (b:Musician)
 WHERE a.musicianID= 255 AND b.musicianID= 349
@@ -1248,6 +1265,7 @@ CREATE
 RETURN a.firstName, type(r), b.firstName;
 
 // Studied Bassoon with Lynn Hileman 292
+MATCH
  (a:Musician),
  (b:Musician)
 WHERE a.musicianID= 255 AND b.musicianID= 292
@@ -1256,6 +1274,7 @@ CREATE
 RETURN a.firstName, type(r), b.firstName;
 
 // Studied Bassoon with Hana Lee 252
+MATCH
  (a:Musician),
  (b:Musician)
 WHERE a.musicianID= 255 AND b.musicianID= 252
@@ -1265,6 +1284,7 @@ RETURN a.firstName, type(r), b.firstName;
 
 //// Frankie Garcia 240 Relationships
 // Studied Bassoon with Saxton Rose 349
+MATCH
  (a:Musician),
  (b:Musician)
 WHERE a.musicianID= 240 AND b.musicianID= 349
@@ -1273,6 +1293,7 @@ CREATE
 RETURN a.firstName, type(r), b.firstName;
 
 // Studied Bassoon with Jennifer Muehrcke 260
+MATCH
  (a:Musician),
  (b:Musician)
 WHERE a.musicianID= 240 AND b.musicianID= 260
@@ -1282,6 +1303,7 @@ RETURN a.firstName, type(r), b.firstName;
 
 //// Colin Jones 225 Relationships
 // Studied Bassoon with Saxton Rose 349
+MATCH
  (a:Musician),
  (b:Musician)
 WHERE a.musicianID= 225 AND b.musicianID= 349
@@ -1291,6 +1313,7 @@ RETURN a.firstName, type(r), b.firstName;
 
 //// Bryce Richardson 217 Relationships
 // Studied Bassoon with Saxton Rose 349
+MATCH
  (a:Musician),
  (b:Musician)
 WHERE a.musicianID= 217 AND b.musicianID= 349
