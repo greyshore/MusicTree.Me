@@ -6,6 +6,7 @@ import {
   BrassIcon,
   StringsIcon,
 } from "~/components/icons";
+import InstrumentList from "~/components/instrument/list";
 import { INSTRUMENT_TYPES } from "~/models/instrument/client";
 import type { Instrument } from "~/models/instrument/server";
 
@@ -35,29 +36,32 @@ const InstrumentSelect = () => {
   const [selectedInstrument, setSelectedInstrument] =
     useState<Instrument | null>(null);
   return (
-    <Flex
-      p={5}
-      background="white"
-      borderRadius="lg"
-      borderWidth="1px"
-      display="flex"
-      justifyContent="space-around"
-      paddingBottom={0}
-      cursor="pointer"
-    >
-      {selections.map((type) => {
-        return (
-          <Center
-            key={type}
-            flexDir={"column"}
-            onClick={() => setSelectedInstrument(type)}
-          >
-            {icon[type]}
-            <Tab isActive={selectedInstrument === type} label={type} />
-          </Center>
-        );
-      })}
-    </Flex>
+    <>
+      <Flex
+        p={5}
+        background="white"
+        borderRadius="lg"
+        borderWidth="1px"
+        display="flex"
+        justifyContent="space-around"
+        paddingBottom={0}
+        cursor="pointer"
+      >
+        {selections.map((type) => {
+          return (
+            <Center
+              key={type}
+              flexDir={"column"}
+              onClick={() => setSelectedInstrument(type)}
+            >
+              {icon[type]}
+              <Tab isActive={selectedInstrument === type} label={type} />
+            </Center>
+          );
+        })}
+      </Flex>
+      <InstrumentList category={selectedInstrument} />
+    </>
   );
 };
 
