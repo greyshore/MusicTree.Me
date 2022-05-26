@@ -1,21 +1,8 @@
-import {
-  Box,
-  Center,
-  Container,
-  Heading,
-  Text,
-  VStack,
-  Flex,
-} from "@chakra-ui/react";
+import { Center, Container, Heading, Text, VStack } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useOptionalUser } from "~/utils";
-import {
-  WoodWindIcon,
-  KeyboardIcon,
-  BrassIcon,
-  StringsIcon,
-} from "~/components/icons";
+import InstrumentSelect from "~/components/instrument/select";
 
 export default function Index() {
   const user = useOptionalUser();
@@ -38,42 +25,7 @@ export default function Index() {
         <Center>
           <Text>Select an instrument to start</Text>
         </Center>
-        <Container maxW="full">
-          <Flex
-            p={5}
-            shadow="md"
-            background="white"
-            borderRadius="lg"
-            borderWidth="1px"
-            display="flex"
-            justifyContent="space-around"
-          >
-            <Center flexDir={"column"}>
-              <VStack spacing={10}>
-                <WoodWindIcon />
-                <Text>Woodwinds</Text>
-              </VStack>
-            </Center>
-            <Center flexDir={"column"}>
-              <VStack spacing={10}>
-                <KeyboardIcon />
-                <Text>Keyboard</Text>
-              </VStack>
-            </Center>
-            <Center flexDir={"column"}>
-              <VStack spacing={10}>
-                <BrassIcon />
-                <Text>Brass</Text>
-              </VStack>
-            </Center>
-            <Center flexDir={"column"}>
-              <VStack spacing={10}>
-                <StringsIcon />
-                <Text>Strings</Text>
-              </VStack>
-            </Center>
-          </Flex>
-        </Container>
+        <InstrumentSelect />
       </VStack>
     </Container>
   );

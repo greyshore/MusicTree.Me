@@ -24,4 +24,9 @@ describe("Landing page", () => {
     // user = {}
     // url pathname shuold be 'explore'
   });
+  it("selects an instrument category", () => {
+    // c;ick on a selection
+    // the selection should have active styles
+    // the selections shows a list of relevant instruments for selection
+  });
 });

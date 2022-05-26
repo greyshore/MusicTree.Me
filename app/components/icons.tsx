@@ -2,8 +2,8 @@ export const WoodWindIcon = () => (
   <svg
     version="1.0"
     xmlns="http://www.w3.org/2000/svg"
-    width="150pt"
-    height="250pt"
+    width="134pt"
+    height="154pt"
     viewBox="0 0 1280.000000 640.000000"
     preserveAspectRatio="xMidYMid meet"
     style={{ transform: "rotate(90deg)" }}
@@ -256,8 +256,8 @@ c0 -22 -31 -44 -61 -44 -25 0 -29 4 -29 29 0 33 17 51 26 27 10 -27 34 -18 34
 );
 export const KeyboardIcon = () => (
   <svg
-    width="150pt"
-    height="250pt"
+    width="134pt"
+    height="154pt"
     viewBox="0 0 1280.000000 1116.000000"
     preserveAspectRatio="xMidYMid meet"
   >
@@ -976,8 +976,8 @@ export const BrassIcon = () => (
   <svg
     version="1.0"
     xmlns="http://www.w3.org/2000/svg"
-    width="150pt"
-    height="250pt"
+    width="134pt"
+    height="154pt"
     viewBox="0 0 1280.000000 640.000000"
     preserveAspectRatio="xMidYMid meet"
     style={{ transform: "rotate(90deg)" }}
@@ -1334,8 +1334,8 @@ export const StringsIcon = () => (
   <svg
     version="1.0"
     xmlns="http://www.w3.org/2000/svg"
-    width="150pt"
-    height="250pt"
+    width="134pt"
+    height="154pt"
     viewBox="0 0 1250.000000 1280.000000"
     preserveAspectRatio="xMidYMid meet"
   >
