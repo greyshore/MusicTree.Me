@@ -1,0 +1,3 @@
+musicianID,prefix,firstName,middleName,lastName,suffix,email,pronouns,currentPosition,currentOrganization,genderIdentity ,website,nationality,birthYear,deathYear,lastModified
+9000,Dr,Robert,Taylor,Massey,,taylor.massey@gmail.com,He/Him/His,Principal Clarinet,Augusta Symphony Orchestra,Male,http://www.taylormasseyclarinetist.com/,United States,1982,,2022-06-01
+9001,Dr,Adam,,Fontana,,fontanaa@newpaltz.edu,He/Him/His,Assistant Professor of Music- Large Ensembles,SUNY New Paltz,Male,,United States,1980,,2022-06-01
