@@ -32,17 +32,19 @@ const Tab = ({ isActive, label }: { isActive: boolean; label: string }) => (
   </Center>
 );
 
-const InstrumentSelect = () => {
-  const [selectedInstrument, setSelectedInstrument] =
-    useState<InstrumentFamily | null>(null);
+const InstrumentFamilySelect = () => {
+  const [selectedFamily, setSelectedFamily] = useState<InstrumentFamily | null>(
+    null
+  );
+
   return (
     <>
       <Flex
         p={5}
         background="white"
         borderRadius="lg"
-        borderBottom={selectedInstrument ? "none" : undefined}
-        borderBottomRadius={selectedInstrument ? "none" : undefined}
+        borderBottom={selectedFamily ? "none" : undefined}
+        borderBottomRadius={selectedFamily ? "none" : undefined}
         borderWidth="1px"
         display="flex"
         justifyContent="space-around"
@@ -54,17 +56,17 @@ const InstrumentSelect = () => {
             <Center
               key={type}
               flexDir={"column"}
-              onClick={() => setSelectedInstrument(type)}
+              onClick={() => setSelectedFamily(type)}
             >
               {icon[type]}
-              <Tab isActive={selectedInstrument === type} label={type} />
+              <Tab isActive={selectedFamily === type} label={type} />
             </Center>
           );
         })}
       </Flex>
-      <InstrumentList family={selectedInstrument} />
+      <InstrumentList family={selectedFamily} />
     </>
   );
 };
 
-export default InstrumentSelect;
+export default InstrumentFamilySelect;
