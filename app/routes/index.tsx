@@ -2,7 +2,7 @@ import { Center, Container, Heading, Text, VStack } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useOptionalUser } from "~/utils";
-import InstrumentSelect from "~/components/instrument/select";
+import InstrumentSelect from "~/components/instrument/family-select";
 
 export default function Index() {
   const user = useOptionalUser();

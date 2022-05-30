@@ -1,8 +1,9 @@
 import { Flex } from "@chakra-ui/react";
+import type { InstrumentFamily } from "~/models/instrument/server";
 
-const InstrumentList = ({ category }: { category: string | null }) => (
+const InstrumentList = ({ family }: { family: InstrumentFamily | null }) => (
   <>
-    {category && (
+    {family && (
       <Flex
         padding={5}
         paddingLeft={16}
@@ -17,7 +18,7 @@ const InstrumentList = ({ category }: { category: string | null }) => (
         cursor="pointer"
         height={40}
       >
-        {category}
+        {family}
       </Flex>
     )}
   </>

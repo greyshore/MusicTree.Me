@@ -8,11 +8,11 @@ import {
 } from "~/components/icons";
 import InstrumentList from "~/components/instrument/list";
 import { INSTRUMENT_TYPES } from "~/models/instrument/client";
-import type { Instrument } from "~/models/instrument/server";
+import type { InstrumentFamily } from "~/models/instrument/server";
 
 const selections = Object.values(INSTRUMENT_TYPES);
 const icon = {
-  [INSTRUMENT_TYPES.WOODWIND]: <WoodWindIcon />,
+  [INSTRUMENT_TYPES.WOODWINDS]: <WoodWindIcon />,
   [INSTRUMENT_TYPES.KEYBOARD]: <KeyboardIcon />,
   [INSTRUMENT_TYPES.BRASS]: <BrassIcon />,
   [INSTRUMENT_TYPES.STRINGS]: <StringsIcon />,
@@ -34,7 +34,7 @@ const Tab = ({ isActive, label }: { isActive: boolean; label: string }) => (
 
 const InstrumentSelect = () => {
   const [selectedInstrument, setSelectedInstrument] =
-    useState<Instrument | null>(null);
+    useState<InstrumentFamily | null>(null);
   return (
     <>
       <Flex
@@ -62,7 +62,7 @@ const InstrumentSelect = () => {
           );
         })}
       </Flex>
-      <InstrumentList category={selectedInstrument} />
+      <InstrumentList family={selectedInstrument} />
     </>
   );
 };
