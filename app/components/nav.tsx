@@ -34,12 +34,11 @@ const MTNavLink = ({
       <NavLink
         to={linkTo}
         style={({ isActive }) => (isActive ? activeStyle : {})}
-        role="navigation"
+        role="link"
         aria-label="Desktop Navigation"
       >
         {children}
         <Box as="span" className="visuallyhidden">
-          {" "}
           (current section)
         </Box>
       </NavLink>
@@ -99,7 +98,7 @@ const navItemList: Item[] = [
     notLink: true,
     child: (
       <Button
-        role="navigation"
+        role="button"
         aria-label="Desktop Navigation"
         as={Link}
         to="/join"

@@ -12,7 +12,7 @@ import * as React from "react";
 
 export const meta: MetaFunction = () => {
   return {
-    title: "Sign Up",
+    title: "Sign Up - MusicTree.me",
   };
 };
 

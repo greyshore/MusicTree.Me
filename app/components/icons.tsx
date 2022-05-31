@@ -7,7 +7,9 @@ export const WoodWindIcon = () => (
     viewBox="0 0 1280.000000 640.000000"
     preserveAspectRatio="xMidYMid meet"
     style={{ transform: "rotate(270deg)" }}
+    role="img"
   >
+    <title>Select from woodwind family</title>
     <g
       transform="translate(0.000000,640.000000) scale(0.100000,-0.100000)"
       fill="grey"
@@ -260,7 +262,9 @@ export const KeyboardIcon = () => (
     height="100%"
     viewBox="0 0 1280.000000 1116.000000"
     preserveAspectRatio="xMidYMid meet"
+    role="img"
   >
+    <title>Select from keyboard family</title>
     <g
       transform="translate(0.000000,1116.000000) scale(0.100000,-0.100000)"
       fill="#000000"
@@ -981,7 +985,9 @@ export const BrassIcon = () => (
     viewBox="0 0 1280.000000 640.000000"
     preserveAspectRatio="xMidYMid meet"
     style={{ transform: "rotate(90deg)" }}
+    role="img"
   >
+    <title>Select from the brass family</title>
     <g
       transform="translate(0.000000,640.000000) scale(0.100000,-0.100000)"
       fill="grey"
@@ -1338,10 +1344,9 @@ export const StringsIcon = () => (
     height="100%"
     viewBox="0 0 1250.000000 1280.000000"
     preserveAspectRatio="xMidYMid meet"
+    role="img"
   >
-    <metadata>
-      Created by potrace 1.15, written by Peter Selinger 2001-2017
-    </metadata>
+    <title>Select from strings family</title>
     <g
       transform="translate(0.000000,1280.000000) scale(0.100000,-0.100000)"
       fill="grey"
