@@ -21,7 +21,7 @@ const icon = {
 const Tab = ({ isActive, label }: { isActive: boolean; label: string }) => (
   <Center
     as="button"
-    width={250}
+    width="100%"
     height={"40px"}
     background={isActive ? "green" : "unset"}
     color={isActive ? "white" : "inherit"}
@@ -39,20 +39,19 @@ const InstrumentFamilySelect = () => {
   );
 
   return (
-    <>
-      <Flex
+    <SimpleGrid columns={{ sm: 2, md: 1 }}>
+      <SimpleGrid
         p={5}
         background="white"
         borderRadius="lg"
         borderBottom={selectedFamily ? "none" : undefined}
         borderBottomRadius={selectedFamily ? "none" : undefined}
         borderWidth="1px"
-        display="flex"
-        justifyContent="space-around"
         paddingBottom={0}
         marginTop={8}
         flexWrap="wrap"
         flexShrink={1}
+        columns={{ sm: 1, md: 4 }}
       >
         {selections.map((type) => {
           return (
@@ -61,16 +60,16 @@ const InstrumentFamilySelect = () => {
               flexDir={"column"}
               onClick={() => setSelectedFamily(type)}
             >
-              <Box width={250} height={250}>
+              <Box width={48} height={250}>
                 {icon[type]}
               </Box>
               <Tab isActive={selectedFamily === type} label={type} />
             </Center>
           );
         })}
-      </Flex>
+      </SimpleGrid>
       <InstrumentList family={selectedFamily} />
-    </>
+    </SimpleGrid>
   );
 };
 

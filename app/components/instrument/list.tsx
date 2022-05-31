@@ -3,7 +3,7 @@ import {
   Center,
   Checkbox,
   Flex,
-  Grid,
+  SimpleGrid,
   GridItem,
 } from "@chakra-ui/react";
 import { Form } from "@remix-run/react";
@@ -51,13 +51,13 @@ const InstrumentList = ({ family }: { family: InstrumentFamily | null }) => {
             paddingBottom={0}
             cursor="pointer"
           >
-            <Grid
+            <SimpleGrid
               as={Form}
               method="post"
               action=""
               minH={100}
               width="100%"
-              templateColumns="repeat(3, 25%)"
+              columns={{ sm: 1, md: 3 }}
             >
               {instrumentList?.map((intrument) => (
                 <GridItem key={intrument}>
@@ -73,7 +73,7 @@ const InstrumentList = ({ family }: { family: InstrumentFamily | null }) => {
                   </Checkbox>
                 </GridItem>
               ))}
-            </Grid>
+            </SimpleGrid>
           </Flex>
           {!!checked.length && (
             <Center mt={8}>
