@@ -39,7 +39,7 @@ const InstrumentFamilySelect = () => {
   );
 
   return (
-    <SimpleGrid columns={{ sm: 2, md: 1 }}>
+    <SimpleGrid>
       <SimpleGrid
         p={5}
         background="white"
