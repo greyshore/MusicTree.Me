@@ -6,7 +6,7 @@ export const WoodWindIcon = () => (
     height="100%"
     viewBox="0 0 1280.000000 640.000000"
     preserveAspectRatio="xMidYMid meet"
-    style={{ transform: "rotate(90deg)" }}
+    style={{ transform: "rotate(270deg)" }}
   >
     <g
       transform="translate(0.000000,640.000000) scale(0.100000,-0.100000)"
