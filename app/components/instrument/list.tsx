@@ -8,6 +8,7 @@ import {
 } from "@chakra-ui/react";
 import { Form } from "@remix-run/react";
 import { useState } from "react";
+import { HiOutlineArrowRight } from "react-icons/hi";
 import { INSTRUMENT_FAMILIES } from "~/models/instrument/client";
 import type { InstrumentFamily } from "~/models/instrument/server";
 
@@ -39,7 +40,7 @@ const InstrumentList = ({ family }: { family: InstrumentFamily | null }) => {
         <>
           <Flex
             padding={5}
-            paddingLeft={8}
+            paddingLeft={16}
             paddingRight={16}
             mr="px"
             ml="px"
@@ -54,21 +55,21 @@ const InstrumentList = ({ family }: { family: InstrumentFamily | null }) => {
               as={Form}
               method="post"
               action=""
-              minH={200}
+              minH={100}
               width="100%"
-              templateColumns="repeat(3, 1fr)"
+              templateColumns="repeat(3, 25%)"
             >
-              {instrumentList?.map((i) => (
-                <GridItem key={i}>
+              {instrumentList?.map((intrument) => (
+                <GridItem key={intrument}>
                   <Checkbox
-                    checked={checked.includes(i)}
+                    checked={checked.includes(intrument)}
                     onChange={handleChange}
-                    name={i}
-                    size="sm"
+                    name={intrument}
+                    size="md"
                     colorScheme="green"
                     flexFlow="1"
                   >
-                    {i}
+                    {intrument}
                   </Checkbox>
                 </GridItem>
               ))}
@@ -76,7 +77,13 @@ const InstrumentList = ({ family }: { family: InstrumentFamily | null }) => {
           </Flex>
           {!!checked.length && (
             <Center mt={8}>
-              <Button onClick={() => console.log(checked)}>Continue</Button>
+              <Button
+                colorScheme="green"
+                rightIcon={<HiOutlineArrowRight size={18} />}
+                onClick={() => console.log("go to next step")}
+              >
+                Continue
+              </Button>
             </Center>
           )}
         </>
