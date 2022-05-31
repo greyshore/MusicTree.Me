@@ -37,3 +37,11 @@ export function useUser() {
 export function validateEmail(email: unknown): email is string {
   return typeof email === "string" && email.length > 3 && email.includes("@");
 }
+
+export function rmv(arr: any[], item: any): any[] | undefined {
+  const index = arr.indexOf(item);
+  if (index !== -1) {
+    arr.splice(index, 1);
+    return arr;
+  }
+}

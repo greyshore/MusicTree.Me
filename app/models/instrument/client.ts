@@ -20,6 +20,6 @@ export const INSTRUMENT_FAMILIES: InstrumentMap = {
   ],
   Keyboard: ["Piano"],
   Brass: ["Trombone", "Trumpet", "Tuba"],
-  Strings: ["Trombone", "Trumpet", "Tuba"],
+  Strings: ["Cello", "Viola", "Violin"],
   Percussion: ["Drum", "Tympani", "Xylophone", "Tubed Percussion"],
 };
