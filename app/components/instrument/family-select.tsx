@@ -28,6 +28,7 @@ const Tab = ({ isActive, label }: { isActive: boolean; label: string }) => (
     borderTopLeftRadius={"10px"}
     borderTopRightRadius={"10px"}
     mt={8}
+    aria-expanded={isActive}
   >
     <Text>{label}</Text>
   </Center>

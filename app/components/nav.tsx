@@ -34,8 +34,14 @@ const MTNavLink = ({
       <NavLink
         to={linkTo}
         style={({ isActive }) => (isActive ? activeStyle : {})}
+        role="navigation"
+        aria-label="Desktop Navigation"
       >
         {children}
+        <Box as="span" className="visuallyhidden">
+          {" "}
+          (current section)
+        </Box>
       </NavLink>
       {isActivePage && (
         <Box
@@ -76,7 +82,14 @@ const navItemList: Item[] = [
   {
     position: 11,
     child: (
-      <Button as={Link} to="/login" variant="link" colorScheme="black">
+      <Button
+        role="button"
+        aria-label="Desktop Navigation"
+        as={Link}
+        to="/login"
+        variant="link"
+        colorScheme="black"
+      >
         Log in
       </Button>
     ),
@@ -86,6 +99,8 @@ const navItemList: Item[] = [
     notLink: true,
     child: (
       <Button
+        role="navigation"
+        aria-label="Desktop Navigation"
         as={Link}
         to="/join"
         borderRadius="full"
