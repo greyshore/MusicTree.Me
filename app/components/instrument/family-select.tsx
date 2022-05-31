@@ -1,4 +1,4 @@
-import { Flex, Center, Text } from "@chakra-ui/react";
+import { Box, Flex, Center, Text, SimpleGrid } from "@chakra-ui/react";
 import { useState } from "react";
 import {
   WoodWindIcon,
@@ -21,12 +21,13 @@ const icon = {
 const Tab = ({ isActive, label }: { isActive: boolean; label: string }) => (
   <Center
     as="button"
-    width="100%"
+    width={250}
     height={"40px"}
     background={isActive ? "green" : "unset"}
     color={isActive ? "white" : "inherit"}
     borderTopLeftRadius={"10px"}
     borderTopRightRadius={"10px"}
+    mt={8}
   >
     <Text>{label}</Text>
   </Center>
@@ -50,6 +51,8 @@ const InstrumentFamilySelect = () => {
         justifyContent="space-around"
         paddingBottom={0}
         marginTop={8}
+        flexWrap="wrap"
+        flexShrink={1}
       >
         {selections.map((type) => {
           return (
@@ -58,7 +61,9 @@ const InstrumentFamilySelect = () => {
               flexDir={"column"}
               onClick={() => setSelectedFamily(type)}
             >
-              {icon[type]}
+              <Box width={250} height={250}>
+                {icon[type]}
+              </Box>
               <Tab isActive={selectedFamily === type} label={type} />
             </Center>
           );
