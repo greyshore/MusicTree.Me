@@ -9,6 +9,20 @@ import { createUserSession, getUserId } from "~/session.server";
 import { createUser, getProfileByEmail } from "~/models/user.server";
 import { validateEmail } from "~/utils";
 import * as React from "react";
+import {
+  FormControl,
+  FormLabel,
+  Input,
+  FormHelperText,
+  Button,
+  SimpleGrid,
+  Container,
+  Text,
+  Heading,
+  Box,
+  VStack,
+} from "@chakra-ui/react";
+import signupImg from "../images/signup.jpeg";
 
 export const meta: MetaFunction = () => {
   return {
@@ -97,76 +111,61 @@ export default function Join() {
     }
   }, [actionData]);
 
+  const Foo = ({ name, label }: { name: string; label: string }) => (
+    <FormControl>
+      <FormLabel htmlFor={name}>{label}</FormLabel>
+      <Input
+        id={name}
+        type={name}
+        required
+        aria-invalid={actionData?.errors?.email ? true : undefined}
+        aria-describedby="email-error"
+      />
+      <FormHelperText>We'll never share your email.</FormHelperText>
+    </FormControl>
+  );
   return (
-    <div className="flex min-h-full flex-col justify-center">
-      <div className="mx-auto w-full max-w-md px-8">
-        <Form className="space-y-6" method="post" noValidate>
-          <div>
-            <label className="text-sm font-medium" htmlFor="email">
-              <span className="block text-gray-700">Email Address</span>
-              {actionData?.errors?.email && (
-                <span className="block pt-1 text-red-700" id="email-error">
-                  {actionData?.errors?.email}
-                </span>
-              )}
-            </label>
-            <input
-              className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
-              type="email"
-              name="email"
-              id="email"
-              required
-              aria-invalid={actionData?.errors?.email ? true : undefined}
-              aria-describedby="email-error"
-              ref={emailRef}
-            />
-          </div>
-          <div>
-            <label className="text-sm font-medium" htmlFor="password">
-              <span className="block text-gray-700">Password</span>
-              <span className="block font-light text-gray-700">
-                Must have at least 6 characters.
-              </span>
-              {actionData?.errors?.password && (
-                <span className="pt-1 text-red-700" id="password-error">
-                  {actionData?.errors?.password}
-                </span>
-              )}
-            </label>
-            <input
-              id="password"
-              type="password"
-              name="password"
-              className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
-              autoComplete="new-password"
-              aria-invalid={actionData?.errors?.password ? true : undefined}
-              aria-describedby="password-error"
-              ref={passwordRef}
-            />
-          </div>
-          <button
-            className="w-full rounded bg-blue-500  py-2 px-4 text-white hover:bg-blue-600 focus:bg-blue-400"
-            type="submit"
+    <>
+      <Container ml={5}>
+        <Heading as="h1" fontSize="5xl">
+          Sign up to create your tree and explore.
+        </Heading>
+        <Box>
+          <Text as="span">Already have an account?</Text>{" "}
+          <Link
+            to={{
+              pathname: "/login",
+              search: searchParams.toString(),
+            }}
           >
-            Create Account
-          </button>
-          <input type="hidden" name="redirectTo" value={redirectTo} />
-          <div className="flex items-center justify-center">
-            <div className="text-center text-sm text-gray-500">
-              Already have an account?{" "}
-              <Link
-                className="text-blue-500 underline"
-                to={{
-                  pathname: "/login",
-                  search: searchParams.toString(),
-                }}
-              >
-                Log in
-              </Link>
-            </div>
-          </div>
-        </Form>
-      </div>
-    </div>
+            Sign in.
+          </Link>
+        </Box>
+      </Container>
+      <SimpleGrid
+        columns={{ sm: 1, md: 2 }}
+        background="white"
+        p={5}
+        borderRadius="lg"
+        borderWidth="1px"
+        padding={0}
+        marginTop={8}
+        flexWrap="wrap"
+        flexShrink={1}
+      >
+        <Container mt={20}>
+          <Form method="post" noValidate>
+            <VStack spacing={24}>
+              <Foo name="first-name" label="First name" />
+              <Foo name="last-name" label="Last name" />
+              <Button type="submit">Next</Button>
+            </VStack>
+          </Form>
+        </Container>
+        <Box>
+          <img src={signupImg} alt="Nice music illustration" />
+        </Box>
+      </SimpleGrid>
+    </>
   );
 }

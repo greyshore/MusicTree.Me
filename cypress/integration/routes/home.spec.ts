@@ -30,4 +30,10 @@ describe("Landing page", () => {
     // the selections shows a list of relevant instruments for selection
     // the continue btn should be shown
   });
+  it("sets query strings navigating to join page", () => {
+    // click on a selection
+    // the selection should have active styles
+    // the selections shows a list of relevant instruments for selection
+    // the continue btn should be shown
+  });
 });

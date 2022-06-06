@@ -7,9 +7,10 @@ import {
   GridItem,
   useMediaQuery,
 } from "@chakra-ui/react";
-import { Form, Link } from "@remix-run/react";
+import { Form } from "@remix-run/react";
 import { useEffect, useState } from "react";
 import { HiOutlineArrowRight } from "react-icons/hi";
+import { useNavigate } from "react-router-dom";
 import { INSTRUMENT_FAMILIES } from "~/models/instrument/client";
 import type { InstrumentFamily } from "~/models/instrument/server";
 
@@ -19,6 +20,7 @@ const InstrumentList = ({ family }: { family: InstrumentFamily | null }) => {
   const [checked, setChecked] = useState<string[]>([]);
   const [isSmallScreen] = useMediaQuery("(max-width: 767px)");
   const prevFamily = usePrevious(family);
+  const navigate = useNavigate();
 
   const handleChange = (e: {
     currentTarget: { name: string; checked: boolean };
@@ -39,7 +41,11 @@ const InstrumentList = ({ family }: { family: InstrumentFamily | null }) => {
   }, [checked, family, prevFamily]);
 
   const instrumentList = family && INSTRUMENT_FAMILIES[family];
-  const canGo = checked.length > 0;
+  const goToJoin = () =>
+    navigate({
+      pathname: "/join",
+      search: `?instrument=${checked}`,
+    });
   return (
     <>
       {family && (
@@ -84,8 +90,7 @@ const InstrumentList = ({ family }: { family: InstrumentFamily | null }) => {
           {Boolean(checked.length) && (
             <Center mt={8}>
               <Button
-                as={Link}
-                to="/join"
+                onClick={goToJoin}
                 colorScheme="green"
                 rightIcon={<HiOutlineArrowRight size={18} />}
               >

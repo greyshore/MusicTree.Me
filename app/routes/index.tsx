@@ -18,7 +18,7 @@ export default function Index() {
       <VStack spacing={8}>
         <Center>
           <Heading as="h1" fontSize="5xl">
-            Explore your musical heritage <br />
+            Explore your musical heritage. <br />
             Connect with other musicians.
           </Heading>
         </Center>
