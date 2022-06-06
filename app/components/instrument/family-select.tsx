@@ -1,10 +1,11 @@
-import { Box, Flex, Center, Text, SimpleGrid } from "@chakra-ui/react";
+import { Box, Center, Text, SimpleGrid } from "@chakra-ui/react";
 import { useState } from "react";
 import {
   WoodWindIcon,
   KeyboardIcon,
   BrassIcon,
   StringsIcon,
+  PercussionIcon,
 } from "~/components/icons";
 import InstrumentList from "~/components/instrument/list";
 import { INSTRUMENT_TYPES } from "~/models/instrument/client";
@@ -16,6 +17,7 @@ const icon = {
   [INSTRUMENT_TYPES.KEYBOARD]: <KeyboardIcon />,
   [INSTRUMENT_TYPES.BRASS]: <BrassIcon />,
   [INSTRUMENT_TYPES.STRINGS]: <StringsIcon />,
+  [INSTRUMENT_TYPES.PERCUSSION]: <PercussionIcon />,
 };
 // @todo: keyboard navigation (a11y)
 const Tab = ({ isActive, label }: { isActive: boolean; label: string }) => (
@@ -52,7 +54,7 @@ const InstrumentFamilySelect = () => {
         marginTop={8}
         flexWrap="wrap"
         flexShrink={1}
-        columns={{ sm: 1, md: 4 }}
+        columns={{ sm: 1, md: 5 }}
       >
         {selections.map((type) => {
           return (

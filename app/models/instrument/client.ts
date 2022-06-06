@@ -5,6 +5,7 @@ export const INSTRUMENT_TYPES = {
   KEYBOARD: "Keyboard" as const,
   BRASS: "Brass" as const,
   STRINGS: "Strings" as const,
+  PERCUSSION: "Percussion" as const,
 };
 
 export const INSTRUMENT_FAMILIES: InstrumentMap = {
