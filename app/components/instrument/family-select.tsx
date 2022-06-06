@@ -1,4 +1,4 @@
-import { Box, Center, Text, SimpleGrid } from "@chakra-ui/react";
+import { Box, Center, Text, SimpleGrid, useMediaQuery } from "@chakra-ui/react";
 import { useState } from "react";
 import {
   WoodWindIcon,
@@ -40,6 +40,7 @@ const InstrumentFamilySelect = () => {
   const [selectedFamily, setSelectedFamily] = useState<InstrumentFamily | null>(
     null
   );
+  const [isSmallScreen] = useMediaQuery("(max-width: 767px)");
 
   return (
     <SimpleGrid>
@@ -67,11 +68,16 @@ const InstrumentFamilySelect = () => {
                 {icon[type]}
               </Box>
               <Tab isActive={selectedFamily === type} label={type} />
+              {isSmallScreen &&
+                Boolean(selectedFamily) &&
+                type === selectedFamily && (
+                  <InstrumentList family={selectedFamily} />
+                )}
             </Center>
           );
         })}
       </SimpleGrid>
-      <InstrumentList family={selectedFamily} />
+      {!isSmallScreen && <InstrumentList family={selectedFamily} />}
     </SimpleGrid>
   );
 };

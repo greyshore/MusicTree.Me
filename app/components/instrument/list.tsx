@@ -5,6 +5,7 @@ import {
   Flex,
   SimpleGrid,
   GridItem,
+  useMediaQuery,
 } from "@chakra-ui/react";
 import { Form } from "@remix-run/react";
 import { useState } from "react";
@@ -16,6 +17,7 @@ import { rmv } from "~/utils";
 
 const InstrumentList = ({ family }: { family: InstrumentFamily | null }) => {
   const [checked, setChecked] = useState<string[]>([]);
+  const [isSmallScreen] = useMediaQuery("(max-width: 767px)");
 
   const handleChange = (e: {
     currentTarget: { name: string; checked: boolean };
@@ -33,7 +35,7 @@ const InstrumentList = ({ family }: { family: InstrumentFamily | null }) => {
   };
 
   const instrumentList = family && INSTRUMENT_FAMILIES[family];
-
+  console.log(checked);
   return (
     <>
       {family && (
@@ -46,7 +48,7 @@ const InstrumentList = ({ family }: { family: InstrumentFamily | null }) => {
             ml="px"
             background="white"
             borderBottomRadius="lg"
-            borderTop="1px solid green"
+            borderTop={isSmallScreen ? "none" : "1px solid green"}
             display="flex"
             paddingBottom={0}
             cursor="pointer"
