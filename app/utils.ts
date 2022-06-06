@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { useMatches } from "@remix-run/react";
 import type { User } from "./models/user.server";
 
@@ -39,9 +39,17 @@ export function validateEmail(email: unknown): email is string {
 }
 
 export function rmv(arr: any[], item: any): any[] | undefined {
-  const index = arr.indexOf(item);
-  if (index !== -1) {
-    arr.splice(index, 1);
-    return arr;
-  }
+  return arr.filter((element) => element != item);
+}
+
+export function usePrevious<T>(value: T): T {
+  // The ref object is a generic container whose current property is mutable ...
+  // ... and can hold any value, similar to an instance property on a class
+  const ref: any = useRef<T>();
+  // Store current value in ref
+  useEffect(() => {
+    ref.current = value;
+  }, [value]); // Only re-run if value changes
+  // Return previous value (happens before update in useEffect above)
+  return ref.current;
 }

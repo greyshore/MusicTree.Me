@@ -7,35 +7,39 @@ import {
   GridItem,
   useMediaQuery,
 } from "@chakra-ui/react";
-import { Form } from "@remix-run/react";
-import { useState } from "react";
+import { Form, Link } from "@remix-run/react";
+import { useEffect, useState } from "react";
 import { HiOutlineArrowRight } from "react-icons/hi";
 import { INSTRUMENT_FAMILIES } from "~/models/instrument/client";
 import type { InstrumentFamily } from "~/models/instrument/server";
 
-import { rmv } from "~/utils";
+import { rmv, usePrevious } from "~/utils";
 
 const InstrumentList = ({ family }: { family: InstrumentFamily | null }) => {
   const [checked, setChecked] = useState<string[]>([]);
   const [isSmallScreen] = useMediaQuery("(max-width: 767px)");
+  const prevFamily = usePrevious(family);
 
   const handleChange = (e: {
     currentTarget: { name: string; checked: boolean };
   }) => {
-    let selections;
     const myInstrument = e.currentTarget.name;
 
     if (e.currentTarget.checked) {
-      selections = [...checked, myInstrument];
-      setChecked(selections);
+      setChecked([...checked, myInstrument]);
     } else {
-      selections = rmv(checked, myInstrument);
-      if (selections) setChecked(selections);
+      setChecked(rmv(checked, myInstrument) as string[]);
     }
   };
 
+  useEffect(() => {
+    if (checked && family && family !== prevFamily) {
+      setChecked([]);
+    }
+  }, [checked, family, prevFamily]);
+
   const instrumentList = family && INSTRUMENT_FAMILIES[family];
-  console.log(checked);
+  const canGo = checked.length > 0;
   return (
     <>
       {family && (
@@ -61,28 +65,29 @@ const InstrumentList = ({ family }: { family: InstrumentFamily | null }) => {
               width="100%"
               columns={{ sm: 1, md: 3 }}
             >
-              {instrumentList?.map((intrument) => (
-                <GridItem key={intrument}>
+              {instrumentList?.map((instrument) => (
+                <GridItem key={instrument}>
                   <Checkbox
-                    checked={checked.includes(intrument)}
+                    checked={checked.includes(instrument)}
                     onChange={handleChange}
-                    name={intrument}
+                    name={instrument}
                     size="md"
                     colorScheme="green"
                     flexFlow="1"
                   >
-                    {intrument}
+                    {instrument}
                   </Checkbox>
                 </GridItem>
               ))}
             </SimpleGrid>
           </Flex>
-          {!!checked.length && (
+          {Boolean(checked.length) && (
             <Center mt={8}>
               <Button
+                as={Link}
+                to="/join"
                 colorScheme="green"
                 rightIcon={<HiOutlineArrowRight size={18} />}
-                onClick={() => console.log("go to next step")}
               >
                 Continue
               </Button>
