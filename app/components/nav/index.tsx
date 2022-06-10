@@ -5,9 +5,19 @@ import {
   Button,
   Box,
   Container,
+  useMediaQuery,
+  Drawer,
+  DrawerBody,
+  DrawerContent,
+  DrawerHeader,
+  DrawerOverlay,
+  Flex,
+  Spacer,
 } from "@chakra-ui/react";
 import { Link, NavLink, useLocation } from "@remix-run/react";
 import type { ReactNode } from "react";
+import Logo from "./logo";
+import NavMenu from "./menu";
 
 type Item = {
   position: number;
@@ -15,7 +25,7 @@ type Item = {
   span?: number;
   child: ReactNode;
 };
-// @todo define route `to` links as constant 
+// @todo define route `to` links as constant
 // @todo nav a11y
 const MTNavLink = ({
   linkTo,
@@ -58,12 +68,7 @@ const navItemList: Item[] = [
   {
     position: 1,
     notLink: true,
-    child: (
-      // @todo these styles should be elsewhere, i.e. logo?
-      <Link style={{ fontSize: "24px", fontWeight: "bold" }} to="/">
-        MusicTree.me
-      </Link>
-    ),
+    child: <Logo />,
   },
   {
     position: 4,
@@ -126,21 +131,31 @@ const NavItem = (item: Item) => {
     </GridItem>
   );
 };
-// @todo margins on flex container
-const Nav = () => (
-  <Container mt={5} as="nav" maxW="6xl" height={100}>
-    <Grid as="ul" templateColumns="repeat(12, 1fr)" gap={6}>
-      {navItemList.map((item, index) => (
-        <NavItem
-          key={`${item.position}-${index}`}
-          position={item.position}
-          notLink={item.notLink ?? undefined}
-          child={item.child}
-          span={item.span}
-        />
-      ))}
-    </Grid>
-  </Container>
-);
+
+const Nav = () => {
+  const [isSmallScreen] = useMediaQuery("(min-width: 767px)");
+
+  return (
+    <Container mt={5} as="nav" maxW="6xl" height={100}>
+      <>
+        {isSmallScreen ? (
+          <Grid as="ul" templateColumns="repeat(12, 1fr)" gap={6}>
+            {navItemList.map((item, index) => (
+              <NavItem
+                key={`${item.position}-${index}`}
+                position={item.position}
+                notLink={item.notLink ?? undefined}
+                child={item.child}
+                span={item.span}
+              />
+            ))}
+          </Grid>
+        ) : (
+          <NavMenu />
+        )}
+      </>
+    </Container>
+  );
+};
 
 export default Nav;
