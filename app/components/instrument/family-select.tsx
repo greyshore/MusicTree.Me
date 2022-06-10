@@ -29,6 +29,7 @@ const Tab = ({ isActive, label }: { isActive: boolean; label: string }) => (
     color={isActive ? "white" : "inherit"}
     borderTopLeftRadius={"10px"}
     borderTopRightRadius={"10px"}
+    borderBottom={!isActive ? "1px solid #E9E9EE" : "none"}
     mt={8}
     aria-expanded={isActive}
   >
@@ -51,7 +52,7 @@ const InstrumentFamilySelect = () => {
         borderBottom={selectedFamily ? "none" : undefined}
         borderBottomRadius={selectedFamily ? "none" : undefined}
         borderWidth="1px"
-        paddingBottom={0}
+        padding={0}
         marginTop={8}
         flexWrap="wrap"
         flexShrink={1}
