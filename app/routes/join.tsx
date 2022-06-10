@@ -125,23 +125,7 @@ export default function Join() {
     </FormControl>
   );
   return (
-    <>
-      <Container ml={5}>
-        <Heading as="h1" fontSize="5xl">
-          Sign up to create your tree and explore.
-        </Heading>
-        <Box>
-          <Text as="span">Already have an account?</Text>{" "}
-          <Link
-            to={{
-              pathname: "/login",
-              search: searchParams.toString(),
-            }}
-          >
-            Sign in.
-          </Link>
-        </Box>
-      </Container>
+    <Container as="main" maxW="6xl">
       <SimpleGrid
         columns={{ sm: 1, md: 2 }}
         background="white"
@@ -153,19 +137,35 @@ export default function Join() {
         flexWrap="wrap"
         flexShrink={1}
       >
-        <Container mt={20}>
-          <Form method="post" noValidate>
-            <VStack spacing={24}>
+        <div>
+          <Heading as="h1" fontSize="5xl">
+            Sign up to create your tree and explore.
+          </Heading>
+          <Text as="span">Already have an account?</Text>{" "}
+          <Link
+            to={{
+              pathname: "/login",
+              search: searchParams.toString(),
+            }}
+          >
+            Sign in.
+          </Link>
+          <Box as={Form} method="post" noValidate p="12" mt="6">
+            <VStack spacing="20">
               <Foo name="first-name" label="First name" />
               <Foo name="last-name" label="Last name" />
               <Button type="submit">Next</Button>
             </VStack>
-          </Form>
-        </Container>
+          </Box>
+        </div>
         <Box>
-          <img src={signupImg} alt="Nice music illustration" />
+          <img
+            src={signupImg}
+            style={{ width: "100%" }}
+            alt="Nice music illustration"
+          />
         </Box>
       </SimpleGrid>
-    </>
+    </Container>
   );
 }
