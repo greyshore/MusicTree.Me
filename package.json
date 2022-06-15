@@ -23,6 +23,7 @@
     "/server/build"
   ],
   "dependencies": {
+    "@chakra-ui/icons": "^2.0.2",
     "@chakra-ui/react": "^1.3.0",
     "@emotion/cache": "^11.7.1",
     "@emotion/react": "^11.9.0",

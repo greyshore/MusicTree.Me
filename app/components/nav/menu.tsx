@@ -1,41 +1,76 @@
+import { useState } from "react";
 import {
   Flex,
   Button,
   Box,
-  Center,
   Drawer,
   DrawerOverlay,
   DrawerContent,
   DrawerHeader,
   DrawerBody,
+  Spacer,
+  IconButton,
+  Stack,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { HamburgerIcon } from "@chakra-ui/icons";
+import { Link } from "@remix-run/react";
 import Logo from "./logo";
+import { navItemList } from "./index";
 
 const NavMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
   const toggleOpen = () => setIsOpen(!isOpen);
+  const menuItems = navItemList.slice(1, 4);
   return (
     <>
-      <Flex>
-        <Button colorScheme="blue" onClick={toggleOpen}>
-          Open
-        </Button>
-        <Box w="100%">
-          <Center>
-            <Logo />
-          </Center>
+      <Flex alignItems="center">
+        <Box>
+          <IconButton
+            aria-label="Open navigatin menu"
+            bg="transparent"
+            icon={<HamburgerIcon />}
+            onClick={toggleOpen}
+          />
+        </Box>
+        <Spacer />
+        <Box>
+          <Logo />
+        </Box>
+        <Spacer />
+        <Box>
+          <Button
+            role="button"
+            aria-label="Desktop Navigation"
+            as={Link}
+            to="/login"
+            variant="link"
+            colorScheme="black"
+          >
+            Log in
+          </Button>
         </Box>
       </Flex>
+
       {isOpen && (
-        <Drawer placement={"left"} onClose={toggleOpen} isOpen={isOpen}>
+        <Drawer
+          closeOnOverlayClick
+          placement="left"
+          onClose={toggleOpen}
+          isOpen={isOpen}
+        >
           <DrawerOverlay />
           <DrawerContent>
-            <DrawerHeader borderBottomWidth="1px">Basic Drawer</DrawerHeader>
+            <DrawerHeader borderBottomWidth="1px">
+              <Logo />
+            </DrawerHeader>
             <DrawerBody>
-              <p>Some contents...</p>
-              <p>Some contents...</p>
-              <p>Some contents...</p>
+              <Stack alignItems="self-start">
+                {menuItems.map((item, index) => (
+                  <p key={index} onClick={toggleOpen}>
+                    {item.child}
+                  </p>
+                ))}
+              </Stack>
             </DrawerBody>
           </DrawerContent>
         </Drawer>

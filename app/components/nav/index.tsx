@@ -6,13 +6,6 @@ import {
   Box,
   Container,
   useMediaQuery,
-  Drawer,
-  DrawerBody,
-  DrawerContent,
-  DrawerHeader,
-  DrawerOverlay,
-  Flex,
-  Spacer,
 } from "@chakra-ui/react";
 import { Link, NavLink, useLocation } from "@remix-run/react";
 import type { ReactNode } from "react";
@@ -34,6 +27,7 @@ const MTNavLink = ({
   linkTo: string;
   children: string;
 }) => {
+  const [isMedScreen] = useMediaQuery("(min-width: 767px)");
   const { pathname } = useLocation();
   const isActivePage = linkTo === pathname;
   const activeStyle = {
@@ -52,7 +46,7 @@ const MTNavLink = ({
           (current section)
         </Box>
       </NavLink>
-      {isActivePage && (
+      {isActivePage && isMedScreen && (
         <Box
           height={1.5}
           width={1.5}
@@ -64,7 +58,7 @@ const MTNavLink = ({
     </Center>
   );
 };
-const navItemList: Item[] = [
+export const navItemList: Item[] = [
   {
     position: 1,
     notLink: true,
@@ -133,12 +127,12 @@ const NavItem = (item: Item) => {
 };
 
 const Nav = () => {
-  const [isSmallScreen] = useMediaQuery("(min-width: 767px)");
+  const [isMedScreen] = useMediaQuery("(min-width: 767px)");
 
   return (
     <Container mt={5} as="nav" maxW="6xl" height={100}>
       <>
-        {isSmallScreen ? (
+        {isMedScreen ? (
           <Grid as="ul" templateColumns="repeat(12, 1fr)" gap={6}>
             {navItemList.map((item, index) => (
               <NavItem
