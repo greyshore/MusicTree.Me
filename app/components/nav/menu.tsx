@@ -54,7 +54,7 @@ const NavMenu = () => {
       {isOpen && (
         <Drawer
           closeOnOverlayClick
-          placement="left"
+          placement="top"
           onClose={toggleOpen}
           isOpen={isOpen}
         >
@@ -64,13 +64,16 @@ const NavMenu = () => {
               <Logo />
             </DrawerHeader>
             <DrawerBody>
-              <Stack alignItems="self-start">
-                {menuItems.map((item, index) => (
-                  <p key={index} onClick={toggleOpen}>
-                    {item.child}
-                  </p>
-                ))}
+              <Stack spacing="24px" alignItems="self-start">
+                {[...menuItems, navItemList[navItemList.length - 1]].map(
+                  (item, index) => (
+                    <p key={index} onClick={toggleOpen}>
+                      {item.child}
+                    </p>
+                  )
+                )}
               </Stack>
+              <Spacer />
             </DrawerBody>
           </DrawerContent>
         </Drawer>
