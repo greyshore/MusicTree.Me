@@ -160,7 +160,7 @@ export default function Join() {
         </div>
         <Box>
           <img
-            src={signupImg}
+            src="https://via.placeholder.com/150"
             style={{ width: "100%" }}
             alt="Nice music illustration"
           />

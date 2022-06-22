@@ -24,11 +24,11 @@ const Tab = ({ isActive, label }: { isActive: boolean; label: string }) => (
   <Center
     as="button"
     width="100%"
-    height={"40px"}
-    background={isActive ? "green" : "unset"}
+    height={"60px"}
+    background={isActive ? "#005122" : "unset"}
     color={isActive ? "white" : "inherit"}
-    borderTopLeftRadius={"10px"}
-    borderTopRightRadius={"10px"}
+    borderTopLeftRadius={"32px"}
+    borderTopRightRadius={"32px"}
     borderBottom={!isActive ? "1px solid #E9E9EE" : "none"}
     mt={8}
     aria-expanded={isActive}
@@ -46,6 +46,7 @@ const InstrumentFamilySelect = () => {
   return (
     <SimpleGrid>
       <SimpleGrid
+        className="foo"
         p={5}
         background="white"
         borderRadius="lg"
@@ -53,6 +54,8 @@ const InstrumentFamilySelect = () => {
         borderBottomRadius={selectedFamily ? "none" : undefined}
         borderWidth="1px"
         padding={0}
+        pt={"32px"}
+        px={"10px"}
         marginTop={8}
         flexWrap="wrap"
         flexShrink={1}

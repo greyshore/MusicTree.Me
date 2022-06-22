@@ -90,8 +90,10 @@ const InstrumentList = ({ family }: { family: InstrumentFamily | null }) => {
           {Boolean(checked.length) && (
             <Center mt={8}>
               <Button
+                borderRadius={"35.5px"}
                 onClick={goToJoin}
-                colorScheme="green"
+                background="#0D823C"
+                color="white"
                 rightIcon={<HiOutlineArrowRight size={18} />}
               >
                 Continue
