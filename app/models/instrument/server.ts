@@ -11,6 +11,7 @@ export type Instrument =
   // Keyboards
   | "Piano"
   // Brass
+  | "French Horn"
   | "Trombone"
   | "Trumpet"
   | "Tuba"

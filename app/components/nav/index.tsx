@@ -71,7 +71,7 @@ export const navItemList: Item[] = [
   {
     position: 5,
     span: 7,
-    child: <MTNavLink linkTo="/explore">Explore Trees</MTNavLink>,
+    child: <MTNavLink linkTo="/explore">Explore</MTNavLink>,
   },
   {
     position: 7,
