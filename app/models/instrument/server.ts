@@ -1,27 +1,37 @@
 export type Instrument =
   // Woodwinds
   | "Bassoon"
-  | "Clarinet"
   | "Contrabassoon"
   | "English Horn"
-  | "Flute"
   | "Oboe"
+  | "Clarinet"
+  | "Bass Clarinet"
+  | "Flute"
   | "Piccolo"
-  | "Saxophone"
+  | "Alto Saxophone"
+  | "Baritone Saxophone"
+  | "Soprano Saxophone"
+  | "Tenor Saxophone"
   // Keyboards
+  | "Harpsichord" 
+  | "Organ"
   | "Piano"
   // Brass
+  | "Baritone/Euphonium" 
   | "French Horn"
   | "Trombone"
-  | "Trumpet"
-  | "Tuba"
+  | "Bass Trombone"
+  | "Trumpet/Coronet"
+  | "Tuba/Sousaphone"
   // Strings
+  | "Bass"
   | "Cello"
+  | "Harp"
   | "Viola"
   | "Violin"
   // Percussion
   | "Drum"
-  | "Tympani"
+  | "Timpani"
   | "Xylophone"
   | "Tubed Percussion";
 

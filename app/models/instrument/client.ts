@@ -11,16 +11,20 @@ export const INSTRUMENT_TYPES = {
 export const INSTRUMENT_FAMILIES: InstrumentMap = {
   Woodwinds: [
     "Bassoon",
-    "Clarinet",
     "Contrabassoon",
     "English Horn",
-    "Flute",
     "Oboe",
+    "Clarinet",
+    "Bass Clarinet",
+    "Flute",
     "Piccolo",
-    "Saxophone",
+    "Alto Saxophone",
+    "Baritone Saxophone",
+    "Soprano Saxophone",
+    "Tenor Saxophone"
   ],
-  Keyboard: ["Piano"],
-  Brass: ["French Horn", "Trombone", "Trumpet", "Tuba"],
-  Strings: ["Cello", "Viola", "Violin"],
-  Percussion: ["Drum", "Tympani", "Xylophone", "Tubed Percussion"],
+  Keyboard: ["Harpsichord", "Organ", "Piano"],
+  Brass: ["Baritone/Euphonium", "French Horn", "Trombone", "Bass Trombone", "Trumpet/Coronet", "Tuba/Sousaphone"],
+  Strings: ["Bass", "Cello", "Harp", "Viola", "Violin"],
+  Percussion: ["Drum", "Timpani", "Xylophone", "Tubed Percussion"],
 };
