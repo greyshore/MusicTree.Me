@@ -1,6 +1,14 @@
 import * as React from "react";
 
-import { FormControl, FormLabel, Input, Button, Box } from "@chakra-ui/react";
+import {
+  FormControl,
+  FormLabel,
+  Input,
+  Button,
+  Box,
+  InputGroup,
+  InputRightElement,
+} from "@chakra-ui/react";
 
 const Typeahead = () => {
   return (
@@ -9,7 +17,7 @@ const Typeahead = () => {
         <FormLabel htmlFor="foo" ml={1} color="#777E8B">
           Add Your Instruments
         </FormLabel>
-        <Box display={"flex"}>
+        <InputGroup>
           <Input
             id="foo"
             type="foo"
@@ -20,20 +28,20 @@ const Typeahead = () => {
               // @todo extract to input styles
               background: "white",
               borderRadius: "50px",
-              position: "absolute",
               borderColor: "#9DA7B1",
             }}
           />
-          <Button
-            borderRadius="full"
-            background="green"
-            color="white"
-            left="458px"
-            width="100px"
-          >
-            Add
-          </Button>
-        </Box>
+          <InputRightElement width="100px">
+            <Button
+              width="100px"
+              borderRadius="full"
+              background="green"
+              color="white"
+            >
+              Add
+            </Button>
+          </InputRightElement>
+        </InputGroup>
       </FormControl>
     </>
   );

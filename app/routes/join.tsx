@@ -21,8 +21,16 @@ import {
   Heading,
   Box,
   VStack,
+  HStack,
+  Divider,
+  Stack,
+  Flex,
+  Grid,
+  Center,
 } from "@chakra-ui/react";
 import signupImg from "../images/signup.jpeg";
+import Typeahead from "~/components/common/input/typeahead";
+import { FacebookIcon, GoogleIcon } from "~/components/icons";
 
 export const meta: MetaFunction = () => {
   return {
@@ -113,22 +121,29 @@ export default function Join() {
 
   const Foo = ({ name, label }: { name: string; label: string }) => (
     <FormControl>
-      <FormLabel htmlFor={name}>{label}</FormLabel>
+      <FormLabel htmlFor={name} ml={1} color="#777E8B">
+        {label}
+      </FormLabel>
       <Input
         id={name}
         type={name}
         required
         aria-invalid={actionData?.errors?.email ? true : undefined}
         aria-describedby="email-error"
+        sx={{
+          // @todo extract to input styles
+          background: "white",
+          borderRadius: "50px",
+          borderColor: "#9DA7B1",
+        }}
       />
-      <FormHelperText>We'll never share your email.</FormHelperText>
+      {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
     </FormControl>
   );
   return (
     <Container as="main" maxW="6xl">
       <SimpleGrid
         columns={{ sm: 1, md: 2 }}
-        background="white"
         p={5}
         borderRadius="lg"
         borderWidth="1px"
@@ -141,7 +156,7 @@ export default function Join() {
           <Heading as="h1" fontSize="5xl">
             Sign up to create your tree and explore.
           </Heading>
-          <Text as="span">Already have an account?</Text>{" "}
+          <Text as="span">Already have an accoung?</Text>{" "}
           <Link
             to={{
               pathname: "/login",
@@ -150,21 +165,71 @@ export default function Join() {
           >
             Sign in.
           </Link>
-          <Box as={Form} method="post" noValidate p="12" mt="6">
-            <VStack spacing="20">
-              <Foo name="first-name" label="First name" />
-              <Foo name="last-name" label="Last name" />
-              <Button type="submit">Next</Button>
+          <Box as={Form} method="post" noValidate mt="6">
+            <VStack spacing={8}>
+              <HStack width="100%" spacing={5}>
+                <Foo name="first-name" label="First Name" />
+                <Foo name="last-name" label="Last Name" />
+              </HStack>
+              <Typeahead />
+            </VStack>
+
+            <Grid templateColumns="1fr auto 1fr" gap={0} my={8}>
+              <hr
+                style={{
+                  color: "gray",
+                  borderStyle: "inset",
+                  borderWidth: "1px",
+                  margin: "0.5em auto",
+                  backgroundColor: "black",
+                  marginLeft: 0,
+                  marginRight: 0,
+                }}
+              />
+              <Text ml={4} mr={4} pb={1}>
+                Continue With
+              </Text>
+              <hr
+                style={{
+                  color: "gray",
+                  borderStyle: "inset",
+                  borderWidth: "1px",
+                  margin: "0.5em auto",
+                  backgroundColor: "black",
+                  marginLeft: 0,
+                  marginRight: 0,
+                }}
+              />
+            </Grid>
+            {/* start login btns */}
+            <VStack spacing={8}>
+              <HStack width="100%" spacing={5} justifyContent="space-between">
+                <Button
+                  borderRadius="full"
+                  background="white"
+                  leftIcon={<GoogleIcon />}
+                >
+                  Continue with Google
+                </Button>
+                <Button
+                  borderRadius="full"
+                  background="white"
+                  leftIcon={<FacebookIcon />}
+                >
+                  Continue with Facebook
+                </Button>
+              </HStack>
+              <Foo name="email" label="Email" />
             </VStack>
           </Box>
         </div>
-        <Box>
+        {/* <Box>
           <img
             src="https://via.placeholder.com/150"
             style={{ width: "100%" }}
             alt="Nice music illustration"
           />
-        </Box>
+        </Box> */}
       </SimpleGrid>
     </Container>
   );
