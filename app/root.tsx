@@ -13,7 +13,7 @@ import type { MetaFunction, LinksFunction } from "@remix-run/node";
 import stylesUrl from "~/styles/global.css";
 
 import { ServerStyleContext, ClientStyleContext } from "./context";
-import Nav from "./components/nav";
+import Nav from "./components/common/nav";
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
