@@ -13,7 +13,6 @@ import {
   FormControl,
   FormLabel,
   Input,
-  FormHelperText,
   Button,
   SimpleGrid,
   Container,
@@ -22,13 +21,8 @@ import {
   Box,
   VStack,
   HStack,
-  Divider,
-  Stack,
-  Flex,
   Grid,
-  Center,
 } from "@chakra-ui/react";
-import signupImg from "../images/signup.jpeg";
 import Typeahead from "~/components/common/input/typeahead";
 import { FacebookIcon, GoogleIcon } from "~/components/icons";
 
@@ -104,7 +98,6 @@ export const action: ActionFunction = async ({ request }) => {
 export default function Join() {
   const [searchParams] = useSearchParams();
   const redirectTo = searchParams.get("redirectTo") ?? undefined;
-
   const actionData = useActionData() as ActionData;
   const emailRef = React.useRef<HTMLInputElement>(null);
   const passwordRef = React.useRef<HTMLInputElement>(null);
