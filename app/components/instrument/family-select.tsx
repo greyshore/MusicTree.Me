@@ -46,8 +46,6 @@ const InstrumentFamilySelect = () => {
   return (
     <SimpleGrid>
       <SimpleGrid
-        className="foo"
-        p={5}
         background="white"
         borderRadius="lg"
         borderBottom={selectedFamily ? "none" : undefined}
@@ -55,11 +53,13 @@ const InstrumentFamilySelect = () => {
         borderWidth="1px"
         padding={0}
         pt={"32px"}
-        px={"10px"}
+        pl={"10px"}
+        pr={"36px"}
         marginTop={8}
         flexWrap="wrap"
         flexShrink={1}
         columns={{ sm: 1, md: 5 }}
+        gridGap={8}
       >
         {selections.map((type) => {
           return (
