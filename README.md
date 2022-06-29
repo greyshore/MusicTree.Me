@@ -10,15 +10,15 @@ A proof-of-concept application to collect data and display a musical heritage 'f
 
 The original data collected by Dr. Enegren was stored in a relational database. For this open source project the data has been migrated to a [Neo4j graph database](https://neo4j.com/). The production application data is hosted on an instance of [Neo4j AuraDB](https://neo4j.com/cloud/platform/aura-graph-database/) along with a shared AuraDB development environment. Local development is configured for a free [Neo4j Desktop](https://neo4j.com/product/developer-tools/) environment.
 
-The application that allows for collection of information, navigating the graph, and establishing musical relationships, is deployed to and hosted on [Heroku](https://www.heroku.com/). The application code is based on [Node.js](https://nodejs.org/), [TypeScript](https://www.typescriptlang.org/), and [React](https://reactjs.org/), and leverages the [Neo4j Javascript driver](https://neo4j.com/developer/javascript/) for data access.
+The application that allows for collection of information, navigating the graph, and establishing musical relationships, is deployed to and hosted on [Netlify](https://www.netlify.com/). The application code is based on [Remix](https://remix.run/), [TypeScript](https://www.typescriptlang.org/), and [React](https://reactjs.org/), and leverages the [Neo4j Javascript driver](https://neo4j.com/developer/javascript/) for data access.
 
 ### Technical Resources - For More Information
 
 If you are interested in contributing to this project, thank you! If you'd like to learn more about the technologies behind the MusicTree.Me application, the following tutorials and guides can be helpful:
 
 - [Building Neo4j Applications with Node.js](https://neo4j.com/developer/javascript/): This is a great introduction to Neo4j, Node.js, and a test driven development approach. It does not incorporate TypeScript, but the link below brings it all together.
-- [Building a Web Application with Neo4j and NestJS](https://medium.com/neo4j/building-a-modern-web-application-with-neo4j-and-nestjs-b51ffd8268fa): This article and series is the basis for the technical approach to the MusicTree.Me application.
-- [NestJS](https://nestjs.com/): for more details on the NestJS framework for Node applications.
+- [Getting Started with Remix](https://remix.run/docs): More details and introduction to Remix.
+- [Kpop Stack Netlify Remix Template](https://github.com/netlify-templates/kpop-stack): This repo provided a basis for the technical approach to the MusicTree.Me application.
 - Graph/Tree data visialization
 
   - [Neo4j graph visualization using D3.js](https://github.com/eisman/neo4jd3)  
@@ -39,7 +39,7 @@ Future versions of MusicTree.Me can extend this model to include additional node
 
 ### Prerequisites
 
-- [Node](https://nodejs.org/) v14.18.0 and npm v6.14.15 or above. Using a Node version manager such as [nvm or nodist](https://npm.github.io/installation-setup-docs/installing/using-a-node-version-manager.html) is recommended.
+- [Node](https://nodejs.org/) v18.2.0 and npm v8.9.0 or above. Using a Node version manager such as [nvm or nodist](https://npm.github.io/installation-setup-docs/installing/using-a-node-version-manager.html) is recommended.
 - [Neo4j Desktop](https://neo4j.com/download/) with Neo4j version 4.4.6 or above.
 
 ### Clone, build and run locally
