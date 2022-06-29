@@ -8,7 +8,6 @@ import {
   Box,
   InputGroup,
   InputRightElement,
-  HStack,
   Tag,
   TagLabel,
   TagRightIcon,
@@ -25,21 +24,20 @@ const Typeahead = () => {
     }
     return [];
   };
-  const [instrumentSelections, setInstrumentSelections] =
-    React.useState(myInstruments);
+  const [instrumentSelections, setInstrumentSelections] = React.useState(
+    myInstruments()
+  );
+
   return (
     <>
       <FormControl>
-        <FormLabel htmlFor="foo" ml={1} color="#777E8B">
+        <FormLabel ml={1} color="#777E8B">
           Add Your Instruments
         </FormLabel>
         <InputGroup>
+          ]
           <Input
-            id="foo"
-            type="foo"
-            required
-            //   aria-invalid={actionData?.errors?.email ? true : undefined}
-            //   aria-describedby="email-error"
+            type="input"
             sx={{
               // @todo extract to input styles
               background: "white",
@@ -68,9 +66,9 @@ const Typeahead = () => {
               background="white"
               color="black"
               borderRadius="full"
+              justifyContent="space-between"
               minW={40}
               maxW={80}
-              justifyContent="space-between"
             >
               <TagLabel>{selection}</TagLabel>
               <TagRightIcon as={CloseIcon} />

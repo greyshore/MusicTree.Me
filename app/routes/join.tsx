@@ -4,7 +4,13 @@ import type {
   MetaFunction,
 } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
-import { Form, Link, useActionData, useSearchParams } from "@remix-run/react";
+import {
+  Form,
+  Link,
+  useActionData,
+  useSearchParams,
+  useSubmit,
+} from "@remix-run/react";
 import { createUserSession, getUserId } from "~/session.server";
 import { createUser, getProfileByEmail } from "~/models/user.server";
 import { validateEmail } from "~/utils";
@@ -47,92 +53,86 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
-  const email = formData.get("email");
-  const password = formData.get("password");
-  const redirectTo = formData.get("redirectTo");
+  // const email = formData.get("email");
+  // const firstName = formData.get("first-name");
+  // const lastName = formData.get("last-name");
+  // const redirectTo = formData.get("redirectTo");
 
   // Ensure the email is valid
-  if (!validateEmail(email)) {
-    return json<ActionData>(
-      { errors: { email: "Email is invalid." } },
-      { status: 400 }
-    );
-  }
-
-  // What if a user sends us a password through other means than our form?
-  if (typeof password !== "string") {
-    return json(
-      { errors: { password: "Valid password is required." } },
-      { status: 400 }
-    );
-  }
-
-  // Enforce minimum password length
-  if (password.length < 6) {
-    return json<ActionData>(
-      { errors: { password: "Password is too short." } },
-      { status: 400 }
-    );
-  }
+  // if (!validateEmail(email)) {
+  //   return json<ActionData>(
+  //     { errors: { email: "Email is invalid." } },
+  //     { status: 400 }
+  //   );
+  // }
 
   // A user could potentially already exist within our system
   // and we should communicate that well
-  const existingUser = await getProfileByEmail(email);
-  if (existingUser) {
-    return json<ActionData>(
-      { errors: { email: "A user already exists with this email." } },
-      { status: 400 }
-    );
-  }
+  // const existingUser = await getProfileByEmail(email);
+  // if (existingUser) {
+  //   return json<ActionData>(
+  //     { errors: { email: "A user already exists with this email." } },
+  //     { status: 400 }
+  //   );
+  // }
 
-  const user = await createUser(email, password);
+  // const user = await createUser(email, password);
 
-  return createUserSession({
-    request,
-    userId: user.id,
-    remember: false,
-    redirectTo: typeof redirectTo === "string" ? redirectTo : "/",
-  });
+  // return createUserSession({
+  //   request,
+  //   userId: user.id,
+  //   remember: false,
+  //   redirectTo: typeof redirectTo === "string" ? redirectTo : "/",
+  // });
 };
+const Foo = ({ name, label }: { name: string; label: string }) => (
+  <FormControl>
+    <FormLabel htmlFor={name} ml={1} color="#777E8B">
+      {label}
+    </FormLabel>
+    <Input
+      name={name}
+      id={name}
+      type="input`"
+      required
+      // aria-invalid={actionData?.errors[name.toString()] ? true : undefined}
+      aria-describedby="email-error"
+      sx={{
+        // @todo extract to input styles
+        background: "white",
+        borderRadius: "50px",
+        borderColor: "#9DA7B1",
+      }}
+    />
+    {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
+  </FormControl>
+);
 
 export default function Join() {
+  const submit = useSubmit();
   const [searchParams] = useSearchParams();
   const redirectTo = searchParams.get("redirectTo") ?? undefined;
   const actionData = useActionData() as ActionData;
   const emailRef = React.useRef<HTMLInputElement>(null);
-  const passwordRef = React.useRef<HTMLInputElement>(null);
 
   React.useEffect(() => {
     if (actionData?.errors?.email) {
       emailRef?.current?.focus();
     }
-
-    if (actionData?.errors?.password) {
-      passwordRef?.current?.focus();
-    }
   }, [actionData]);
 
-  const Foo = ({ name, label }: { name: string; label: string }) => (
-    <FormControl>
-      <FormLabel htmlFor={name} ml={1} color="#777E8B">
-        {label}
-      </FormLabel>
-      <Input
-        id={name}
-        type={name}
-        required
-        aria-invalid={actionData?.errors?.email ? true : undefined}
-        aria-describedby="email-error"
-        sx={{
-          // @todo extract to input styles
-          background: "white",
-          borderRadius: "50px",
-          borderColor: "#9DA7B1",
-        }}
-      />
-      {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
-    </FormControl>
-  );
+  const handleSubmit = (event: SubmitEvent) => {
+    event.preventDefault();
+    const myInstruments = () => {
+      for (const value of searchParams.values()) {
+        return value;
+      }
+      return [];
+    };
+    const formData = new FormData(event.target as HTMLFormElement);
+    formData.append("my-instruments", myInstruments().toString());
+    // submit(formData, { method: "post", action: "/explore" });
+  };
   return (
     <Container as="main" maxW="6xl">
       <SimpleGrid
@@ -158,7 +158,12 @@ export default function Join() {
           >
             Sign in.
           </Link>
-          <Box as={Form} method="post" noValidate mt="6">
+          <Box
+            as={Form}
+            onSubmit={handleSubmit}
+            encType="multipart/form-data"
+            mt="6"
+          >
             <VStack spacing={8}>
               <HStack width="100%" spacing={5}>
                 <Foo name="first-name" label="First Name" />
@@ -213,16 +218,10 @@ export default function Join() {
                 </Button>
               </HStack>
               <Foo name="email" label="Email" />
+              <button type="submit">Save</button>
             </VStack>
           </Box>
         </div>
-        {/* <Box>
-          <img
-            src="https://via.placeholder.com/150"
-            style={{ width: "100%" }}
-            alt="Nice music illustration"
-          />
-        </Box> */}
       </SimpleGrid>
     </Container>
   );
