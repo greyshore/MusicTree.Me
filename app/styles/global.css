@@ -14,3 +14,6 @@ li {
   white-space: nowrap;
   width: 1px;
 }
+main {
+  height: 100vh
+}

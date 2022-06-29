@@ -68,6 +68,9 @@ const Typeahead = () => {
               background="white"
               color="black"
               borderRadius="full"
+              minW={40}
+              maxW={80}
+              justifyContent="space-between"
             >
               <TagLabel>{selection}</TagLabel>
               <TagRightIcon as={CloseIcon} />
