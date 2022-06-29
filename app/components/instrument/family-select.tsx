@@ -66,6 +66,7 @@ const InstrumentFamilySelect = () => {
             <Center
               key={type}
               flexDir={"column"}
+              _hover={{ cursor: "pointer" }}
               onClick={() => setSelectedFamily(type)}
             >
               <Box width={48} height={250}>
