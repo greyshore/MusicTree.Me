@@ -1,19 +1,12 @@
 import * as React from "react";
-import type { Instrument } from "~/models/instrument/server";
 import {
   FormControl,
   FormLabel,
   Input,
   Button,
-  Box,
   InputGroup,
   InputRightElement,
-  Tag,
-  TagLabel,
-  TagRightIcon,
-  Flex,
 } from "@chakra-ui/react";
-import { CloseIcon } from "@chakra-ui/icons";
 import { useSearchParams } from "react-router-dom";
 
 const Typeahead = () => {
@@ -24,10 +17,6 @@ const Typeahead = () => {
     }
     return [];
   };
-  const [instrumentSelections, setInstrumentSelections] = React.useState(
-    myInstruments()
-  );
-
   return (
     <>
       <FormControl>
@@ -57,25 +46,6 @@ const Typeahead = () => {
           </InputRightElement>
         </InputGroup>
       </FormControl>
-      <Flex wrap="wrap" justifyContent="left" width="100%">
-        {instrumentSelections?.map((selection, idx) => (
-          <Box key={idx} mt={2} mr={2}>
-            <Tag
-              size="lg"
-              variant="outline"
-              background="white"
-              color="black"
-              borderRadius="full"
-              justifyContent="space-between"
-              minW={40}
-              maxW={80}
-            >
-              <TagLabel>{selection}</TagLabel>
-              <TagRightIcon as={CloseIcon} />
-            </Tag>
-          </Box>
-        ))}
-      </Flex>
     </>
   );
 };

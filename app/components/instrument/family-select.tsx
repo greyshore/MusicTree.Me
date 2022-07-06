@@ -69,7 +69,7 @@ const InstrumentFamilySelect = () => {
               _hover={{ cursor: "pointer" }}
               onClick={() => setSelectedFamily(type)}
             >
-              <Box width={48} height={250}>
+              <Box width={48} height={180}>
                 {icon[type]}
               </Box>
               <Tab isActive={selectedFamily === type} label={type} />

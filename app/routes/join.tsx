@@ -27,10 +27,12 @@ import {
   Box,
   VStack,
   HStack,
-  Grid,
+  Stack,
+  Divider,
 } from "@chakra-ui/react";
-import Typeahead from "~/components/common/input/typeahead";
+import InstrumentBadge from "~/components/instrument/badge";
 import { FacebookIcon, GoogleIcon } from "~/components/icons";
+import type { Instrument } from "~/models/instrument/server";
 
 export const meta: MetaFunction = () => {
   return {
@@ -87,7 +89,7 @@ export const action: ActionFunction = async ({ request }) => {
 };
 const Foo = ({ name, label }: { name: string; label: string }) => (
   <FormControl>
-    <FormLabel htmlFor={name} ml={1} color="#777E8B">
+    <FormLabel htmlFor={name} ml={1} color="grey">
       {label}
     </FormLabel>
     <Input
@@ -97,11 +99,10 @@ const Foo = ({ name, label }: { name: string; label: string }) => (
       required
       // aria-invalid={actionData?.errors[name.toString()] ? true : undefined}
       aria-describedby="email-error"
+      borderRadius="full"
+      variant="outline"
       sx={{
-        // @todo extract to input styles
         background: "white",
-        borderRadius: "50px",
-        borderColor: "#9DA7B1",
       }}
     />
     {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
@@ -110,10 +111,18 @@ const Foo = ({ name, label }: { name: string; label: string }) => (
 
 export default function Join() {
   const submit = useSubmit();
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const redirectTo = searchParams.get("redirectTo") ?? undefined;
   const actionData = useActionData() as ActionData;
   const emailRef = React.useRef<HTMLInputElement>(null);
+
+  const myInstruments = React.useCallback(() => {
+    for (const value of searchParams.values()) {
+      return value.split(",");
+    }
+    return [];
+  }, [searchParams]);
+  console.log(myInstruments());
 
   React.useEffect(() => {
     if (actionData?.errors?.email) {
@@ -121,7 +130,7 @@ export default function Join() {
     }
   }, [actionData]);
 
-  const handleSubmit = (event: SubmitEvent) => {
+  const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     const myInstruments = () => {
       for (const value of searchParams.values()) {
@@ -133,13 +142,19 @@ export default function Join() {
     formData.append("my-instruments", myInstruments().toString());
     // submit(formData, { method: "post", action: "/explore" });
   };
+  const handleRemoveMyInstrument = React.useCallback(
+    (...args: Instrument[]) => {
+      const [instrument] = args;
+      // @todo rmv instrument from params
+      console.log(instrument);
+    },
+    []
+  );
   return (
     <Container as="main" maxW="6xl">
       <SimpleGrid
         columns={{ sm: 1, md: 2 }}
         p={5}
-        borderRadius="lg"
-        borderWidth="1px"
         padding={0}
         marginTop={8}
         flexWrap="wrap"
@@ -149,8 +164,11 @@ export default function Join() {
           <Heading as="h1" fontSize="5xl">
             Sign up to create your tree and explore.
           </Heading>
-          <Text as="span">Already have an accoung?</Text>{" "}
+          <Text color="grey" as="span">
+            Already have an accoung?
+          </Text>{" "}
           <Link
+            style={{ color: "#2B6CB0" }}
             to={{
               pathname: "/login",
               search: searchParams.toString(),
@@ -169,56 +187,51 @@ export default function Join() {
                 <Foo name="first-name" label="First Name" />
                 <Foo name="last-name" label="Last Name" />
               </HStack>
-              <Typeahead />
+              <Foo name="email" label="Email" />
+              <InstrumentBadge
+                selections={myInstruments() as Instrument[]}
+                onClick={handleRemoveMyInstrument}
+              />
+              <Box w="100%">
+                <Button
+                  colorScheme="green"
+                  borderRadius="full"
+                  width="100%"
+                  my={10}
+                >
+                  Sign up
+                </Button>
+              </Box>
             </VStack>
-
-            <Grid templateColumns="1fr auto 1fr" gap={0} my={8}>
-              <hr
-                style={{
-                  color: "gray",
-                  borderStyle: "inset",
-                  borderWidth: "1px",
-                  margin: "0.5em auto",
-                  backgroundColor: "black",
-                  marginLeft: 0,
-                  marginRight: 0,
-                }}
-              />
-              <Text ml={4} mr={4} pb={1}>
-                Continue With
+            <Stack direction="row" p={4} alignItems="center">
+              <Divider orientation="horizontal" />
+              <Text pl={8} pr={8}>
+                or
               </Text>
-              <hr
-                style={{
-                  color: "gray",
-                  borderStyle: "inset",
-                  borderWidth: "1px",
-                  margin: "0.5em auto",
-                  backgroundColor: "black",
-                  marginLeft: 0,
-                  marginRight: 0,
-                }}
-              />
-            </Grid>
+              <Divider orientation="horizontal" />
+            </Stack>
             {/* start login btns */}
-            <VStack spacing={8}>
+            <VStack spacing={8} mt={8}>
               <HStack width="100%" spacing={5} justifyContent="space-between">
                 <Button
                   borderRadius="full"
                   background="white"
+                  variant="outline"
                   leftIcon={<GoogleIcon />}
+                  w="50%"
                 >
                   Continue with Google
                 </Button>
                 <Button
                   borderRadius="full"
                   background="white"
+                  variant="outline"
                   leftIcon={<FacebookIcon />}
+                  w="50%"
                 >
                   Continue with Facebook
                 </Button>
               </HStack>
-              <Foo name="email" label="Email" />
-              <button type="submit">Save</button>
             </VStack>
           </Box>
         </div>
