@@ -8,6 +8,7 @@ import {
   Form,
   Link,
   useActionData,
+  useNavigate,
   useSearchParams,
   useSubmit,
 } from "@remix-run/react";
@@ -55,36 +56,36 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
-  // const email = formData.get("email");
-  // const firstName = formData.get("first-name");
-  // const lastName = formData.get("last-name");
-  // const redirectTo = formData.get("redirectTo");
+  const email = formData.get("email");
+  const firstName = formData.get("first-name");
+  const lastName = formData.get("last-name");
+  const redirectTo = formData.get("redirectTo");
 
   // Ensure the email is valid
-  // if (!validateEmail(email)) {
-  //   return json<ActionData>(
-  //     { errors: { email: "Email is invalid." } },
-  //     { status: 400 }
-  //   );
-  // }
+  if (!validateEmail(email)) {
+    return json<ActionData>(
+      { errors: { email: "Email is invalid." } },
+      { status: 400 }
+    );
+  }
 
   // A user could potentially already exist within our system
   // and we should communicate that well
-  // const existingUser = await getProfileByEmail(email);
-  // if (existingUser) {
-  //   return json<ActionData>(
-  //     { errors: { email: "A user already exists with this email." } },
-  //     { status: 400 }
-  //   );
-  // }
+  const existingUser = await getProfileByEmail(email);
+  if (existingUser) {
+    return json<ActionData>(
+      { errors: { email: "A user already exists with this email." } },
+      { status: 400 }
+    );
+  }
+  const user = await createUser(email, "password");
 
-  // const user = await createUser(email, password);
-
+  return redirectTo;
   // return createUserSession({
   //   request,
   //   userId: user.id,
   //   remember: false,
-  //   redirectTo: typeof redirectTo === "string" ? redirectTo : "/",
+  //   redirectTo: "/explore",
   // });
 };
 const Foo = ({ name, label }: { name: string; label: string }) => (
@@ -112,7 +113,8 @@ const Foo = ({ name, label }: { name: string; label: string }) => (
 export default function Join() {
   const submit = useSubmit();
   const [searchParams, setSearchParams] = useSearchParams();
-  const redirectTo = searchParams.get("redirectTo") ?? undefined;
+  const navigate = useNavigate();
+  const redirectTo = searchParams.get("redirectTo") ?? "/explore";
   const actionData = useActionData() as ActionData;
   const emailRef = React.useRef<HTMLInputElement>(null);
 
@@ -130,7 +132,7 @@ export default function Join() {
     }
   }, [actionData]);
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     const myInstruments = () => {
       for (const value of searchParams.values()) {
@@ -140,7 +142,9 @@ export default function Join() {
     };
     const formData = new FormData(event.target as HTMLFormElement);
     formData.append("my-instruments", myInstruments().toString());
-    // submit(formData, { method: "post", action: "/explore" });
+    // @todo
+    // await submit(formData, { method: "post", action: "/join" });
+    navigate("/explore", { replace: true });
   };
   const handleRemoveMyInstrument = React.useCallback(
     (...args: Instrument[]) => {
@@ -194,6 +198,7 @@ export default function Join() {
               />
               <Box w="100%">
                 <Button
+                  type="submit"
                   colorScheme="green"
                   borderRadius="full"
                   width="100%"
