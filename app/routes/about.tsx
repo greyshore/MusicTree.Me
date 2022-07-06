@@ -1,4 +1,5 @@
 import type { MetaFunction } from "@remix-run/node";
+import { Link } from "@remix-run/react";
 import { Center, Container, Heading, Text, VStack } from "@chakra-ui/react";
 
 export const meta: MetaFunction = () => {
@@ -14,18 +15,19 @@ export default function About() {
         <Center>
           <Text>
           <Heading>A musical family tree and resource</Heading>
+
           At MusicTree.me, we provide an opportunity for musicians to explore their connections to the generations of musicians from which they are pedagogically descended.
           Discover intersecting paths and common roots to understand your musical heritage. Explore the landscape of constellation teachers and their impact on the global music community.
-          <p>
+          <Text>
           Check back frequently – your musical family tree is shaped by data shared by other users, so it will grow and change as more users share information.
-          </p>
+          </Text>
           This is a project for our beloved musical community. We are committed to providing accurate information and your privacy. We will never sell/share your personal information. 
-          <p>
-          <a href="https://www.sashabassoon.com/">Dr. Sasha Enegren</a>
-          </p>
-          <p>
-          For the digitally inclined, <a href="https://github.com/greyshore/MusicTree.Me/">contribute our project on Github!</a>
-          </p>
+          <Text>
+          <Link to="https://www.sashabassoon.com/">Dr. Sasha Enegren</Link>
+          </Text>
+          <Text>
+          For the digitally inclined, <Link to="https://github.com/greyshore/MusicTree.Me/">contribute our project on Github!</Link>
+          </Text>
           </Text>
         </Center>
       </VStack>
