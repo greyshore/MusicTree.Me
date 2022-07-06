@@ -78,15 +78,17 @@ export const action: ActionFunction = async ({ request }) => {
       { status: 400 }
     );
   }
-  const user = await createUser(email, "password");
+  const user = await createUser(email);
 
-  return redirectTo;
-  // return createUserSession({
-  //   request,
-  //   userId: user.id,
-  //   remember: false,
-  //   redirectTo: "/explore",
-  // });
+  if (!user) {
+    return json({ errors: { email: "Something went wrong" } }, { status: 400 });
+  }
+  return createUserSession({
+    request,
+    userId: user.id,
+    remember: false,
+    redirectTo: "/explore",
+  });
 };
 const Foo = ({ name, label }: { name: string; label: string }) => (
   <FormControl>
@@ -143,8 +145,7 @@ export default function Join() {
     const formData = new FormData(event.target as HTMLFormElement);
     formData.append("my-instruments", myInstruments().toString());
     // @todo
-    // await submit(formData, { method: "post", action: "/join" });
-    navigate("/explore", { replace: true });
+    await submit(formData, { method: "post", action: "/join" });
   };
   const handleRemoveMyInstrument = React.useCallback(
     (...args: Instrument[]) => {

@@ -19,10 +19,9 @@ invariant(
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-export async function createUser(email: string, password: string) {
-  const { user } = await supabase.auth.signUp({
+export async function createUser(email: string) {
+  const { user } = await supabase.auth.signIn({
     email,
-    password,
   });
 
   // get the user profile after created
