@@ -92,24 +92,24 @@ export const navItemList: Item[] = [
       </Button>
     ),
   },
-  {
-    position: 12,
-    notLink: true,
-    child: (
-      <Button
-        role="button"
-        aria-label="Desktop Navigation"
-        as={Link}
-        to="/join"
-        borderRadius="full"
-        variant="solid"
-        backgroundColor="black"
-        color="white"
-      >
-        Sign up
-      </Button>
-    ),
-  },
+//  {
+//    position: 12,
+//    notLink: true,
+//    child: (
+//      <Button
+//        role="button"
+//        aria-label="Desktop Navigation"
+//        as={Link}
+//        to="/join"
+//        borderRadius="full"
+//        variant="solid"
+//        backgroundColor="black"
+//        color="white"
+//     >
+//        Sign up
+//      </Button>
+//    ),
+//  },
 ];
 
 const NavItem = (item: Item) => {

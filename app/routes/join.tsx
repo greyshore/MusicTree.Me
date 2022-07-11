@@ -161,7 +161,7 @@ export default function Join() {
             Sign up to create your tree and explore.
           </Heading>
           <Text color="grey" as="span">
-            Already have an accoung?
+            If you're new, we'll send you sign in link by email. Already have an account?
           </Text>{" "}
           <Link
             style={{ color: "#2B6CB0" }}

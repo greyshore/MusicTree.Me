@@ -23,7 +23,7 @@ export default function Index() {
           </Heading>
         </Center>
         <Center>
-          <Text>Select an instrument to sign up, or login to grow your tree:</Text>
+          <Text>Select an instrument to Sign Up, or Log In to grow your tree:</Text>
         </Center>
       </VStack>
       <InstrumentFamilySelect />
