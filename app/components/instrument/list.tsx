@@ -34,12 +34,6 @@ const InstrumentList = ({ family }: { family: InstrumentFamily | null }) => {
     }
   };
 
-  useEffect(() => {
-    if (checked && family && family !== prevFamily) {
-      setChecked([]);
-    }
-  }, [checked, family, prevFamily]);
-
   const instrumentList = family && INSTRUMENT_FAMILIES[family];
   const goToJoin = () =>
     navigate({

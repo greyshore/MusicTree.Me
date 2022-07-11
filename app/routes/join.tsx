@@ -69,15 +69,6 @@ export const action: ActionFunction = async ({ request }) => {
     );
   }
 
-  // A user could potentially already exist within our system
-  // and we should communicate that well
-  const existingUser = await getProfileByEmail(email);
-  if (existingUser) {
-    return json<ActionData>(
-      { errors: { email: "A user already exists with this email." } },
-      { status: 400 }
-    );
-  }
   const user = await createUser(email);
 
   if (!user) {
