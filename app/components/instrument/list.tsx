@@ -8,18 +8,17 @@ import {
   useMediaQuery,
 } from "@chakra-ui/react";
 import { Form } from "@remix-run/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { HiOutlineArrowRight } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
 import { INSTRUMENT_FAMILIES } from "~/models/instrument/client";
 import type { InstrumentFamily } from "~/models/instrument/server";
 
-import { rmv, usePrevious } from "~/utils";
+import { rmv } from "~/utils";
 
 const InstrumentList = ({ family }: { family: InstrumentFamily | null }) => {
   const [checked, setChecked] = useState<string[]>([]);
   const [isSmallScreen] = useMediaQuery("(max-width: 767px)");
-  const prevFamily = usePrevious(family);
   const navigate = useNavigate();
 
   const handleChange = (e: {
@@ -66,7 +65,7 @@ const InstrumentList = ({ family }: { family: InstrumentFamily | null }) => {
               {instrumentList?.map((instrument) => (
                 <GridItem key={instrument}>
                   <Checkbox
-                    checked={checked.includes(instrument)}
+                    isChecked={checked.includes(instrument)}
                     onChange={handleChange}
                     name={instrument}
                     size="md"
