@@ -19,18 +19,25 @@ invariant(
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-export async function createUser(email: string) {
-  const { user } = await supabase.auth.signIn({
-    email,
-  });
+export async function createUser(email: string, host: string | null) {
+  let redirect = undefined;
+  if (host && host.includes('localhost')) {
+    redirect = { redirectTo: 'http://localhost:3000' }
+  }
+  const { user, error } = await supabase.auth.signIn(
+    { email },
+    redirect
+  );
 
   // get the user profile after created
-  const profile = await getProfileByEmail(user?.email);
+  // const profile = await getProfileByEmail(user?.email);
 
-  return profile;
+  return { user, error };
 }
 
+//leads to dead ends
 export async function getProfileById(id: string) {
+  debugger;
   const { data, error } = await supabase
     .from("profiles")
     .select("email, id")
@@ -41,16 +48,17 @@ export async function getProfileById(id: string) {
   if (data) return { id: data.id, email: data.email };
 }
 
-export async function getProfileByEmail(email?: string) {
-  const { data, error } = await supabase
-    .from("profiles")
-    .select("email, id")
-    .eq("email", email)
-    .single();
-
-  if (error) return null;
-  if (data) return data;
-}
+// export async function getProfileByEmail(email?: string) {
+//   debugger;
+//   const { data, error } = await supabase
+//     .from("profiles")
+//     .select("email, id")
+//     .eq("email", email)
+//     .single();
+//   debugger;
+//   if (error) return null;
+//   if (data) return data;
+// }
 
 export async function verifyLogin(email: string, password: string) {
   const { user, error } = await supabase.auth.signIn({

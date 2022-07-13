@@ -1,10 +1,21 @@
 import { Center, Container, Heading, Text, VStack } from "@chakra-ui/react";
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useOptionalUser } from "~/utils";
 import InstrumentFamilySelect from "~/components/instrument/family-select";
+import { LoaderFunction } from "@remix-run/node";
+
+// export const loader: LoaderFunction = async ({ request }) => {
+//   const url = new URL(request.url)
+//   console.log('params: ' + url.searchParams)
+//   const param = url.searchParams.get('access_token')
+//   debugger
+//   //if magic link -> createSession
+//   return null;
+// };
 
 export default function Index() {
+  let location = useLocation(); 
   const user = useOptionalUser();
   const navigate = useNavigate();
   useEffect(() => {
@@ -12,6 +23,9 @@ export default function Index() {
       navigate("/explore");
     }
   }, [user, navigate]);
+
+  useEffect(())
+
 
   return (
     <Container as="main" maxW="6xl">

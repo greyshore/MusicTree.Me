@@ -13,7 +13,7 @@ import {
   useSubmit,
 } from "@remix-run/react";
 import { createUserSession, getUserId } from "~/session.server";
-import { createUser, getProfileByEmail } from "~/models/user.server";
+import { createUser } from "~/models/user.server";
 import { validateEmail } from "~/utils";
 import * as React from "react";
 import {
@@ -68,18 +68,19 @@ export const action: ActionFunction = async ({ request }) => {
       { status: 400 }
     );
   }
+  const { user, error }= await createUser(email, request.headers.get('host'));
 
-  const user = await createUser(email);
-
-  if (!user) {
-    return json({ errors: { email: "Something went wrong" } }, { status: 400 });
+  if (error) {
+    return json({ errors: { email: "Something went wrong: " + error.message } }, { status: 400 });
   }
-  return createUserSession({
-    request,
-    userId: user.id,
-    remember: false,
-    redirectTo: "/explore",
-  });
+  console.log(user);
+  // return createUserSession({
+  //   request,
+  //   userId: '1',
+  //   remember: false,
+  //   redirectTo: "/explore",
+  // });
+  return null;
 };
 const Foo = ({ name, label }: { name: string; label: string }) => (
   <FormControl>

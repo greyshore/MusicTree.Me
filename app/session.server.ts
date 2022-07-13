@@ -33,6 +33,7 @@ export async function getUserId(request: Request) {
   return userId;
 }
 
+//dead code
 export async function getUser(request: Request) {
   const userId = await getUserId(request);
   if (userId === undefined) return null;
@@ -61,6 +62,7 @@ export async function requireUserId(
   return userId;
 }
 
+//dead code
 export async function requireUser(request: Request) {
   const userId = await requireUserId(request);
   if (userId == undefined) return null;
