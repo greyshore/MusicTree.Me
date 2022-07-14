@@ -68,7 +68,7 @@ export const action: ActionFunction = async ({ request }) => {
       { status: 400 }
     );
   }
-  const { user, error }= await createUser(email, request.headers.get('host'));
+  const { user, error } = await createUser(email, request.headers.get('host'));
 
   if (error) {
     return json({ errors: { email: "Something went wrong: " + error.message } }, { status: 400 });

@@ -22,7 +22,7 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 export async function createUser(email: string, host: string | null) {
   let redirect = undefined;
   if (host && host.includes('localhost')) {
-    redirect = { redirectTo: 'http://localhost:3000' }
+    redirect = { redirectTo: 'http://localhost:3000/auth' }
   }
   const { user, error } = await supabase.auth.signIn(
     { email },

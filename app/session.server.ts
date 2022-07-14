@@ -1,4 +1,4 @@
-import { createCookieSessionStorage, redirect } from "@remix-run/node";
+import { createCookieSessionStorage, json, redirect } from "@remix-run/node";
 import invariant from "tiny-invariant";
 import { getProfileById } from "./models/user.server";
 
@@ -72,6 +72,8 @@ export async function requireUser(request: Request) {
 
   throw await logout(request);
 }
+
+
 
 export async function createUserSession({
   request,
