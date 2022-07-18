@@ -1,6 +1,7 @@
 import bcrypt from "bcryptjs";
 import { createClient } from "@supabase/supabase-js";
 import invariant from "tiny-invariant";
+import type { Instrument } from "./instrument/server";
 
 export type User = { id: string; email: string };
 
@@ -19,11 +20,30 @@ invariant(
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-export async function createUser(email: string) {
+export async function createUser(
+  email: string,
+  password: string,
+  firstName: string,
+  lastName: string,
+  instruments: Instrument[]
+): Promise<User> {
+  console.log(email, password, firstName, lastName, instruments);
   const { user } = await supabase.auth.signIn({
     email,
+    password,
   });
-
+  const updates = {
+    id: user?.id,
+    firstName,
+    lastName,
+    email,
+    instruments,
+    created_at: new Date(),
+  };
+  let { error } = await supabase.from("profiles").upsert(updates);
+  if (error) {
+    throw error;
+  }
   // get the user profile after created
   const profile = await getProfileByEmail(user?.email);
 

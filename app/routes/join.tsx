@@ -13,6 +13,7 @@ import {
   useSubmit,
 } from "@remix-run/react";
 import { createUserSession, getUserId } from "~/session.server";
+import type { User } from "~/models/user.server";
 import { createUser, getProfileByEmail } from "~/models/user.server";
 import { validateEmail } from "~/utils";
 import * as React from "react";
@@ -59,6 +60,8 @@ export const action: ActionFunction = async ({ request }) => {
   const email = formData.get("email");
   const firstName = formData.get("first-name");
   const lastName = formData.get("last-name");
+  const password = formData.get("password");
+  const instruments = formData.get("my-instruments");
   const redirectTo = formData.get("redirectTo");
 
   // Ensure the email is valid
@@ -69,7 +72,26 @@ export const action: ActionFunction = async ({ request }) => {
     );
   }
 
-  const user = await createUser(email);
+  if (typeof password !== "string") {
+    return json(
+      { errors: { password: "Valid password is required." } },
+      { status: 400 }
+    );
+  }
+
+  if (password.length < 6) {
+    return json(
+      { errors: { password: "Password is too short" } },
+      { status: 400 }
+    );
+  }
+  const user: User = await createUser(
+    email,
+    password,
+    firstName,
+    lastName,
+    instruments
+  );
 
   if (!user) {
     return json({ errors: { email: "Something went wrong" } }, { status: 400 });
@@ -117,7 +139,6 @@ export default function Join() {
     }
     return [];
   }, [searchParams]);
-  console.log(myInstruments());
 
   React.useEffect(() => {
     if (actionData?.errors?.email) {
@@ -161,7 +182,8 @@ export default function Join() {
             Sign up to create your tree and explore.
           </Heading>
           <Text color="grey" as="span">
-            If you're new, we'll send you sign in link by email. Already have an account?
+            If you're new, we'll send you sign in link by email. Already have an
+            account?
           </Text>{" "}
           <Link
             style={{ color: "#2B6CB0" }}
@@ -184,6 +206,30 @@ export default function Join() {
                 <Foo name="last-name" label="Last Name" />
               </HStack>
               <Foo name="email" label="Email" />
+              <Foo name="password" label="Password" />
+              {/* <div>
+            <label className="text-sm font-medium" htmlFor="password">
+              <span className="block text-gray-700">Password</span>
+              <span className="block font-light text-gray-700">
+                Must have at least 6 characters.
+              </span>
+              {actionData?.errors?.password && (
+                <span className="pt-1 text-red-700" id="password-error">
+                  {actionData?.errors?.password}
+                </span>
+              )}
+            </label>
+            <input
+              id="password"
+              type="password"
+              name="password"
+              autoComplete=""
+              className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
+              aria-invalid={actionData?.errors?.password ? true : undefined}
+              aria-describedby="password-error"
+              ref={passwordRef}
+            />
+          </div> */}
               <InstrumentBadge
                 selections={myInstruments() as Instrument[]}
                 onClick={handleRemoveMyInstrument}
