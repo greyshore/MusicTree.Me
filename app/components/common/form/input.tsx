@@ -1,11 +1,22 @@
-import { FormControl, FormLabel, Input as ChakraInput } from "@chakra-ui/react";
+import {
+  FormControl,
+  FormHelperText,
+  FormLabel,
+  Input as ChakraInput,
+} from "@chakra-ui/react";
 // @todo: errors, helper text
 type InputProps = {
   name: string;
   label: string;
   type?: string;
+  helperText?: string;
 };
-export default function Input({ name, label, type = "input" }: InputProps) {
+export default function Input({
+  name,
+  label,
+  type = "input",
+  helperText,
+}: InputProps) {
   return (
     <FormControl>
       <FormLabel htmlFor={name} ml={1} color="grey">
@@ -24,7 +35,7 @@ export default function Input({ name, label, type = "input" }: InputProps) {
           background: "white",
         }}
       />
-      {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
+      {helperText && <FormHelperText>{helperText}</FormHelperText>}
     </FormControl>
   );
 }

@@ -177,8 +177,18 @@ export default function Join() {
               <Input name="first-name" label="First Name" />
               <Input name="last-name" label="Last Name" />
             </HStack>
-            <Input name="email" label="Email" type="email" />
-            <Input name="password" label="Password" type="password" />
+            <Input
+              name="email"
+              label="Email"
+              type="email"
+              helperText="We'll never share your email."
+            />
+            <Input
+              name="password"
+              label="Password"
+              type="password"
+              helperText="Must be at least 6 characters long."
+            />
             <InstrumentBadge
               selections={myInstruments() as Instrument[]}
               onClick={handleRemoveMyInstrument}
