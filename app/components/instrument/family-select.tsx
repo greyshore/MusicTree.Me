@@ -37,13 +37,14 @@ const Tab = ({ isActive, label }: { isActive: boolean; label: string }) => (
   </Center>
 );
 
-const InstrumentFamilySelect = () => {
+const InstrumentFamilySelect = (props: { showIcon?: boolean }) => {
+  const { showIcon } = props;
   const [selectedFamily, setSelectedFamily] = useState<InstrumentFamily | null>(
     null
   );
   const [isSmallScreen] = useMediaQuery("(max-width: 767px)");
 
-  return (
+  if (showIcon) {
     <SimpleGrid>
       <SimpleGrid
         background="white"
@@ -69,9 +70,50 @@ const InstrumentFamilySelect = () => {
               _hover={{ cursor: "pointer" }}
               onClick={() => setSelectedFamily(type)}
             >
-              <Box width={48} height={180}>
-                {icon[type]}
-              </Box>
+              {showIcon && (
+                <Box width={48} height={180}>
+                  {icon[type]}
+                </Box>
+              )}
+              <Tab isActive={selectedFamily === type} label={type} />
+              {isSmallScreen &&
+                Boolean(selectedFamily) &&
+                type === selectedFamily && (
+                  <InstrumentList family={selectedFamily} />
+                )}
+            </Center>
+          );
+        })}
+      </SimpleGrid>
+      {!isSmallScreen && <InstrumentList family={selectedFamily} />}
+    </SimpleGrid>;
+  }
+
+  return (
+    <SimpleGrid>
+      <SimpleGrid
+        background="white"
+        borderRadius="lg"
+        borderBottom={selectedFamily ? "none" : undefined}
+        borderBottomRadius={selectedFamily ? "none" : undefined}
+        borderWidth="1px"
+        padding={0}
+        pl={"10px"}
+        pr={"36px"}
+        marginTop={8}
+        flexWrap="wrap"
+        flexShrink={1}
+        columns={{ sm: 1, md: 5 }}
+        gridGap={8}
+      >
+        {selections.map((type) => {
+          return (
+            <Center
+              key={type}
+              flexDir={"column"}
+              _hover={{ cursor: "pointer" }}
+              onClick={() => setSelectedFamily(type)}
+            >
               <Tab isActive={selectedFamily === type} label={type} />
               {isSmallScreen &&
                 Boolean(selectedFamily) &&
