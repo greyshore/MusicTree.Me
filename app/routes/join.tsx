@@ -14,7 +14,7 @@ import {
 } from "@remix-run/react";
 import { createUserSession, getUserId } from "~/session.server";
 import type { User } from "~/models/user.server";
-import { createUser, getProfileByEmail } from "~/models/user.server";
+import { signUp, getProfileByEmail } from "~/models/user.server";
 import { validateEmail } from "~/utils";
 import * as React from "react";
 import {
@@ -80,7 +80,7 @@ export const action: ActionFunction = async ({ request }) => {
       { status: 400 }
     );
   }
-  const user: User = await createUser(
+  const user: User = await signUp(
     email,
     password,
     firstName,

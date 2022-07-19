@@ -1,8 +1,5 @@
-import bcrypt from "bcryptjs";
 import { createClient } from "@supabase/supabase-js";
 import invariant from "tiny-invariant";
-import type { Instrument } from "./instrument/server";
-
 export type User = { id: string; email: string };
 
 // Abstract this away
@@ -20,34 +17,48 @@ invariant(
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-export async function createUser(
+export async function signUp(
   email: string,
   password: string,
   firstName: string,
   lastName: string,
-  instruments: Instrument[]
+  instruments: string,
 ): Promise<User> {
-  console.log(email, password, firstName, lastName, instruments);
-  const { user } = await supabase.auth.signIn({
+  const { data: existingProfile } = await getProfileByEmail(email);
+  if (existingProfile) throw new Error("User already exists, please log in");
+
+  const { user, error: signUpError } = await supabase.auth.signUp({
     email,
     password,
   });
+  if (signUpError) {
+    throw signUpError;
+  }
   const updates = {
     id: user?.id,
     firstName,
     lastName,
     email,
-    instruments,
     created_at: new Date(),
   };
-  let { error } = await supabase.from("profiles").upsert(updates);
+  const { error } = await supabase.from("profiles").upsert(updates);
   if (error) {
     throw error;
   }
+  instruments.split(',').forEach(async instrument => {
+    if (instrument.trim().length > 0) {
+      let { data, error: instrumentError } = await supabase.from("instruments").select('id').eq('name', instrument).single();
+      if (instrumentError) throw instrumentError;
+      let newInstrument = { profile_id: user?.id, instrument_id: data.id }
+      let { error } = await supabase.from("profile_instruments").insert(newInstrument);
+      if (error) throw error;
+    }
+  });
   // get the user profile after created
-  const profile = await getProfileByEmail(user?.email);
+  const {data: newProfile, error: fetchError }= await getProfileByEmail(user?.email);
+  if (fetchError) throw fetchError;
 
-  return profile;
+  return newProfile;
 }
 
 export async function getProfileById(id: string) {
@@ -68,8 +79,7 @@ export async function getProfileByEmail(email?: string) {
     .eq("email", email)
     .single();
 
-  if (error) return null;
-  if (data) return data;
+  return { data, error }
 }
 
 export async function verifyLogin(email: string, password: string) {
