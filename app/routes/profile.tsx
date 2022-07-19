@@ -1,8 +1,14 @@
 import type { MetaFunction } from "@remix-run/node";
-import { Container, Heading, HStack, Text, VStack } from "@chakra-ui/react";
+import {
+  Container,
+  Heading,
+  HStack,
+  Spacer,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
 import { Grid, GridItem } from "@chakra-ui/react";
 import Input from "~/components/common/form/input";
-import InstrumentList from "~/components/instrument/list";
 import InstrumentFamilySelect from "~/components/instrument/family-select";
 
 export const meta: MetaFunction = () => {
@@ -28,7 +34,7 @@ export default function Profile() {
   return (
     <Container as="main" maxW="6xl">
       <VStack spacing={8} alignItems="flex-start">
-        <Text>Leave space for section headers</Text>
+        <Spacer />
         <VStack spacing={20} alignItems="flex-start">
           <Heading>About you</Heading>
           <TwoColumnGrid
