@@ -44,7 +44,7 @@ const InstrumentFamilySelect = (props: { showIcon?: boolean }) => {
   );
   const [isSmallScreen] = useMediaQuery("(max-width: 767px)");
 
-  if (showIcon) {
+  return (
     <SimpleGrid>
       <SimpleGrid
         background="white"
@@ -75,45 +75,6 @@ const InstrumentFamilySelect = (props: { showIcon?: boolean }) => {
                   {icon[type]}
                 </Box>
               )}
-              <Tab isActive={selectedFamily === type} label={type} />
-              {isSmallScreen &&
-                Boolean(selectedFamily) &&
-                type === selectedFamily && (
-                  <InstrumentList family={selectedFamily} />
-                )}
-            </Center>
-          );
-        })}
-      </SimpleGrid>
-      {!isSmallScreen && <InstrumentList family={selectedFamily} />}
-    </SimpleGrid>;
-  }
-
-  return (
-    <SimpleGrid>
-      <SimpleGrid
-        background="white"
-        borderRadius="lg"
-        borderBottom={selectedFamily ? "none" : undefined}
-        borderBottomRadius={selectedFamily ? "none" : undefined}
-        borderWidth="1px"
-        padding={0}
-        pl={"10px"}
-        pr={"36px"}
-        marginTop={8}
-        flexWrap="wrap"
-        flexShrink={1}
-        columns={{ sm: 1, md: 5 }}
-        gridGap={8}
-      >
-        {selections.map((type) => {
-          return (
-            <Center
-              key={type}
-              flexDir={"column"}
-              _hover={{ cursor: "pointer" }}
-              onClick={() => setSelectedFamily(type)}
-            >
               <Tab isActive={selectedFamily === type} label={type} />
               {isSmallScreen &&
                 Boolean(selectedFamily) &&
