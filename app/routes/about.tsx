@@ -1,6 +1,5 @@
 import type { MetaFunction } from "@remix-run/node";
-import { Link } from "@remix-run/react";
-import { Center, Container, Heading, Text, VStack } from "@chakra-ui/react";
+import { Link, Container, Heading, Text, VStack } from "@chakra-ui/react";
 
 export const meta: MetaFunction = () => {
   return {
@@ -8,7 +7,6 @@ export const meta: MetaFunction = () => {
   };
 };
 export default function About() {
-
   return (
     <Container as="main" maxW="6xl">
       <VStack spacing={8} alignItems="flex-start">
@@ -29,7 +27,10 @@ export default function About() {
         providing accurate information and your privacy. We will never
         sell/share your personal information.
         <Text sx={{ fontFamily: "'Sofia', cursive", fontSize: 26 }}>
-          <Link style={{ color: "#2B6CB0" }} to="https://www.sashabassoon.com/">
+          <Link
+            style={{ color: "#2B6CB0" }}
+            href="https://www.sashabassoon.com/"
+          >
             Dr. Sasha Enegren
           </Link>
         </Text>
@@ -37,7 +38,7 @@ export default function About() {
           For the digitally inclined, contribute our project on{" "}
           <Link
             style={{ color: "#2B6CB0" }}
-            to="https://github.com/greyshore/MusicTree.Me/"
+            href="https://github.com/greyshore/MusicTree.Me/"
           >
             Github!
           </Link>
