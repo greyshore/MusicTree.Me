@@ -78,19 +78,18 @@ const InstrumentList = ({ family }: { family: InstrumentFamily | null }) => {
               ))}
             </SimpleGrid>
           </Flex>
-          {Boolean(checked.length) && (
-            <Center mt={8}>
-              <Button
-                borderRadius={"35.5px"}
-                onClick={goToJoin}
-                background="#0D823C"
-                color="white"
-                rightIcon={<HiOutlineArrowRight size={18} />}
-              >
-                Continue
-              </Button>
-            </Center>
-          )}
+          <Center mt={8}>
+            <Button
+              borderRadius={"35.5px"}
+              onClick={goToJoin}
+              background="#0D823C"
+              color="white"
+              rightIcon={<HiOutlineArrowRight size={18} />}
+              disabled={Boolean(!checked.length)}
+            >
+              Continue
+            </Button>
+          </Center>
         </>
       )}
     </>

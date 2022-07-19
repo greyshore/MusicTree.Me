@@ -78,49 +78,47 @@ export const navItemList: Item[] = [
     child: <MTNavLink linkTo="/about">About</MTNavLink>,
   },
   {
-    position: 11,
+    position: 12,
     child: (
       <Button
         role="button"
         aria-label="Desktop Navigation"
         as={Link}
         to="/login"
-        variant="link"
-        colorScheme="black"
+        borderRadius="full"
+        variant="solid"
+        backgroundColor="black"
+        color="white"
+        mt={0}
       >
         Log in
       </Button>
     ),
   },
-//  {
-//    position: 12,
-//    notLink: true,
-//    child: (
-//      <Button
-//        role="button"
-//        aria-label="Desktop Navigation"
-//        as={Link}
-//        to="/join"
-//        borderRadius="full"
-//        variant="solid"
-//        backgroundColor="black"
-//        color="white"
-//     >
-//        Sign up
-//      </Button>
-//    ),
-//  },
+  //  {
+  //    position: 12,
+  //    notLink: true,
+  //    child: (
+  //      <Button
+  //        role="button"
+  //        aria-label="Desktop Navigation"
+  //        as={Link}
+  //        to="/join"
+  //  borderRadius="full"
+  //  variant="solid"
+  //  backgroundColor="black"
+  //  color="white"
+  //     >
+  //        Sign up
+  //      </Button>
+  //    ),
+  //  },
 ];
 
 const NavItem = (item: Item) => {
   const { position, notLink, span, child } = item;
   return (
-    <GridItem
-      as="li"
-      mt={notLink ? undefined : 2}
-      colEnd={span ? span : undefined}
-      colStart={position}
-    >
+    <GridItem as="li" colEnd={span ? span : undefined} colStart={position}>
       {child}
     </GridItem>
   );
@@ -133,7 +131,12 @@ const Nav = () => {
     <Container mt={5} as="nav" maxW="6xl" height={100}>
       <>
         {isMedScreen ? (
-          <Grid as="ul" templateColumns="repeat(12, 1fr)" gap={6}>
+          <Grid
+            as="ul"
+            templateColumns="repeat(12, 1fr)"
+            gap={6}
+            alignItems="baseline"
+          >
             {navItemList.map((item, index) => (
               <NavItem
                 key={`${item.position}-${index}`}

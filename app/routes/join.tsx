@@ -143,29 +143,31 @@ export default function Join() {
   return (
     <Container as="main" maxW="6xl">
       <SimpleGrid
-        columns={{ sm: 1, md: 2 }}
+        width={{ sm: "100%", md: "50%" }}
+        columns={1}
         p={5}
         padding={0}
         marginTop={8}
         flexWrap="wrap"
         flexShrink={1}
       >
-        <Heading as="h1" fontSize="5xl">
-          Sign up to create your tree and explore.
-        </Heading>
-        <Text color="grey" as="span">
-          If you're new, we'll send you sign in link by email. Already have an
-          account?
-        </Text>{" "}
-        <Link
-          style={{ color: "#2B6CB0" }}
-          to={{
-            pathname: "/login",
-            search: searchParams.toString(),
-          }}
-        >
-          Sign in.
-        </Link>
+        <Box>
+          <Heading as="h1" fontSize="5xl">
+            Sign up to create your tree and explore.
+          </Heading>
+          <Text color="grey" as="span">
+            Already have an account?
+          </Text>{" "}
+          <Link
+            style={{ color: "#2B6CB0" }}
+            to={{
+              pathname: "/login",
+              search: searchParams.toString(),
+            }}
+          >
+            Sign in.
+          </Link>
+        </Box>
         <Box
           as={Form}
           onSubmit={handleSubmit}
