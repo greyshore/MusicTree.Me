@@ -47,7 +47,9 @@ export async function signUp(
   }
   instruments.split(',').forEach(async instrument => {
     if (instrument.trim().length > 0) {
-      let { data, error: instrumentError } = await supabase.from("instruments").select('id').eq('name', instrument).single();
+      // adding debug for issue in dev
+      console.log(instrument);
+      let { data, error: instrumentError } = await supabase.from("instruments").select('id').eq('name', instrument.trim()).single();
       if (instrumentError) throw instrumentError;
       let newInstrument = { profile_id: user?.id, instrument_id: data.id }
       let { error } = await supabase.from("profile_instruments").insert(newInstrument);
