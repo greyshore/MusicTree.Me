@@ -18,9 +18,6 @@ import { createUser, getProfileByEmail } from "~/models/user.server";
 import { validateEmail } from "~/utils";
 import * as React from "react";
 import {
-  FormControl,
-  FormLabel,
-  Input,
   Button,
   SimpleGrid,
   Container,
@@ -29,11 +26,9 @@ import {
   Box,
   VStack,
   HStack,
-  Stack,
-  Divider,
 } from "@chakra-ui/react";
+import Input from "~/components/common/form/input";
 import InstrumentBadge from "~/components/instrument/badge";
-import { FacebookIcon, GoogleIcon } from "~/components/icons";
 import type { Instrument } from "~/models/instrument/server";
 
 export const meta: MetaFunction = () => {
@@ -103,32 +98,10 @@ export const action: ActionFunction = async ({ request }) => {
     redirectTo: "/explore",
   });
 };
-const Foo = ({ name, label }: { name: string; label: string }) => (
-  <FormControl>
-    <FormLabel htmlFor={name} ml={1} color="grey">
-      {label}
-    </FormLabel>
-    <Input
-      name={name}
-      id={name}
-      type="input`"
-      required
-      // aria-invalid={actionData?.errors[name.toString()] ? true : undefined}
-      aria-describedby="email-error"
-      borderRadius="full"
-      variant="outline"
-      sx={{
-        background: "white",
-      }}
-    />
-    {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
-  </FormControl>
-);
 
 export default function Join() {
   const submit = useSubmit();
   const [searchParams, setSearchParams] = useSearchParams();
-  const navigate = useNavigate();
   const redirectTo = searchParams.get("redirectTo") ?? "/explore";
   const actionData = useActionData() as ActionData;
   const emailRef = React.useRef<HTMLInputElement>(null);
@@ -156,7 +129,7 @@ export default function Join() {
     };
     const formData = new FormData(event.target as HTMLFormElement);
     formData.append("my-instruments", myInstruments().toString());
-    // @todo
+    // @todo action="/profile"
     await submit(formData, { method: "post", action: "/join" });
   };
   const handleRemoveMyInstrument = React.useCallback(
@@ -177,107 +150,52 @@ export default function Join() {
         flexWrap="wrap"
         flexShrink={1}
       >
-        <div>
-          <Heading as="h1" fontSize="5xl">
-            Sign up to create your tree and explore.
-          </Heading>
-          <Text color="grey" as="span">
-            If you're new, we'll send you sign in link by email. Already have an
-            account?
-          </Text>{" "}
-          <Link
-            style={{ color: "#2B6CB0" }}
-            to={{
-              pathname: "/login",
-              search: searchParams.toString(),
-            }}
-          >
-            Sign in.
-          </Link>
-          <Box
-            as={Form}
-            onSubmit={handleSubmit}
-            encType="multipart/form-data"
-            mt="6"
-          >
-            <VStack spacing={8}>
-              <HStack width="100%" spacing={5}>
-                <Foo name="first-name" label="First Name" />
-                <Foo name="last-name" label="Last Name" />
-              </HStack>
-              <Foo name="email" label="Email" />
-              <Foo name="password" label="Password" />
-              {/* <div>
-            <label className="text-sm font-medium" htmlFor="password">
-              <span className="block text-gray-700">Password</span>
-              <span className="block font-light text-gray-700">
-                Must have at least 6 characters.
-              </span>
-              {actionData?.errors?.password && (
-                <span className="pt-1 text-red-700" id="password-error">
-                  {actionData?.errors?.password}
-                </span>
-              )}
-            </label>
-            <input
-              id="password"
-              type="password"
-              name="password"
-              autoComplete=""
-              className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
-              aria-invalid={actionData?.errors?.password ? true : undefined}
-              aria-describedby="password-error"
-              ref={passwordRef}
+        <Heading as="h1" fontSize="5xl">
+          Sign up to create your tree and explore.
+        </Heading>
+        <Text color="grey" as="span">
+          If you're new, we'll send you sign in link by email. Already have an
+          account?
+        </Text>{" "}
+        <Link
+          style={{ color: "#2B6CB0" }}
+          to={{
+            pathname: "/login",
+            search: searchParams.toString(),
+          }}
+        >
+          Sign in.
+        </Link>
+        <Box
+          as={Form}
+          onSubmit={handleSubmit}
+          encType="multipart/form-data"
+          mt="6"
+        >
+          <VStack spacing={8}>
+            <HStack width="100%" spacing={5}>
+              <Input name="first-name" label="First Name" />
+              <Input name="last-name" label="Last Name" />
+            </HStack>
+            <Input name="email" label="Email" type="email" />
+            <Input name="password" label="Password" type="password" />
+            <InstrumentBadge
+              selections={myInstruments() as Instrument[]}
+              onClick={handleRemoveMyInstrument}
             />
-          </div> */}
-              <InstrumentBadge
-                selections={myInstruments() as Instrument[]}
-                onClick={handleRemoveMyInstrument}
-              />
-              <Box w="100%">
-                <Button
-                  type="submit"
-                  colorScheme="green"
-                  borderRadius="full"
-                  width="100%"
-                  my={10}
-                >
-                  Sign up
-                </Button>
-              </Box>
-            </VStack>
-            <Stack direction="row" p={4} alignItems="center">
-              <Divider orientation="horizontal" />
-              <Text pl={8} pr={8}>
-                or
-              </Text>
-              <Divider orientation="horizontal" />
-            </Stack>
-            {/* start login btns */}
-            <VStack spacing={8} mt={8}>
-              <HStack width="100%" spacing={5} justifyContent="space-between">
-                <Button
-                  borderRadius="full"
-                  background="white"
-                  variant="outline"
-                  leftIcon={<GoogleIcon />}
-                  w="50%"
-                >
-                  Continue with Google
-                </Button>
-                <Button
-                  borderRadius="full"
-                  background="white"
-                  variant="outline"
-                  leftIcon={<FacebookIcon />}
-                  w="50%"
-                >
-                  Continue with Facebook
-                </Button>
-              </HStack>
-            </VStack>
-          </Box>
-        </div>
+            <Box w="100%">
+              <Button
+                type="submit"
+                colorScheme="green"
+                borderRadius="full"
+                width="100%"
+                my={10}
+              >
+                Sign up
+              </Button>
+            </Box>
+          </VStack>
+        </Box>
       </SimpleGrid>
     </Container>
   );
