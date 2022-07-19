@@ -48,7 +48,7 @@ export async function signUp(
   instruments.split(',').forEach(async instrument => {
     if (instrument.trim().length > 0) {
       // adding debug for issue in dev
-      console.log(instrument);
+      console.log(instrument.trim());
       let { data, error: instrumentError } = await supabase.from("instruments").select('id').eq('name', instrument.trim()).single();
       if (instrumentError) throw instrumentError;
       let newInstrument = { profile_id: user?.id, instrument_id: data.id }
@@ -90,8 +90,9 @@ export async function verifyLogin(email: string, password: string) {
     password,
   });
 
-  if (error) return undefined;
-  const profile = await getProfileByEmail(user?.email);
+  if (error) throw error;
+  const {data: profile, error: fetchError} = await getProfileByEmail(user?.email);
+  if (fetchError) throw fetchError;
 
   return profile;
 }
