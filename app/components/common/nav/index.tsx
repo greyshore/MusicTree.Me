@@ -7,7 +7,7 @@ import {
   Container,
   useMediaQuery,
 } from "@chakra-ui/react";
-import { Link, NavLink, useLocation } from "@remix-run/react";
+import { Form, Link, NavLink, useLocation } from "@remix-run/react";
 import type { ReactNode } from "react";
 import Logo from "./logo";
 import NavMenu from "./menu";
@@ -76,6 +76,25 @@ export const navItemList: Item[] = [
   {
     position: 7,
     child: <MTNavLink linkTo="/about">About</MTNavLink>,
+  },
+  {
+    position: 11,
+    child: (
+      <Form action="/logout" method="post">
+        <Button
+          type="submit"
+          role="button"
+          aria-label="Desktop Navigation"
+          borderRadius="full"
+          variant="solid"
+          backgroundColor="black"
+          color="white"
+          mt={0}
+        >
+          Log out
+        </Button>
+      </Form>
+    ),
   },
   {
     position: 12,

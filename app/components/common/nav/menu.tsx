@@ -46,7 +46,17 @@ const NavMenu = () => {
             variant="link"
             colorScheme="black"
           >
-            Log in
+            Log out
+          </Button>
+          <Button
+            role="button"
+            aria-label="Desktop Navigation"
+            as={Link}
+            to="/login"
+            variant="link"
+            colorScheme="black"
+          >
+            Log baby
           </Button>
         </Box>
       </Flex>
