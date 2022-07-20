@@ -1,3 +1,4 @@
+import { InfoIcon } from "@chakra-ui/icons";
 import {
   Center,
   Grid,
@@ -76,7 +77,7 @@ export const getNavItemList = (hasUser: boolean) => [
     child: <MTNavLink linkTo="/about">About</MTNavLink>,
   },
   {
-    position: !hasUser ? 11 : 12,
+    position: 11,
     child: {
       ...(hasUser ? (
         <Form action="/logout" method="post">
@@ -85,9 +86,8 @@ export const getNavItemList = (hasUser: boolean) => [
             role="button"
             aria-label="Desktop Navigation"
             borderRadius="full"
-            variant="solid"
-            backgroundColor="black"
-            color="white"
+            variant="link"
+            color="black"
             mt={0}
           >
             Log out
@@ -109,11 +109,26 @@ export const getNavItemList = (hasUser: boolean) => [
     },
   },
   {
-    // has user ? my profile : sign up
-    ...(!hasUser && {
-      position: 12,
-      notLink: true,
-      child: (
+    position: 12,
+    notLink: true,
+    child: {
+      ...(hasUser ? (
+        <Button
+          type="submit"
+          role="button"
+          aria-label="Desktop Navigation"
+          borderRadius="full"
+          variant="solid"
+          backgroundColor="black"
+          color="white"
+          mt={0}
+          as={Link}
+          to="/profile"
+          leftIcon={<InfoIcon />}
+        >
+          My Profile
+        </Button>
+      ) : (
         <Button
           role="button"
           aria-label="Desktop Navigation"
@@ -126,8 +141,8 @@ export const getNavItemList = (hasUser: boolean) => [
         >
           Sign up
         </Button>
-      ),
-    }),
+      )),
+    },
   },
 ];
 
