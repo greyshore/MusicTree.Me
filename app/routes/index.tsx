@@ -1,14 +1,24 @@
 import { Center, Container, Heading, Text, VStack } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useOptionalUser } from "~/utils";
 import InstrumentFamilySelect from "~/components/instrument/family-select";
+import type { LoaderFunction } from "@remix-run/node";
+import { json } from "@remix-run/node";
+import { getUserId } from "~/session.server";
+import { useLoaderData } from "@remix-run/react";
+
+export const loader: LoaderFunction = async ({ request }) => {
+  const userId = await getUserId(request);
+
+  return json({ userId });
+};
 
 export default function Index() {
-  const user = useOptionalUser();
+  const user = useLoaderData();
   const navigate = useNavigate();
   useEffect(() => {
-    if (user) {
+    // we  dont want to onboard if user is logged in
+    if (user.userId) {
       navigate("/explore");
     }
   }, [user, navigate]);

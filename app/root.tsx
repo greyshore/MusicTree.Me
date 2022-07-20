@@ -99,7 +99,6 @@ const Document = withEmotionCache(
 
 export default function App() {
   const user = useLoaderData();
-  console.log(user);
   return (
     <Document>
       <ChakraProvider>
