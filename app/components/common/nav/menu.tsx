@@ -11,16 +11,22 @@ import {
   Spacer,
   IconButton,
   Stack,
+  Divider,
+  Avatar,
 } from "@chakra-ui/react";
 import { HamburgerIcon } from "@chakra-ui/icons";
-import { Link } from "@remix-run/react";
-import Logo from "./logo";
-import { navItemList } from "./index";
+import { Form, Link } from "@remix-run/react";
+import { NavLink } from "react-router-dom";
 
-const NavMenu = () => {
+import Logo from "./logo";
+
+const NavMenu = ({ hasUser }: { hasUser: boolean }) => {
   const [isOpen, setIsOpen] = useState(false);
+
   const toggleOpen = () => setIsOpen(!isOpen);
-  const menuItems = navItemList.slice(1, 4);
+
+  const menuItems = ["Explore", "About"];
+
   return (
     <>
       <Flex alignItems="center">
@@ -38,26 +44,29 @@ const NavMenu = () => {
         </Box>
         <Spacer />
         <Box>
-          <Button
-            role="button"
-            aria-label="Desktop Navigation"
-            as={Link}
-            to="/login"
-            variant="link"
-            colorScheme="black"
-          >
-            Log out
-          </Button>
-          <Button
-            role="button"
-            aria-label="Desktop Navigation"
-            as={Link}
-            to="/login"
-            variant="link"
-            colorScheme="black"
-          >
-            Log baby
-          </Button>
+          {hasUser ? (
+            <Button
+              role="button"
+              aria-label="Desktop Navigation"
+              as={Link}
+              to="/logout"
+              variant="link"
+              colorScheme="black"
+            >
+              Log out
+            </Button>
+          ) : (
+            <Button
+              role="button"
+              aria-label="Desktop Navigation"
+              as={Link}
+              to="/login"
+              variant="link"
+              colorScheme="black"
+            >
+              Log in
+            </Button>
+          )}
         </Box>
       </Flex>
 
@@ -73,14 +82,61 @@ const NavMenu = () => {
             <DrawerHeader borderBottomWidth="1px">
               <Logo />
             </DrawerHeader>
-            <DrawerBody>
+            <DrawerBody marginBottom={8}>
               <Stack spacing="24px" alignItems="self-start">
-                {[...menuItems, navItemList[navItemList.length - 1]].map(
-                  (item, index) => (
-                    <p key={index} onClick={toggleOpen}>
-                      {item.child}
-                    </p>
-                  )
+                {menuItems.map((item, index) => (
+                  <NavLink
+                    to={`/${item.toLowerCase()}`}
+                    key={index}
+                    onClick={toggleOpen}
+                  >
+                    {item}
+                  </NavLink>
+                ))}
+                {hasUser && (
+                  <>
+                    <Divider orientation="horizontal" />
+                    <Box>
+                      <Avatar name="firstName lastName" size="xs" /> firstName
+                      lastName
+                    </Box>
+                    <NavLink to="/profile" onClick={toggleOpen}>
+                      Profile
+                    </NavLink>{" "}
+                    <NavLink to="/my-tree" onClick={toggleOpen}>
+                      My Tree
+                    </NavLink>
+                  </>
+                )}
+                {/* end user menu */}
+                <Divider orientation="horizontal" />
+                {hasUser && (
+                  <Form action="/logout" method="post">
+                    <Button
+                      type="submit"
+                      role="button"
+                      color="black"
+                      variant="link"
+                      mt={0}
+                    >
+                      Log out
+                    </Button>
+                  </Form>
+                )}
+                {!hasUser && (
+                  <Button
+                    role="button"
+                    aria-label="Desktop Navigation"
+                    as={Link}
+                    to="/"
+                    borderRadius="full"
+                    variant="solid"
+                    backgroundColor="black"
+                    color="white"
+                    onClick={toggleOpen}
+                  >
+                    Sign up
+                  </Button>
                 )}
               </Stack>
               <Spacer />

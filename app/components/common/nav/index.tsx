@@ -18,8 +18,6 @@ type Item = {
   span?: number;
   child: ReactNode;
 };
-// @todo define route `to` links as constant
-// @todo nav a11y
 const MTNavLink = ({
   linkTo,
   children,
@@ -58,7 +56,7 @@ const MTNavLink = ({
     </Center>
   );
 };
-export const navItemList: Item[] = [
+export const getNavItemList = (hasUser: boolean) => [
   {
     position: 1,
     notLink: true,
@@ -78,64 +76,63 @@ export const navItemList: Item[] = [
     child: <MTNavLink linkTo="/about">About</MTNavLink>,
   },
   {
-    position: 11,
-    child: (
-      <Form action="/logout" method="post">
+    position: !hasUser ? 11 : 12,
+    child: {
+      ...(hasUser ? (
+        <Form action="/logout" method="post">
+          <Button
+            type="submit"
+            role="button"
+            aria-label="Desktop Navigation"
+            borderRadius="full"
+            variant="solid"
+            backgroundColor="black"
+            color="white"
+            mt={0}
+          >
+            Log out
+          </Button>
+        </Form>
+      ) : (
         <Button
-          type="submit"
+          role="button"
+          variant="link"
+          color="black"
+          aria-label="Desktop Navigation"
+          as={Link}
+          to="/login"
+          mt={0}
+        >
+          Log in
+        </Button>
+      )),
+    },
+  },
+  {
+    // has user ? my profile : sign up
+    ...(!hasUser && {
+      position: 12,
+      notLink: true,
+      child: (
+        <Button
           role="button"
           aria-label="Desktop Navigation"
+          as={Link}
+          to="/"
           borderRadius="full"
           variant="solid"
           backgroundColor="black"
           color="white"
-          mt={0}
         >
-          Log out
+          Sign up
         </Button>
-      </Form>
-    ),
+      ),
+    }),
   },
-  {
-    position: 12,
-    child: (
-      <Button
-        role="button"
-        aria-label="Desktop Navigation"
-        as={Link}
-        to="/login"
-        borderRadius="full"
-        variant="solid"
-        backgroundColor="black"
-        color="white"
-        mt={0}
-      >
-        Log in
-      </Button>
-    ),
-  },
-  //  {
-  //    position: 12,
-  //    notLink: true,
-  //    child: (
-  //      <Button
-  //        role="button"
-  //        aria-label="Desktop Navigation"
-  //        as={Link}
-  //        to="/join"
-  //  borderRadius="full"
-  //  variant="solid"
-  //  backgroundColor="black"
-  //  color="white"
-  //     >
-  //        Sign up
-  //      </Button>
-  //    ),
-  //  },
 ];
 
 const NavItem = (item: Item) => {
-  const { position, notLink, span, child } = item;
+  const { position, span, child } = item;
   return (
     <GridItem as="li" colEnd={span ? span : undefined} colStart={position}>
       {child}
@@ -143,7 +140,7 @@ const NavItem = (item: Item) => {
   );
 };
 
-const Nav = () => {
+const Nav = ({ hasUser }: { hasUser: boolean }) => {
   const [isMedScreen] = useMediaQuery("(min-width: 767px)");
 
   return (
@@ -156,18 +153,20 @@ const Nav = () => {
             gap={6}
             alignItems="baseline"
           >
-            {navItemList.map((item, index) => (
-              <NavItem
-                key={`${item.position}-${index}`}
-                position={item.position}
-                notLink={item.notLink ?? undefined}
-                child={item.child}
-                span={item.span}
-              />
-            ))}
+            {(getNavItemList(hasUser) as Item[]).map((item, index) => {
+              return (
+                <NavItem
+                  key={`${item.position}-${index}`}
+                  position={item.position}
+                  notLink={item.notLink ?? undefined}
+                  child={item.child}
+                  span={item.span}
+                />
+              );
+            })}
           </Grid>
         ) : (
-          <NavMenu />
+          <NavMenu hasUser={hasUser} />
         )}
       </>
     </Container>

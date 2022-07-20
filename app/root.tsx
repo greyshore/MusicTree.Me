@@ -8,12 +8,19 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLoaderData,
 } from "@remix-run/react";
-import type { MetaFunction, LinksFunction } from "@remix-run/node";
+import { json, redirect } from "@remix-run/node";
 import stylesUrl from "~/styles/global.css";
 
 import { ServerStyleContext, ClientStyleContext } from "./context";
 import Nav from "./components/common/nav";
+import type {
+  LoaderFunction,
+  MetaFunction,
+  LinksFunction,
+} from "@remix-run/node";
+import { getUserId } from "./session.server";
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
@@ -36,6 +43,13 @@ export let links: LinksFunction = () => {
   ];
 };
 
+export const loader: LoaderFunction = async ({ request }) => {
+  const userId = await getUserId(request);
+  if (!userId) {
+    redirect("/login");
+  }
+  return json({ userId });
+};
 interface DocumentProps {
   children: React.ReactNode;
 }
@@ -84,12 +98,15 @@ const Document = withEmotionCache(
 );
 
 export default function App() {
+  const user = useLoaderData();
+  console.log(user);
   return (
     <Document>
       <ChakraProvider>
-        <Nav />
+        <Nav hasUser={Boolean(user.userId)} />
         <Outlet />
       </ChakraProvider>
     </Document>
   );
 }
+
