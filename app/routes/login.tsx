@@ -83,8 +83,6 @@ export const action: ActionFunction = async ({ request }) => {
 };
 
 export default function Login() {
-  const [searchParams] = useSearchParams();
-
   const actionData = useActionData() as ActionData;
   const emailRef = React.useRef<HTMLInputElement>(null);
   const passwordRef = React.useRef<HTMLInputElement>(null);
@@ -101,7 +99,15 @@ export default function Login() {
 
   return (
     <Container as="main" maxW="6xl">
-      <SimpleGrid>
+      <SimpleGrid
+        width={{ sm: "100%", md: "50%" }}
+        columns={1}
+        p={5}
+        padding={0}
+        marginTop={8}
+        flexWrap="wrap"
+        flexShrink={1}
+      >
         <Box>
           <Heading as="h1" fontSize="5xl">
             Welcome Back
@@ -111,7 +117,7 @@ export default function Login() {
           </Text>
         </Box>
         <Box as={Form} method="post" noValidate>
-          <VStack spacing={8}>
+          <VStack spacing={8} marginTop={16}>
             <Input
               name="email"
               label="Email"
