@@ -57,7 +57,6 @@ export const action: ActionFunction = async ({ request }) => {
   const lastName = formData.get("last-name");
   const password = formData.get("password");
   const instruments = formData.get("my-instruments");
-  const redirectTo = formData.get("redirectTo");
 
   // Ensure the email is valid
   if (!validateEmail(email)) {
@@ -95,14 +94,13 @@ export const action: ActionFunction = async ({ request }) => {
     request,
     userId: user.id,
     remember: false,
-    redirectTo: "/explore",
+    redirectTo: "/verify-auth",
   });
 };
 
 export default function Join() {
   const submit = useSubmit();
   const [searchParams, setSearchParams] = useSearchParams();
-  const redirectTo = searchParams.get("redirectTo") ?? "/explore";
   const actionData = useActionData() as ActionData;
   const emailRef = React.useRef<HTMLInputElement>(null);
 
