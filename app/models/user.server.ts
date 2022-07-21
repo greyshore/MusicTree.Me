@@ -125,3 +125,12 @@ export async function verifyLogin(email: string, password: string) {
 
   return profile;
 }
+
+export async function createStudent(userId: string, studentEmail: string) {
+  const { data } = await getProfileByEmail(studentEmail);
+  const newStudent = { id: userId, student_id: data.id };
+  const { error } = await supabase.from("profile_students").insert(newStudent);
+  if (error) {
+    throw error;
+  }
+}

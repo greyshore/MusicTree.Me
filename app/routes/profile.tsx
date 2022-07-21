@@ -15,6 +15,7 @@ import InstrumentFamilySelect from "~/components/instrument/family-select";
 import { useLoaderData } from "@remix-run/react";
 import { getUser } from "~/session.server";
 import { getInstrumentsByProfileId } from "~/models/user.server";
+import AddStudent from "~/routes/addStudent";
 
 export const meta: MetaFunction = () => {
   return {
@@ -97,6 +98,7 @@ export default function Profile() {
                   We use this for research purposes and to help connect
                   musicians from diverse groups.
                 </Text>
+                <AddStudent />
               </>
             }
             column2={null}
