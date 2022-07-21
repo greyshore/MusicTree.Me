@@ -16,10 +16,12 @@ import { getUser } from "~/session.server";
 import {
   getInstrumentsByProfileId,
   getStudents,
+  getTeachers,
   Student,
+  Teacher,
 } from "~/models/user.server";
-import AddStudent from "~/routes/addStudent";
-import RemoveStudent from "./removeStudent";
+import AddStudent from "~/routes/addRelationship";
+import RemoveRelationship from "./removeRelationship";
 
 export const meta: MetaFunction = () => {
   return {
@@ -30,9 +32,10 @@ export const meta: MetaFunction = () => {
 export const loader: LoaderFunction = async ({ request }) => {
   const user = await getUser(request);
   const students = await getStudents(user.id);
+  const teachers = await getTeachers(user.id);
   const instruments = await getInstrumentsByProfileId(user.id);
   const instrumentListItems = instruments.map((i) => i.instrument.name);
-  return { user, instrumentListItems, students };
+  return { user, instrumentListItems, students, teachers };
 };
 
 const TwoColumnGrid = (props: {
@@ -57,13 +60,28 @@ const studentList = (students: Student[]) => {
   return students.map((s) => (
     <ListItem key={s.student.id}>
       {s.student.firstName + " " + s.student.lastName}
-      <RemoveStudent studentId={s.student.id} />
+      <RemoveRelationship
+        relationshipId={s.student.id}
+        relationshipType={"student"}
+      />
+    </ListItem>
+  ));
+};
+
+const teacherList = (teachers: Teacher[]) => {
+  return teachers.map((t) => (
+    <ListItem key={t.teacher.id}>
+      {t.teacher.firstName + " " + t.teacher.lastName}
+      <RemoveRelationship
+        relationshipId={t.teacher.id}
+        relationshipType={"teacher"}
+      />
     </ListItem>
   ));
 };
 
 export default function Profile() {
-  const { user, instrumentListItems, students } = useLoaderData();
+  const { user, instrumentListItems, students, teachers } = useLoaderData();
   return (
     <Container as="main" maxW="6xl">
       <VStack spacing={8} alignItems="flex-start">
@@ -112,8 +130,16 @@ export default function Profile() {
                   We use this for research purposes and to help connect
                   musicians from diverse groups.
                 </Text>
+                <Heading as="h3" size="">
+                  Your Students
+                </Heading>
                 <UnorderedList>{studentList(students)}</UnorderedList>
                 <AddStudent />
+                <Heading as="h3" size="">
+                  Your Teachers
+                </Heading>
+                <UnorderedList>{teacherList(teachers)}</UnorderedList>
+                <AddStudent teacher={true} />
               </>
             }
             column2={null}

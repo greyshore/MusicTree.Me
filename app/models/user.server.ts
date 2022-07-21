@@ -135,6 +135,15 @@ export async function createStudent(userId: string, studentEmail: string) {
   }
 }
 
+export async function createTeacher(userId: string, teacherEmail: string) {
+  const { data } = await getProfileByEmail(teacherEmail);
+  const newTeachers = { id: userId, teacher_id: data.id };
+  const { error } = await supabase.from("profile_teachers").insert(newTeachers);
+  if (error) {
+    throw error;
+  }
+}
+
 export async function deleteStudent(userId: string, studentId: string) {
   const { error } = await supabase
     .from("profile_students")
@@ -144,6 +153,28 @@ export async function deleteStudent(userId: string, studentId: string) {
   if (error) {
     throw error;
   }
+}
+
+export async function deleteTeacher(userId: string, teacherId: string) {
+  const { error } = await supabase
+    .from("profile_teachers")
+    .delete()
+    .eq("id", userId)
+    .eq("teacher_id", teacherId);
+  if (error) {
+    throw error;
+  }
+}
+
+export async function getTeachers(userId: string): Promise<Teacher[]> {
+  const { data, error } = await supabase
+    .from("profile_teachers")
+    .select("teacher:teacher_id(id, firstName, lastName)")
+    .eq("id", userId);
+  if (error) {
+    throw error;
+  }
+  return data as Teacher[];
 }
 
 export async function getStudents(userId: string): Promise<Student[]> {
@@ -159,4 +190,8 @@ export async function getStudents(userId: string): Promise<Student[]> {
 
 export type Student = {
   student: { id: string; firstName: string; lastName: string };
+};
+
+export type Teacher = {
+  teacher: { id: string; firstName: string; lastName: string };
 };
