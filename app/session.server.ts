@@ -43,6 +43,8 @@ export async function getUser(request: Request) {
   throw await logout(request);
 }
 
+
+
 /**
  * Require a user session to get to a page. If none is found
  * redirect them to the login page. After login, take them to

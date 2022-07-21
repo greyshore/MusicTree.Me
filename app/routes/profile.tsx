@@ -3,8 +3,10 @@ import {
   Container,
   Heading,
   HStack,
+  ListItem,
   Spacer,
   Text,
+  UnorderedList,
   VStack,
 } from "@chakra-ui/react";
 import { Grid, GridItem } from "@chakra-ui/react";
@@ -12,6 +14,7 @@ import Input from "~/components/common/form/input";
 import InstrumentFamilySelect from "~/components/instrument/family-select";
 import { useLoaderData } from "@remix-run/react";
 import { getUser } from "~/session.server";
+import { getInstrumentsByProfileId } from "~/models/user.server";
 
 export const meta: MetaFunction = () => {
   return {
@@ -21,7 +24,9 @@ export const meta: MetaFunction = () => {
 
 export const loader: LoaderFunction = async ({ request }) => {
   const user = await getUser(request);
-  return user;
+  const instruments = await getInstrumentsByProfileId(user.id);
+  const instrumentListItems = instruments.map((i) => i.instrument.name);
+  return { user, instrumentListItems };
 };
 
 const TwoColumnGrid = (props: {
@@ -37,8 +42,13 @@ const TwoColumnGrid = (props: {
     </Grid>
   );
 };
+
+const Instrumentlist = (instrumentNames: string[]) => {
+  return instrumentNames.map((i) => <ListItem key={i}>{i}</ListItem>);
+};
+
 export default function Profile() {
-  const user = useLoaderData();
+  const { user, instrumentListItems } = useLoaderData();
   return (
     <Container as="main" maxW="6xl">
       <VStack spacing={8} alignItems="flex-start">
@@ -65,6 +75,11 @@ export default function Profile() {
                 <HStack alignItems="flex-start" spacing={8}>
                   <Text>{user.firstName}</Text>
                   <Text>{user.lastName}</Text>
+                </HStack>
+                <HStack>
+                  <UnorderedList>
+                    {Instrumentlist(instrumentListItems)}
+                  </UnorderedList>
                 </HStack>
                 <HStack alignItems="center">
                   <InstrumentFamilySelect />

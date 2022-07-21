@@ -82,6 +82,25 @@ export async function getProfileById(id: string) {
   if (data) return data;
 }
 
+export type InstrumentName = {
+  instrument: { name: string };
+};
+
+export async function getInstrumentsByProfileId(
+  id: string
+): Promise<InstrumentName[]> {
+  const { data, error } = await supabase
+    .from("profile_instruments")
+    .select(
+      `
+      instrument:instrument_id (name)
+    `
+    )
+    .eq("profile_id", id);
+  if (data) return data as InstrumentName[];
+  return [];
+}
+
 export async function getProfileByEmail(email?: string) {
   const { data, error } = await supabase
     .from("profiles")
