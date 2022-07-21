@@ -134,3 +134,29 @@ export async function createStudent(userId: string, studentEmail: string) {
     throw error;
   }
 }
+
+export async function deleteStudent(userId: string, studentId: string) {
+  const { error } = await supabase
+    .from("profile_students")
+    .delete()
+    .eq("id", userId)
+    .eq("student_id", studentId);
+  if (error) {
+    throw error;
+  }
+}
+
+export async function getStudents(userId: string): Promise<Student[]> {
+  const { data, error } = await supabase
+    .from("profile_students")
+    .select("student:student_id(id, firstName, lastName)")
+    .eq("id", userId);
+  if (error) {
+    throw error;
+  }
+  return data as Student[];
+}
+
+export type Student = {
+  student: { id: string; firstName: string; lastName: string };
+};

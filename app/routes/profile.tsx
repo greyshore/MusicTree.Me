@@ -10,12 +10,16 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { Grid, GridItem } from "@chakra-ui/react";
-import Input from "~/components/common/form/input";
 import InstrumentFamilySelect from "~/components/instrument/family-select";
 import { useLoaderData } from "@remix-run/react";
 import { getUser } from "~/session.server";
-import { getInstrumentsByProfileId } from "~/models/user.server";
+import {
+  getInstrumentsByProfileId,
+  getStudents,
+  Student,
+} from "~/models/user.server";
 import AddStudent from "~/routes/addStudent";
+import RemoveStudent from "./removeStudent";
 
 export const meta: MetaFunction = () => {
   return {
@@ -25,9 +29,10 @@ export const meta: MetaFunction = () => {
 
 export const loader: LoaderFunction = async ({ request }) => {
   const user = await getUser(request);
+  const students = await getStudents(user.id);
   const instruments = await getInstrumentsByProfileId(user.id);
   const instrumentListItems = instruments.map((i) => i.instrument.name);
-  return { user, instrumentListItems };
+  return { user, instrumentListItems, students };
 };
 
 const TwoColumnGrid = (props: {
@@ -44,12 +49,21 @@ const TwoColumnGrid = (props: {
   );
 };
 
-const Instrumentlist = (instrumentNames: string[]) => {
+const instrumentList = (instrumentNames: string[]) => {
   return instrumentNames.map((i) => <ListItem key={i}>{i}</ListItem>);
 };
 
+const studentList = (students: Student[]) => {
+  return students.map((s) => (
+    <ListItem key={s.student.id}>
+      {s.student.firstName + " " + s.student.lastName}
+      <RemoveStudent studentId={s.student.id} />
+    </ListItem>
+  ));
+};
+
 export default function Profile() {
-  const { user, instrumentListItems } = useLoaderData();
+  const { user, instrumentListItems, students } = useLoaderData();
   return (
     <Container as="main" maxW="6xl">
       <VStack spacing={8} alignItems="flex-start">
@@ -79,7 +93,7 @@ export default function Profile() {
                 </HStack>
                 <HStack>
                   <UnorderedList>
-                    {Instrumentlist(instrumentListItems)}
+                    {instrumentList(instrumentListItems)}
                   </UnorderedList>
                 </HStack>
                 <HStack alignItems="center">
@@ -98,6 +112,7 @@ export default function Profile() {
                   We use this for research purposes and to help connect
                   musicians from diverse groups.
                 </Text>
+                <UnorderedList>{studentList(students)}</UnorderedList>
                 <AddStudent />
               </>
             }
