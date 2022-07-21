@@ -22,7 +22,7 @@ export async function signUp(
   password: string,
   firstName: string,
   lastName: string,
-  instruments: string,
+  instruments: string
 ): Promise<User> {
   const { data: existingProfile } = await getProfileByEmail(email);
   if (existingProfile) throw new Error("User already exists, please log in");
@@ -45,19 +45,27 @@ export async function signUp(
   if (error) {
     throw error;
   }
-  instruments.split(',').forEach(async instrument => {
+  instruments.split(",").forEach(async (instrument) => {
     if (instrument.trim().length > 0) {
       // adding debug for issue in dev
       console.log(instrument.trim());
-      let { data, error: instrumentError } = await supabase.from("instruments").select('id').eq('name', instrument.trim()).single();
+      let { data, error: instrumentError } = await supabase
+        .from("instruments")
+        .select("id")
+        .eq("name", instrument.trim())
+        .single();
       if (instrumentError) throw instrumentError;
-      let newInstrument = { profile_id: user?.id, instrument_id: data.id }
-      let { error } = await supabase.from("profile_instruments").insert(newInstrument);
+      let newInstrument = { profile_id: user?.id, instrument_id: data.id };
+      let { error } = await supabase
+        .from("profile_instruments")
+        .insert(newInstrument);
       if (error) throw error;
     }
   });
   // get the user profile after created
-  const {data: newProfile, error: fetchError }= await getProfileByEmail(user?.email);
+  const { data: newProfile, error: fetchError } = await getProfileByEmail(
+    user?.email
+  );
   if (fetchError) throw fetchError;
 
   return newProfile;
@@ -66,12 +74,12 @@ export async function signUp(
 export async function getProfileById(id: string) {
   const { data, error } = await supabase
     .from("profiles")
-    .select("email, id")
+    .select("email, id, firstName, lastName")
     .eq("id", id)
     .single();
 
   if (error) return null;
-  if (data) return { id: data.id, email: data.email };
+  if (data) return data;
 }
 
 export async function getProfileByEmail(email?: string) {
@@ -81,7 +89,7 @@ export async function getProfileByEmail(email?: string) {
     .eq("email", email)
     .single();
 
-  return { data, error }
+  return { data, error };
 }
 
 export async function verifyLogin(email: string, password: string) {
@@ -91,7 +99,9 @@ export async function verifyLogin(email: string, password: string) {
   });
 
   if (error) throw error;
-  const {data: profile, error: fetchError} = await getProfileByEmail(user?.email);
+  const { data: profile, error: fetchError } = await getProfileByEmail(
+    user?.email
+  );
   if (fetchError) throw fetchError;
 
   return profile;

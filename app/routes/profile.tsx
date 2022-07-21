@@ -1,4 +1,4 @@
-import type { MetaFunction } from "@remix-run/node";
+import { json, LoaderFunction, MetaFunction } from "@remix-run/node";
 import {
   Container,
   Heading,
@@ -10,11 +10,18 @@ import {
 import { Grid, GridItem } from "@chakra-ui/react";
 import Input from "~/components/common/form/input";
 import InstrumentFamilySelect from "~/components/instrument/family-select";
+import { useLoaderData } from "@remix-run/react";
+import { getUser } from "~/session.server";
 
 export const meta: MetaFunction = () => {
   return {
     title: "Profile - MusicTree.me",
   };
+};
+
+export const loader: LoaderFunction = async ({ request }) => {
+  const user = await getUser(request);
+  return user;
 };
 
 const TwoColumnGrid = (props: {
@@ -31,6 +38,7 @@ const TwoColumnGrid = (props: {
   );
 };
 export default function Profile() {
+  const user = useLoaderData();
   return (
     <Container as="main" maxW="6xl">
       <VStack spacing={8} alignItems="flex-start">
@@ -55,8 +63,8 @@ export default function Profile() {
                 spacing={8}
               >
                 <HStack alignItems="flex-start" spacing={8}>
-                  <Input name="firstName" label="First Name" />
-                  <Input name="lastName" label="Last Name" />
+                  <Text>{user.firstName}</Text>
+                  <Text>{user.lastName}</Text>
                 </HStack>
                 <HStack alignItems="center">
                   <InstrumentFamilySelect />
