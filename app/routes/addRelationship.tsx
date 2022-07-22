@@ -12,12 +12,11 @@ export const action: ActionFunction = async ({ request }) => {
   const userId = await getUserId(request);
   const formData = await request.formData();
   const type = formData.get("type");
-  const email = formData.get("email");
-  if (type === "student" && email) {
-    await createStudent(userId, email.toString());
+  if (type === "student") {
+    await createStudent(userId, formData);
   }
-  if (type === "teacher" && email) {
-    await createTeacher(userId, email.toString());
+  if (type === "teacher") {
+    await createTeacher(userId, formData);
   }
   return redirect("/profile");
 };
@@ -27,7 +26,11 @@ export default function AddRelationship({ ...props }) {
   const type = isTeacher ? "teacher" : "student";
 
   const options = props.instruments.map((i: InstrumentRecord) => {
-    return <option value={i.id}>{i.name}</option>;
+    return (
+      <option key={i.name + i.id} value={i.id}>
+        {i.name}
+      </option>
+    );
   });
   return (
     <Form method="post" action="/addRelationship">
@@ -39,7 +42,9 @@ export default function AddRelationship({ ...props }) {
             Last Name:
             <input name="lastName" type="text" />
             Instrument:
-            <Select placeholder="instrument">{options}</Select>
+            <select name="instrument" placeholder="instrument">
+              {options}
+            </select>
             Start Year:
             <input name="startYear" type="number" />
             End Year:

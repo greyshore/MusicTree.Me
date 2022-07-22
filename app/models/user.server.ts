@@ -112,19 +112,36 @@ export async function verifyLogin(email: string, password: string) {
   return profile;
 }
 
-export async function createStudent(userId: string, studentEmail: string) {
-  const { data } = await getProfileByEmail(studentEmail);
-  const newStudent = { id: userId, student_id: data.id };
+export async function createStudent(userId: string, formData: FormData) {
+  const firstName = formData.get("firstName")?.toString();
+  const lastName = formData.get("lastName")?.toString();
+  const profile = await findProfile(firstName, lastName);
+  // todo: handle case when profile is not found
+  const newStudent = {
+    id: userId,
+    student_id: profile.id,
+    instrument_id: formData.get("instrument"),
+    start_year: formData.get("startYear"),
+    end_year: formData.get("endYear"),
+  };
   const { error } = await supabase.from("profile_students").insert(newStudent);
   if (error) {
     throw error;
   }
 }
 
-export async function createTeacher(userId: string, teacherEmail: string) {
-  const { data } = await getProfileByEmail(teacherEmail);
-  const newTeachers = { id: userId, teacher_id: data.id };
-  const { error } = await supabase.from("profile_teachers").insert(newTeachers);
+export async function createTeacher(userId: string, formData: FormData) {
+  const firstName = formData.get("firstName")?.toString();
+  const lastName = formData.get("lastName")?.toString();
+  const profile = await findProfile(firstName, lastName);
+  const newTeacher = {
+    id: userId,
+    teacher_id: profile.id,
+    instrument_id: formData.get("instrument"),
+    start_year: formData.get("startYear"),
+    end_year: formData.get("endYear"),
+  };
+  const { error } = await supabase.from("profile_teachers").insert(newTeacher);
   if (error) {
     throw error;
   }
@@ -181,3 +198,19 @@ export type Student = {
 export type Teacher = {
   teacher: { id: string; firstName: string; lastName: string };
 };
+
+async function findProfile(
+  firstName: string | undefined,
+  lastName: string | undefined
+): Promise<User> {
+  const { data, error } = await supabase
+    .from("profiles")
+    .select()
+    .eq("firstName", firstName)
+    .eq("lastName", lastName)
+    .single();
+  if (error) {
+    console.log(error);
+  }
+  return data;
+}
