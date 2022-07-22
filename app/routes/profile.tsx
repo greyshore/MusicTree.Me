@@ -1,4 +1,4 @@
-import { json, LoaderFunction, MetaFunction } from "@remix-run/node";
+import { LoaderFunction, MetaFunction } from "@remix-run/node";
 import {
   Container,
   Heading,
@@ -14,14 +14,17 @@ import InstrumentFamilySelect from "~/components/instrument/family-select";
 import { useLoaderData } from "@remix-run/react";
 import { getUser } from "~/session.server";
 import {
-  getInstrumentsByProfileId,
   getStudents,
   getTeachers,
   Student,
   Teacher,
 } from "~/models/user.server";
-import AddStudent from "~/routes/addRelationship";
+import AddRelationship from "~/routes/addRelationship";
 import RemoveRelationship from "./removeRelationship";
+import {
+  getInstruments,
+  getInstrumentsByProfileId,
+} from "~/models/instrument/server";
 
 export const meta: MetaFunction = () => {
   return {
@@ -33,9 +36,10 @@ export const loader: LoaderFunction = async ({ request }) => {
   const user = await getUser(request);
   const students = await getStudents(user.id);
   const teachers = await getTeachers(user.id);
-  const instruments = await getInstrumentsByProfileId(user.id);
-  const instrumentListItems = instruments.map((i) => i.instrument.name);
-  return { user, instrumentListItems, students, teachers };
+  const userInstruments = await getInstrumentsByProfileId(user.id);
+  const allInstruments = await getInstruments();
+  const instrumentListItems = userInstruments.map((i) => i.instrument.name);
+  return { user, instrumentListItems, students, teachers, allInstruments };
 };
 
 const TwoColumnGrid = (props: {
@@ -81,7 +85,8 @@ const teacherList = (teachers: Teacher[]) => {
 };
 
 export default function Profile() {
-  const { user, instrumentListItems, students, teachers } = useLoaderData();
+  const { user, instrumentListItems, students, teachers, allInstruments } =
+    useLoaderData();
   return (
     <Container as="main" maxW="6xl">
       <VStack spacing={8} alignItems="flex-start">
@@ -134,12 +139,12 @@ export default function Profile() {
                   Your Students
                 </Heading>
                 <UnorderedList>{studentList(students)}</UnorderedList>
-                <AddStudent />
+                <AddRelationship instruments={allInstruments} />
                 <Heading as="h3" size="">
                   Your Teachers
                 </Heading>
                 <UnorderedList>{teacherList(teachers)}</UnorderedList>
-                <AddStudent teacher={true} />
+                <AddRelationship instruments={allInstruments} teacher />
               </>
             }
             column2={null}

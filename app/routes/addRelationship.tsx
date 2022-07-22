@@ -1,6 +1,10 @@
-import { Box, Button, HStack, VStack } from "@chakra-ui/react";
+import { Box, Button, HStack, Select, VStack } from "@chakra-ui/react";
 import { ActionFunction, redirect } from "@remix-run/node";
 import { Form } from "@remix-run/react";
+import {
+  InstrumentRecord,
+  InstrumentRelation,
+} from "~/models/instrument/server";
 import { createStudent, createTeacher } from "~/models/user.server";
 import { getUserId } from "~/session.server";
 
@@ -21,13 +25,25 @@ export const action: ActionFunction = async ({ request }) => {
 export default function AddRelationship({ ...props }) {
   const isTeacher = props.teacher;
   const type = isTeacher ? "teacher" : "student";
+
+  const options = props.instruments.map((i: InstrumentRecord) => {
+    return <option value={i.id}>{i.name}</option>;
+  });
   return (
     <Form method="post" action="/addRelationship">
       <VStack spacing={8}>
         <HStack width="100%" spacing={5}>
           <label>
-            email:
-            <input name="email" type="text" />
+            First Name:
+            <input name="firstName" type="text" />
+            Last Name:
+            <input name="lastName" type="text" />
+            Instrument:
+            <Select placeholder="instrument">{options}</Select>
+            Start Year:
+            <input name="startYear" type="number" />
+            End Year:
+            <input name="endYear" type="number" />
             <input name="type" hidden value={type} readOnly />
           </label>
         </HStack>

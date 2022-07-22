@@ -1,3 +1,5 @@
+import { supabase } from "../user.server";
+
 export type Instrument =
   // Woodwinds
   | "Bassoon"
@@ -13,11 +15,11 @@ export type Instrument =
   | "Soprano Saxophone"
   | "Tenor Saxophone"
   // Keyboards
-  | "Harpsichord" 
+  | "Harpsichord"
   | "Organ"
   | "Piano"
   // Brass
-  | "Baritone/Euphonium" 
+  | "Baritone/Euphonium"
   | "French Horn"
   | "Trombone"
   | "Bass Trombone"
@@ -45,3 +47,34 @@ export type InstrumentFamily =
 export type InstrumentMap = {
   [K in InstrumentFamily]: Instrument[];
 };
+
+export type InstrumentRelation = {
+  instrument: { id: string; name: string };
+};
+
+export type InstrumentRecord = {
+  id: string;
+  name: string;
+};
+
+export async function getInstruments(): Promise<InstrumentRecord[]> {
+  const { data } = await supabase.from("instruments").select("id, name");
+  if (data) return data;
+
+  return [];
+}
+
+export async function getInstrumentsByProfileId(
+  id: string
+): Promise<InstrumentRelation[]> {
+  const { data, error } = await supabase
+    .from("profile_instruments")
+    .select(
+      `
+      instrument:instrument_id (id, name)
+    `
+    )
+    .eq("profile_id", id);
+  if (data) return data as InstrumentRelation[];
+  return [];
+}
