@@ -28,7 +28,7 @@ export default function AddRelationship({ ...props }) {
           <label>
             email:
             <input name="email" type="text" />
-            <input name="type" hidden value={type} />
+            <input name="type" hidden value={type} readOnly />
           </label>
         </HStack>
         <Box w="100%">

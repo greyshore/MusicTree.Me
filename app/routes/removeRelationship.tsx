@@ -23,8 +23,18 @@ export default function RemoveRelationship({ ...props }) {
       action="/removeRelationship"
       style={{ display: "inline", margin: "20px" }}
     >
-      <input type="hidden" name="relationshipId" value={props.relationshipId} />
-      <input type="hidden" name="type" value={props.relationshipType} />
+      <input
+        type="hidden"
+        name="relationshipId"
+        value={props.relationshipId}
+        readOnly
+      />
+      <input
+        type="hidden"
+        name="type"
+        value={props.relationshipType}
+        readOnly
+      />
       <Button type="submit" colorScheme="red" borderRadius="full" my={10}>
         Remove
       </Button>
