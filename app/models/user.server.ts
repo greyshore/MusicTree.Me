@@ -114,8 +114,19 @@ export async function verifyLogin(email: string, password: string) {
 export async function createStudent(userId: string, formData: FormData) {
   const firstName = formData.get("firstName")?.toString();
   const lastName = formData.get("lastName")?.toString();
+  let profiles: User[] = [];
+  if (firstName && lastName) profiles = await findProfile(firstName, lastName);
   let profile;
-  if (firstName && lastName) profile = await findProfile(firstName, lastName);
+  if (profiles.length === 1) profile = profiles[0];
+  if (profiles.length === 0) {
+    const { data, error } = await supabase
+      .from("profilesv2")
+      .insert({ first_name: firstName, last_name: lastName });
+    if (error) {
+      throw error;
+    }
+    profile = data[0] as User;
+  }
   // todo: handle case when profile is not found
   const newStudent = {
     id: userId,
@@ -203,15 +214,18 @@ export type Teacher = {
   teacher: { id: string; first_name: string; last_name: string };
 };
 
-async function findProfile(firstName: string, lastName: string): Promise<User> {
+async function findProfile(
+  firstName: string,
+  lastName: string
+): Promise<User[]> {
   const { data, error } = await supabase
     .from("profilesv2")
     .select()
     .ilike("first_name", firstName)
-    .ilike("last_name", lastName)
-    .single();
+    .ilike("last_name", lastName);
   if (error) {
     console.log(error);
+    return [];
   }
   return data;
 }
