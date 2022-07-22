@@ -115,7 +115,6 @@ export async function verifyLogin(email: string, password: string) {
 
 export async function createStudent(userId: string, formData: FormData) {
   const profile = await getOrCreateProfile(formData);
-  // todo: handle case when profile is not found
   const newStudent = {
     id: userId,
     student_id: profile?.id,
@@ -212,7 +211,7 @@ async function findProfile(
   return data;
 }
 
-async function getOrCreateProfile(formData: FormData): Promise<User | null> {
+async function getOrCreateProfile(formData: FormData): Promise<User> {
   const firstName = formData.get("firstName")?.toString();
   const lastName = formData.get("lastName")?.toString();
   let profiles: User[] = [];
@@ -228,8 +227,10 @@ async function getOrCreateProfile(formData: FormData): Promise<User | null> {
       throw error;
     }
     profile = data[0] as User;
+  } else if (profiles.length > 1) {
+    throw new Error("multiple profiles match the given criteria");
   } else {
-    profile = null;
+    throw new Error("unable to find or create profile for student/teacher");
   }
   return profile;
 }

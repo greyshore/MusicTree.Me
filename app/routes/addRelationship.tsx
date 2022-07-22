@@ -1,10 +1,7 @@
 import { Box, Button, HStack, Select, VStack } from "@chakra-ui/react";
 import { ActionFunction, redirect } from "@remix-run/node";
 import { Form } from "@remix-run/react";
-import {
-  InstrumentRecord,
-  InstrumentRelation,
-} from "~/models/instrument/server";
+import { InstrumentRecord } from "~/models/instrument/server";
 import { createStudent, createTeacher } from "~/models/user.server";
 import { getUserId } from "~/session.server";
 
