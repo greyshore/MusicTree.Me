@@ -10,7 +10,6 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { Grid, GridItem } from "@chakra-ui/react";
-import InstrumentFamilySelect from "~/components/instrument/family-select";
 import { useLoaderData } from "@remix-run/react";
 import { getUser } from "~/session.server";
 import {
@@ -25,6 +24,8 @@ import {
   getInstruments,
   getInstrumentsByProfileId,
 } from "~/models/instrument/server";
+import { ChakraStylesConfig, Select } from "chakra-react-select";
+import * as React from "react";
 
 export const meta: MetaFunction = () => {
   return {
@@ -84,9 +85,36 @@ const teacherList = (teachers: Teacher[]) => {
   ));
 };
 
+const styles: ChakraStylesConfig = {
+  container: (provided, state) => ({
+    ...provided,
+    w: "100%",
+  }),
+};
+
 export default function Profile() {
   const { user, instrumentListItems, students, teachers, allInstruments } =
-    useLoaderData();
+    useLoaderData<{
+      user: any;
+      instrumentListItems: any;
+      students: any;
+      teachers: any;
+      allInstruments: { name: string }[];
+    }>();
+
+  const [multiselectOptions, setMultiselectOptions] = React.useState<
+    { label: string; value: string }[] | null
+  >(null);
+
+  React.useEffect(() => {
+    const collection: { label: string; value: string }[] = [];
+    allInstruments.map((instrument) =>
+      collection.push({ label: instrument.name, value: instrument.name })
+    );
+
+    setMultiselectOptions(collection);
+  }, [allInstruments]);
+
   return (
     <Container as="main" maxW="6xl">
       <VStack spacing={8} alignItems="flex-start">
@@ -119,8 +147,16 @@ export default function Profile() {
                     {instrumentList(instrumentListItems)}
                   </UnorderedList>
                 </HStack>
-                <HStack alignItems="center">
-                  <InstrumentFamilySelect />
+                <HStack alignItems="center" width="100%">
+                  {multiselectOptions && (
+                    <Select
+                      chakraStyles={styles}
+                      isMulti
+                      useBasicStyles
+                      tagVariant="solid"
+                      options={multiselectOptions}
+                    />
+                  )}
                 </HStack>
               </VStack>
             }
