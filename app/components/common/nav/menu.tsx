@@ -46,16 +46,17 @@ const NavMenu = ({ user: user }: { user: User }) => {
         <Spacer />
         <Box>
           {user ? (
-            <Button
-              role="button"
-              aria-label="Desktop Navigation"
-              as={Link}
-              to="/logout"
-              variant="link"
-              colorScheme="black"
-            >
-              Log out
-            </Button>
+            <Form action="/logout" method="post">
+              <Button
+                type="submit"
+                role="button"
+                color="black"
+                variant="link"
+                mt={0}
+              >
+                Log out
+              </Button>
+            </Form>
           ) : (
             <Button
               role="button"
