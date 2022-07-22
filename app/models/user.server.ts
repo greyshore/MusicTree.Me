@@ -112,21 +112,7 @@ export async function verifyLogin(email: string, password: string) {
 }
 
 export async function createStudent(userId: string, formData: FormData) {
-  const firstName = formData.get("firstName")?.toString();
-  const lastName = formData.get("lastName")?.toString();
-  let profiles: User[] = [];
-  if (firstName && lastName) profiles = await findProfile(firstName, lastName);
-  let profile;
-  if (profiles.length === 1) profile = profiles[0];
-  if (profiles.length === 0) {
-    const { data, error } = await supabase
-      .from("profilesv2")
-      .insert({ first_name: firstName, last_name: lastName });
-    if (error) {
-      throw error;
-    }
-    profile = data[0] as User;
-  }
+  const profile = await getOrCreateProfile(formData);
   // todo: handle case when profile is not found
   const newStudent = {
     id: userId,
@@ -142,13 +128,7 @@ export async function createStudent(userId: string, formData: FormData) {
 }
 
 export async function createTeacher(userId: string, formData: FormData) {
-  const firstName = formData.get("firstName")?.toString();
-  const lastName = formData.get("lastName")?.toString();
-  let profile;
-  if (firstName && lastName) profile = await findProfile(firstName, lastName);
-  if (!profile) {
-    debugger;
-  }
+  const profile = await getOrCreateProfile(formData);
   const newTeacher = {
     id: userId,
     teacher_id: profile?.id,
@@ -228,4 +208,26 @@ async function findProfile(
     return [];
   }
   return data;
+}
+
+async function getOrCreateProfile(formData: FormData): Promise<User | null> {
+  const firstName = formData.get("firstName")?.toString();
+  const lastName = formData.get("lastName")?.toString();
+  let profiles: User[] = [];
+  if (firstName && lastName) profiles = await findProfile(firstName, lastName);
+  let profile: User | null;
+  if (profiles.length === 1) {
+    profile = profiles[0];
+  } else if (profiles.length === 0) {
+    const { data, error } = await supabase
+      .from("profilesv2")
+      .insert({ first_name: firstName, last_name: lastName });
+    if (error) {
+      throw error;
+    }
+    profile = data[0] as User;
+  } else {
+    profile = null;
+  }
+  return profile;
 }
