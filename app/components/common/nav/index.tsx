@@ -10,6 +10,7 @@ import {
 } from "@chakra-ui/react";
 import { Form, Link, NavLink, useLocation } from "@remix-run/react";
 import type { ReactNode } from "react";
+import { User } from "~/models/user.server";
 import Logo from "./logo";
 import NavMenu from "./menu";
 
@@ -57,7 +58,7 @@ const MTNavLink = ({
     </Center>
   );
 };
-export const getNavItemList = (hasUser: boolean) => [
+export const getNavItemList = (user: User) => [
   {
     position: 1,
     notLink: true,
@@ -79,7 +80,7 @@ export const getNavItemList = (hasUser: boolean) => [
   {
     position: 11,
     child: {
-      ...(hasUser ? (
+      ...(user ? (
         <Form action="/logout" method="post">
           <Button
             type="submit"
@@ -112,7 +113,7 @@ export const getNavItemList = (hasUser: boolean) => [
     position: 12,
     notLink: true,
     child: {
-      ...(hasUser ? (
+      ...(user ? (
         <Button
           type="submit"
           role="button"

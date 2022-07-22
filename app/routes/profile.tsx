@@ -17,6 +17,7 @@ import {
   getTeachers,
   Student,
   Teacher,
+  User,
 } from "~/models/user.server";
 import AddRelationship from "~/routes/addRelationship";
 import RemoveRelationship from "./removeRelationship";
@@ -95,7 +96,7 @@ const styles: ChakraStylesConfig = {
 export default function Profile() {
   const { user, instrumentListItems, students, teachers, allInstruments } =
     useLoaderData<{
-      user: any;
+      user: User;
       instrumentListItems: any;
       students: any;
       teachers: any;
@@ -139,8 +140,8 @@ export default function Profile() {
                 spacing={8}
               >
                 <HStack alignItems="flex-start" spacing={8}>
-                  <Text>{user.firstName}</Text>
-                  <Text>{user.lastName}</Text>
+                  <Text>{user.first_name}</Text>
+                  <Text>{user.last_name}</Text>
                 </HStack>
                 <HStack>
                   <UnorderedList>

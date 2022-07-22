@@ -100,10 +100,10 @@ const NavMenu = ({ user: user }: { user: User }) => {
                     <Divider orientation="horizontal" />
                     <Box>
                       <Avatar
-                        name={user.firstName + " " + user.lastName}
+                        name={user.first_name + " " + user.last_name}
                         size="xs"
                       />
-                      {user.firstName + " " + user.lastName}
+                      {user.first_name + " " + user.last_name}
                     </Box>
                     <NavLink to="/profile" onClick={toggleOpen}>
                       Profile

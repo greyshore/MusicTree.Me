@@ -3,8 +3,8 @@ import invariant from "tiny-invariant";
 export type User = {
   id: string;
   email: string;
-  firstName: string;
-  lastName: string;
+  first_name: string;
+  last_name: string;
 };
 
 // Abstract this away
@@ -45,7 +45,9 @@ export async function signUp(
     last_name: lastName,
     email,
   };
-  const { data, error } = await supabase.from("profilesv2").upsert(updates);
+  const { data: profile, error } = await supabase
+    .from("profilesv2")
+    .upsert(updates);
   if (error) {
     throw error;
   }
@@ -59,7 +61,7 @@ export async function signUp(
         .eq("name", instrument.trim())
         .single();
       if (instrumentError) throw instrumentError;
-      let newInstrument = { profile_id: data.id, instrument_id: data.id };
+      let newInstrument = { profile_id: profile[0].id, instrument_id: data.id };
       let { error } = await supabase
         .from("profile_instrumentsv2")
         .insert(newInstrument);
