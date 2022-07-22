@@ -76,7 +76,7 @@ export const action: ActionFunction = async ({ request }) => {
 
   return createUserSession({
     request,
-    userId: user.id,
+    userId: user.auth_id,
     remember: remember === "on" ? true : false,
     redirectTo: typeof redirectTo === "string" ? redirectTo : "/my-tree",
   });

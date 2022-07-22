@@ -68,7 +68,7 @@ export async function getInstrumentsByProfileId(
   id: string
 ): Promise<InstrumentRelation[]> {
   const { data, error } = await supabase
-    .from("profile_instruments")
+    .from("profile_instrumentsv2")
     .select(
       `
       instrument:instrument_id (id, name)

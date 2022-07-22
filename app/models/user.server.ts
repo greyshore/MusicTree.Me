@@ -40,13 +40,12 @@ export async function signUp(
     throw signUpError;
   }
   const updates = {
-    id: user?.id,
-    firstName,
-    lastName,
+    auth_id: user?.id,
+    first_name: firstName,
+    last_name: lastName,
     email,
-    created_at: new Date(),
   };
-  const { error } = await supabase.from("profiles").upsert(updates);
+  const { data, error } = await supabase.from("profilesv2").upsert(updates);
   if (error) {
     throw error;
   }
@@ -60,9 +59,9 @@ export async function signUp(
         .eq("name", instrument.trim())
         .single();
       if (instrumentError) throw instrumentError;
-      let newInstrument = { profile_id: user?.id, instrument_id: data.id };
+      let newInstrument = { profile_id: data.id, instrument_id: data.id };
       let { error } = await supabase
-        .from("profile_instruments")
+        .from("profile_instrumentsv2")
         .insert(newInstrument);
       if (error) throw error;
     }
@@ -78,9 +77,9 @@ export async function signUp(
 
 export async function getProfileById(id: string) {
   const { data, error } = await supabase
-    .from("profiles")
-    .select("email, id, firstName, lastName")
-    .eq("id", id)
+    .from("profilesv2")
+    .select("email, id, first_name, last_name, auth_id")
+    .eq("auth_id", id)
     .single();
 
   if (error) return null;
@@ -89,8 +88,8 @@ export async function getProfileById(id: string) {
 
 export async function getProfileByEmail(email?: string) {
   const { data, error } = await supabase
-    .from("profiles")
-    .select("email, id")
+    .from("profilesv2")
+    .select("email, auth_id")
     .eq("email", email)
     .single();
 
@@ -177,7 +176,7 @@ export async function deleteTeacher(userId: string, teacherId: string) {
 export async function getTeachers(userId: string): Promise<Teacher[]> {
   const { data, error } = await supabase
     .from("profile_teachers")
-    .select("teacher:teacher_id(id, firstName, lastName)")
+    .select("teacher:teacher_id(id, first_name, last_name)")
     .eq("id", userId);
   if (error) {
     throw error;
@@ -188,7 +187,7 @@ export async function getTeachers(userId: string): Promise<Teacher[]> {
 export async function getStudents(userId: string): Promise<Student[]> {
   const { data, error } = await supabase
     .from("profile_students")
-    .select("student:student_id(id, firstName, lastName)")
+    .select("student:student_id(id, first_name, last_name)")
     .eq("id", userId);
   if (error) {
     throw error;
@@ -206,10 +205,10 @@ export type Teacher = {
 
 async function findProfile(firstName: string, lastName: string): Promise<User> {
   const { data, error } = await supabase
-    .from("profiles")
+    .from("profilesv2")
     .select()
-    .ilike("firstName", firstName)
-    .ilike("lastName", lastName)
+    .ilike("first_name", firstName)
+    .ilike("last_name", lastName)
     .single();
   if (error) {
     console.log(error);

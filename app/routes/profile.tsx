@@ -35,8 +35,8 @@ export const meta: MetaFunction = () => {
 
 export const loader: LoaderFunction = async ({ request }) => {
   const user = await getUser(request);
-  const students = await getStudents(user.id);
-  const teachers = await getTeachers(user.id);
+  const students = await getStudents(user.auth_id);
+  const teachers = await getTeachers(user.auth_id);
   const userInstruments = await getInstrumentsByProfileId(user.id);
   const allInstruments = await getInstruments();
   const instrumentListItems = userInstruments.map((i) => i.instrument.name);
