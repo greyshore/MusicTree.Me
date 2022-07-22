@@ -1,6 +1,11 @@
 import { createClient } from "@supabase/supabase-js";
 import invariant from "tiny-invariant";
-export type User = { id: string; email: string };
+export type User = {
+  id: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+};
 
 // Abstract this away
 const supabaseUrl = process.env.SUPABASE_URL;

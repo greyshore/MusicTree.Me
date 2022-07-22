@@ -20,7 +20,7 @@ import type {
   MetaFunction,
   LinksFunction,
 } from "@remix-run/node";
-import { getUserId } from "./session.server";
+import { getUser, getUserId } from "./session.server";
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
@@ -44,11 +44,12 @@ export let links: LinksFunction = () => {
 };
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const userId = await getUserId(request);
-  if (!userId) {
+  const user = await getUser(request);
+
+  if (!user) {
     redirect("/login");
   }
-  return json({ userId });
+  return user;
 };
 interface DocumentProps {
   children: React.ReactNode;
@@ -102,10 +103,9 @@ export default function App() {
   return (
     <Document>
       <ChakraProvider>
-        <Nav hasUser={Boolean(user.userId)} />
+        <Nav user={user} />
         <Outlet />
       </ChakraProvider>
     </Document>
   );
 }
-

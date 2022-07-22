@@ -155,7 +155,7 @@ const NavItem = (item: Item) => {
   );
 };
 
-const Nav = ({ hasUser }: { hasUser: boolean }) => {
+const Nav = ({ user: user }: { user: User }) => {
   const [isMedScreen] = useMediaQuery("(min-width: 767px)");
 
   return (
@@ -168,7 +168,7 @@ const Nav = ({ hasUser }: { hasUser: boolean }) => {
             gap={6}
             alignItems="baseline"
           >
-            {(getNavItemList(hasUser) as Item[]).map((item, index) => {
+            {(getNavItemList(user) as Item[]).map((item, index) => {
               return (
                 <NavItem
                   key={`${item.position}-${index}`}
@@ -181,7 +181,7 @@ const Nav = ({ hasUser }: { hasUser: boolean }) => {
             })}
           </Grid>
         ) : (
-          <NavMenu hasUser={hasUser} />
+          <NavMenu user={user} />
         )}
       </>
     </Container>

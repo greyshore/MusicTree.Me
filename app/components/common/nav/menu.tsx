@@ -19,8 +19,9 @@ import { Form, Link } from "@remix-run/react";
 import { NavLink } from "react-router-dom";
 
 import Logo from "./logo";
+import { User } from "~/models/user.server";
 
-const NavMenu = ({ hasUser }: { hasUser: boolean }) => {
+const NavMenu = ({ user: user }: { user: User }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleOpen = () => setIsOpen(!isOpen);
@@ -44,7 +45,7 @@ const NavMenu = ({ hasUser }: { hasUser: boolean }) => {
         </Box>
         <Spacer />
         <Box>
-          {hasUser ? (
+          {user ? (
             <Button
               role="button"
               aria-label="Desktop Navigation"
@@ -93,12 +94,15 @@ const NavMenu = ({ hasUser }: { hasUser: boolean }) => {
                     {item}
                   </NavLink>
                 ))}
-                {hasUser && (
+                {user && (
                   <>
                     <Divider orientation="horizontal" />
                     <Box>
-                      <Avatar name="firstName lastName" size="xs" /> firstName
-                      lastName
+                      <Avatar
+                        name={user.firstName + " " + user.lastName}
+                        size="xs"
+                      />
+                      {user.firstName + " " + user.lastName}
                     </Box>
                     <NavLink to="/profile" onClick={toggleOpen}>
                       Profile
@@ -110,7 +114,7 @@ const NavMenu = ({ hasUser }: { hasUser: boolean }) => {
                 )}
                 {/* end user menu */}
                 <Divider orientation="horizontal" />
-                {hasUser && (
+                {user && (
                   <Form action="/logout" method="post">
                     <Button
                       type="submit"
@@ -123,7 +127,7 @@ const NavMenu = ({ hasUser }: { hasUser: boolean }) => {
                     </Button>
                   </Form>
                 )}
-                {!hasUser && (
+                {!user && (
                   <Button
                     role="button"
                     aria-label="Desktop Navigation"
