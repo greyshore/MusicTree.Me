@@ -73,13 +73,14 @@ export const action: ActionFunction = async ({ request }) => {
       { status: 400 }
     );
   }
-
-  return createUserSession({
+  const result = await createUserSession({
     request,
-    userId: user.auth_id,
+    userId: user.id,
     remember: remember === "on" ? true : false,
     redirectTo: typeof redirectTo === "string" ? redirectTo : "/my-tree",
   });
+
+  return result;
 };
 
 export default function Login() {

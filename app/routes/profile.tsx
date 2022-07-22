@@ -35,8 +35,8 @@ export const meta: MetaFunction = () => {
 
 export const loader: LoaderFunction = async ({ request }) => {
   const user = await getUser(request);
-  const students = await getStudents(user.auth_id);
-  const teachers = await getTeachers(user.auth_id);
+  const students = await getStudents(user.id);
+  const teachers = await getTeachers(user.id);
   const userInstruments = await getInstrumentsByProfileId(user.id);
   const allInstruments = await getInstruments();
   const instrumentListItems = userInstruments.map((i) => i.instrument.name);
@@ -64,7 +64,7 @@ const instrumentList = (instrumentNames: string[]) => {
 const studentList = (students: Student[]) => {
   return students.map((s) => (
     <ListItem key={s.student.id}>
-      {s.student.firstName + " " + s.student.lastName}
+      {s.student.first_name + " " + s.student.last_name}
       <RemoveRelationship
         relationshipId={s.student.id}
         relationshipType={"student"}
@@ -76,7 +76,7 @@ const studentList = (students: Student[]) => {
 const teacherList = (teachers: Teacher[]) => {
   return teachers.map((t) => (
     <ListItem key={t.teacher.id}>
-      {t.teacher.firstName + " " + t.teacher.lastName}
+      {t.teacher.first_name + " " + t.teacher.last_name}
       <RemoveRelationship
         relationshipId={t.teacher.id}
         relationshipType={"teacher"}

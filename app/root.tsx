@@ -45,7 +45,6 @@ export let links: LinksFunction = () => {
 
 export const loader: LoaderFunction = async ({ request }) => {
   const user = await getUser(request);
-
   if (!user) {
     redirect("/login");
   }

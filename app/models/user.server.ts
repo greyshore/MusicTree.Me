@@ -79,7 +79,7 @@ export async function getProfileById(id: string) {
   const { data, error } = await supabase
     .from("profilesv2")
     .select("email, id, first_name, last_name, auth_id")
-    .eq("auth_id", id)
+    .eq("id", id)
     .single();
 
   if (error) return null;
@@ -89,7 +89,7 @@ export async function getProfileById(id: string) {
 export async function getProfileByEmail(email?: string) {
   const { data, error } = await supabase
     .from("profilesv2")
-    .select("email, auth_id")
+    .select("email, auth_id, id")
     .eq("email", email)
     .single();
 
@@ -196,11 +196,11 @@ export async function getStudents(userId: string): Promise<Student[]> {
 }
 
 export type Student = {
-  student: { id: string; firstName: string; lastName: string };
+  student: { id: string; first_name: string; last_name: string };
 };
 
 export type Teacher = {
-  teacher: { id: string; firstName: string; lastName: string };
+  teacher: { id: string; first_name: string; last_name: string };
 };
 
 async function findProfile(firstName: string, lastName: string): Promise<User> {
