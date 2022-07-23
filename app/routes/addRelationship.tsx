@@ -36,6 +36,8 @@ export default function AddRelationship({ ...props }) {
           <label>
             First Name:
             <input name="firstName" type="text" />
+            Middle Name:
+            <input name="middleName" type="text" />
             Last Name:
             <input name="lastName" type="text" />
             Instrument:

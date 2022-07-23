@@ -80,7 +80,7 @@ export async function signUp(
 export async function getProfileById(id: string) {
   const { data, error } = await supabase
     .from("profilesv2")
-    .select("email, id, first_name, last_name, auth_id")
+    .select("email, id, first_name, middle_name, last_name, auth_id")
     .eq("id", id)
     .single();
 
@@ -168,7 +168,7 @@ export async function deleteTeacher(userId: string, teacherId: string) {
 export async function getTeachers(userId: string): Promise<Teacher[]> {
   const { data, error } = await supabase
     .from("profile_teachers")
-    .select("teacher:teacher_id(id, first_name, last_name)")
+    .select("teacher:teacher_id(id, first_name, middle_name, last_name)")
     .eq("id", userId);
   if (error) {
     throw error;
@@ -179,7 +179,7 @@ export async function getTeachers(userId: string): Promise<Teacher[]> {
 export async function getStudents(userId: string): Promise<Student[]> {
   const { data, error } = await supabase
     .from("profile_students")
-    .select("student:student_id(id, first_name, last_name)")
+    .select("student:student_id(id, first_name, middle_name, last_name)")
     .eq("id", userId);
   if (error) {
     throw error;
@@ -188,11 +188,21 @@ export async function getStudents(userId: string): Promise<Student[]> {
 }
 
 export type Student = {
-  student: { id: string; first_name: string; last_name: string };
+  student: {
+    id: string;
+    first_name: string;
+    middle_name: string | null;
+    last_name: string;
+  };
 };
 
 export type Teacher = {
-  teacher: { id: string; first_name: string; last_name: string };
+  teacher: {
+    id: string;
+    first_name: string;
+    middle_name: string | null;
+    last_name: string;
+  };
 };
 
 async function findProfile(
@@ -211,18 +221,45 @@ async function findProfile(
   return data;
 }
 
+async function findProfileWithMiddle(
+  firstName: string,
+  lastName: string,
+  middleName: string
+): Promise<User[]> {
+  const { data, error } = await supabase
+    .from("profilesv2")
+    .select()
+    .ilike("first_name", firstName)
+    .ilike("last_name", lastName)
+    .ilike("middle_name", middleName);
+  if (error) {
+    console.log(error);
+    return [];
+  }
+  return data;
+}
+
 async function getOrCreateProfile(formData: FormData): Promise<User> {
   const firstName = formData.get("firstName")?.toString();
   const lastName = formData.get("lastName")?.toString();
+  const middleName = formData.get("middleName")?.toString();
   let profiles: User[] = [];
-  if (firstName && lastName) profiles = await findProfile(firstName, lastName);
+  if (firstName && lastName && middleName) {
+    profiles = await findProfileWithMiddle(firstName, lastName, middleName);
+  } else if (firstName && lastName) {
+    profiles = await findProfile(firstName, lastName);
+  }
   let profile: User | null;
   if (profiles.length === 1) {
     profile = profiles[0];
   } else if (profiles.length === 0) {
     const { data, error } = await supabase
       .from("profilesv2")
-      .insert({ first_name: firstName, last_name: lastName });
+      .insert({
+        first_name: firstName,
+        last_name: lastName,
+        middle_name: middleName,
+      });
     if (error) {
       throw error;
     }

@@ -63,27 +63,33 @@ const instrumentList = (instrumentNames: string[]) => {
 };
 
 const studentList = (students: Student[]) => {
-  return students.map((s) => (
-    <ListItem key={s.student.id}>
-      {s.student.first_name + " " + s.student.last_name}
-      <RemoveRelationship
-        relationshipId={s.student.id}
-        relationshipType={"student"}
-      />
-    </ListItem>
-  ));
+  return students.map((s) => {
+    const middle = s.student.middle_name ? ` ${s.student.middle_name} ` : " ";
+    return (
+      <ListItem key={s.student.id}>
+        {s.student.first_name + middle + s.student.last_name}
+        <RemoveRelationship
+          relationshipId={s.student.id}
+          relationshipType={"student"}
+        />
+      </ListItem>
+    );
+  });
 };
 
 const teacherList = (teachers: Teacher[]) => {
-  return teachers.map((t) => (
-    <ListItem key={t.teacher.id}>
-      {t.teacher.first_name + " " + t.teacher.last_name}
-      <RemoveRelationship
-        relationshipId={t.teacher.id}
-        relationshipType={"teacher"}
-      />
-    </ListItem>
-  ));
+  return teachers.map((t) => {
+    const middle = t.teacher.middle_name ? ` ${t.teacher.middle_name} ` : " ";
+    return (
+      <ListItem key={t.teacher.id}>
+        {t.teacher.first_name + middle + t.teacher.last_name}
+        <RemoveRelationship
+          relationshipId={t.teacher.id}
+          relationshipType={"teacher"}
+        />
+      </ListItem>
+    );
+  });
 };
 
 const styles: ChakraStylesConfig = {
